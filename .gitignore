@@ -1,9 +1,9 @@
-config/*.ini
-cache/templates_c/*
-cache/cache/*
-cache/kills/*
-cache/assetsCache/*
 makesql.php
+config/*.ini
+cache/templates_c/*.php
+cache/cache/*.*
+cache/kills/*.*
+cache/assetsCache/*.*
 icons/Renders/*
 icons/Types/*
 icons/Icons/*
