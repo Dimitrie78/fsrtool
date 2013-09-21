@@ -4,7 +4,7 @@ config/*.ini
 cache/templates_c/*.php
 cache/cache/*
 cache/kills/*
-cache/assetsCache/*
+cache/assetsCache/*.txt
 icons/Renders/*
 icons/Types/*
 icons/Icons/*
