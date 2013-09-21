@@ -1,3 +1,4 @@
+!.htaccess
 makesql.php
 config/*.ini
 cache/templates_c/*.php
