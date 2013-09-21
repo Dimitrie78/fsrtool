@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_snow_tempchars</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_snow_tempchars` (
+  `charID` bigint(20) NOT NULL DEFAULT '0',
+  `arrayIndex` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  `startDateTime` datetime DEFAULT NULL,
+  `logoffDateTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`charID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

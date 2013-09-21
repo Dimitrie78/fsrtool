@@ -1,0 +1,27 @@
+table.data{
+	border: solid 3px #000;
+	width: 1000px;
+	text-align:left;
+}
+table.data thead, table.data tfoot{
+	background-color:#000;
+}
+table.data thead td{
+	padding-bottom:2px;
+}
+table.data thead span.head{
+	font-size:18px;
+}
+table.data thead tr.headcol{
+	font-weight:bold;
+	background-color:#626456;
+}
+table.data thead tr.headcol td{
+	border-bottom: solid 2px #000;
+}
+tr.light_red{
+	background-color:#600000;
+}
+tr.medium_red{
+	background-color:#400000;
+}

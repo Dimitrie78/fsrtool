@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_silos</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_silos` (
+  `itemID` bigint(20) NOT NULL DEFAULT '0',
+  `itemName` varchar(255) DEFAULT NULL,
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `locationID` int(11) DEFAULT NULL,
+  `siloTypeID` int(11) DEFAULT NULL,
+  `typeID` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `x` double DEFAULT NULL,
+  `y` double DEFAULT NULL,
+  `z` double DEFAULT NULL,
+  `pos` int(11) DEFAULT NULL,
+  `turn` tinyint(3) NOT NULL DEFAULT '0',
+  `sort` tinyint(3) NOT NULL DEFAULT '0',
+  `input` tinyint(3) NOT NULL DEFAULT '0',
+  `stack` tinyint(3) NOT NULL DEFAULT '0',
+  `emptyTime` int(11) NOT NULL DEFAULT '0',
+  `alarm` tinyint(3) NOT NULL DEFAULT '0',
+  `suspect` tinyint(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`itemID`),
+  KEY `locationID` (`locationID`),
+  KEY `typeID` (`typeID`),
+  KEY `corpID` (`corpID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_pos_filter</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_pos_filter` (
+  `charID` int(11) NOT NULL DEFAULT '0',
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `filter_name` varchar(255) NOT NULL DEFAULT '',
+  `filter` blob,
+  PRIMARY KEY (`charID`,`corpID`,`filter_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

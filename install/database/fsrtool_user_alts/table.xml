@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_user_alts</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_user_alts` (
+  `charID` bigint(20) NOT NULL DEFAULT '0',
+  `mainCharID` bigint(20) NOT NULL DEFAULT '0',
+  `charName` varchar(100) NOT NULL DEFAULT '',
+  `userID` bigint(20) NOT NULL DEFAULT '0',
+  `userAPI` varchar(100) NOT NULL DEFAULT '',
+  `accessMask` bigint(20) NOT NULL DEFAULT '0',
+  `corpID` bigint(20) NOT NULL DEFAULT '0',
+  `pos` tinyint(3) NOT NULL DEFAULT '0',
+  `pos_edit` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `silo` tinyint(3) NOT NULL DEFAULT '0',
+  `newAPI` tinyint(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`charID`,`mainCharID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

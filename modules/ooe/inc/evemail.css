@@ -1,0 +1,61 @@
+ .evemail {
+	width: 800px;
+	border: solid 2px #000;
+	margin: 20px 0 0 0;
+}
+
+.evemail thead, .evemail tfoot{
+	background-color:#000;
+}
+
+.evemail thead .evemail {
+	text-align:center;
+	font-weight:bold;
+}
+
+.evemail tbody {
+	cursor:pointer;
+}
+
+.up {
+	background-color:#444444;
+}
+
+.down {
+	background-color:#333333;
+}
+
+
+#mask {
+	display: none;
+	background: #000; 
+	position: fixed; left: 0; top: 0; 
+	z-index: 10;
+	width: 100%; height: 100%;
+	opacity: 0.8;
+	z-index: 999;
+}
+
+.mail-popup{
+	display:none;
+	background: #333;
+	padding: 10px; 	
+	border: 2px solid #ddd;
+	float: left;
+	font-size: 1.2em;
+	position: fixed;
+	width: 600px;
+	top: 50%; left: 50%;
+	z-index: 99999;
+	box-shadow: 0px 0px 20px #999;
+	-moz-box-shadow: 0px 0px 20px #999; /* Firefox */
+    -webkit-box-shadow: 0px 0px 20px #999; /* Safari, Chrome */
+	border-radius:3px 3px 3px 3px;
+    -moz-border-radius: 3px; /* Firefox */
+    -webkit-border-radius: 3px; /* Safari, Chrome */
+}
+
+img.btn_close {
+	float: right; 
+	margin: -28px -28px 0 0;
+}

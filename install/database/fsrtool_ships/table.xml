@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_ships</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_ships` (
+  `Id` int(11) NOT NULL DEFAULT '0',
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `typ` char(20) DEFAULT NULL,
+  `name` char(32) DEFAULT NULL,
+  `standort` char(10) DEFAULT NULL,
+  `status` char(32) NOT NULL DEFAULT 'not ready',
+  `versichert` char(32) NOT NULL DEFAULT 'Nein',
+  `versichert_bis` int(11) DEFAULT NULL,
+  `bemerkung` varchar(150) DEFAULT NULL,
+  `player` char(32) DEFAULT NULL,
+  `time` int(11) DEFAULT NULL,
+  `timeback` int(11) DEFAULT NULL,
+  `tot` int(11) DEFAULT '0',
+  `kblink` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`Id`,`corpID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

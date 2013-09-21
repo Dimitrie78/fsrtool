@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_assets</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_assets` (
+  `itemID` bigint(20) NOT NULL DEFAULT '0',
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `locationID` bigint(20) DEFAULT NULL,
+  `typeID` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `flag` int(11) DEFAULT NULL,
+  `singleton` tinyint(1) NOT NULL DEFAULT '0',
+  `rawQuantity` tinyint(3) DEFAULT NULL,
+  `contents` tinyint(3) NOT NULL DEFAULT '0',
+  `lastFetch` int(11) DEFAULT '123456',
+  PRIMARY KEY (`itemID`,`corpID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

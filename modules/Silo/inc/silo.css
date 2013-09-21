@@ -1,0 +1,56 @@
+/* Silos tabellen layout */
+table.silo{
+	border-top: solid 3px #006400;
+	border-right: solid 2px #000;
+	border-left: solid 2px #000;
+	width: 300px;
+	text-align:left;
+}
+table.silo.alert{
+	border-top: solid 3px #8b0000;
+}
+table.silo.alert tr.alert{
+	background-color: #8b0000;
+}
+table.silo.alert thead tr.alert td{
+	font-size:9px;
+	border-bottom: solid 2px #000;
+}
+table.silo thead, table.silo tfoot, table.data tfoot{
+	background-color:#000;
+}
+table.silo tfoot tr td{
+	padding:5px;
+	font-size:9px;
+	text-align:right;
+	border-bottom: solid 2px #000;
+}
+table.silo thead td{
+	padding-bottom:2px;
+}
+table.silo thead span.head{
+	font-size:18px;
+}
+table.silo tbody td{
+	border-bottom: solid 2px #000;
+}
+table.silo.suspect{
+	border-top: solid 3px #2F008E;
+}
+table.silo.suspect tr.suspect{
+	background-color: #2F008E;
+}
+table.silo.suspect thead tr.suspect td{
+	font-size:9px;
+	border-bottom: solid 2px #000;
+}
+
+
+.settings {
+	background-color:#074;
+}
+.assign td {
+	background-color:#079;
+	text-align:center;
+	border-bottom: solid 2px #000;
+}

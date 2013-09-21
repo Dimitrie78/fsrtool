@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_user_notifications</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_user_notifications` (
+  `charID` int(11) unsigned NOT NULL DEFAULT '0',
+  `email` varchar(255) DEFAULT NULL,
+  `push_user` varchar(255) DEFAULT NULL,
+  `push_token` varchar(255) DEFAULT NULL,
+  `email_valid` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `push_valid` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `notivications` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`charID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

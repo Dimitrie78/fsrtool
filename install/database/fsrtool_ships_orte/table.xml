@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_ships_orte</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_ships_orte` (
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `standort` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`corpID`,`standort`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

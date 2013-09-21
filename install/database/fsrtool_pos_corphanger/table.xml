@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_pos_corphanger</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_pos_corphanger` (
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `itemID` bigint(20) NOT NULL DEFAULT '0',
+  `locationID` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `typeID` int(11) NOT NULL,
+  `quantity` double DEFAULT NULL,
+  `flag` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`itemID`,`corpID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

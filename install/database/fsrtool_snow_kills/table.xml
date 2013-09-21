@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_snow_kills</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_snow_kills` (
+  `kill_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `timestamp` int(11) NOT NULL DEFAULT '0',
+  `pilot_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `corpID` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `system_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `main_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `loss` tinyint(3) NOT NULL DEFAULT '1',
+  UNIQUE KEY `kill_id` (`kill_id`,`pilot_id`,`corpID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

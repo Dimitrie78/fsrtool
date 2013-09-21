@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_snow_time</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_snow_time` (
+  `updateTime` bigint(20) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

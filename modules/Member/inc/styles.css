@@ -1,0 +1,117 @@
+/* Snowflake */
+
+table.snow{
+	border: solid 1px #000;
+	text-align:left;
+}
+table.snow thead, table.snow tfoot{
+	background-color:#000;
+}
+table.snow thead td{
+	padding-bottom:3px;
+}
+table.snow thead span.snow{
+	font-size:18px;
+}
+table.snow thead tr.headcol{
+	font-weight:bold;
+	background-color:#626456;
+}
+table.snow thead tr.headcol td{
+	border: solid 1px #000;
+}
+table.snow tbody td{
+	border: solid 1px #000;
+	color: black;
+	font-size: 12px;
+}
+div#isAltWin {
+	position: fixed;
+	width: 400px;
+	top: 50%;
+	left: 50%;
+	padding: 10px;
+	color: #FFFFFF;
+	background: #3b983d;
+	border: 1px solid #000000;
+	font-family: Verdana;
+	font-size: 12px;
+}
+div#editEvalWin {
+	position: fixed;
+	width: 400px;
+	top: 50%;
+	left: 50%;
+	padding: 10px;
+	color: #FFFFFF;
+	background: #3b983d;
+	border: 1px solid #000000;
+	font-family: Verdana;
+	font-size: 14px;
+}
+
+div#addEvalWin {
+	position: fixed;
+	width: 400px;
+	top: 50%;
+	left: 50%;
+	padding: 10px;
+	color: #FFFFFF;
+	background: #3b983d;
+	border: 1px solid #000000;
+	font-family: Verdana;
+	font-size: 14px;
+}
+div#flagWin{
+	position: fixed;
+	width: 400px;
+	top: 50%;
+	left: 50%;
+	padding: 10px;
+	color: #FFFFFF;
+	background: #3b983d;
+	border: 1px solid #000000;
+	font-family: Verdana;
+	font-size: 12px;
+}
+.altWin{
+	width: 80%;
+	background: #c0fdc2;
+	margin-top: 5px;
+	margin-left: 30px;
+	margin-bottom: 5px;
+	padding: 3px;
+	border: 1px solid #838383;
+	font-size: 12px;
+}
+table.snow tbody a:link {    color: #000000; text-decoration: underline; }
+table.snow tbody a:visited { color: #000000; text-decoration: underline; }
+table.snow tbody a:hover {   color: #000000; text-decoration: underline; }
+table.snow tbody a:active {  color: #000000; text-decoration: underline; }
+
+table.snow thead a:link {    color: #ffa500; text-decoration: none; }
+table.snow thead a:visited { color: #ffa500; text-decoration: none; }
+table.snow thead a:hover {   color: #ffa500; text-decoration: underline; }
+table.snow thead a:active {  color: #ffa500; text-decoration: none; }
+
+table.snow thead ul.item { text-align:left; list-style-type:none; padding: 0; margin: 0; }
+table.snow thead ul.item li { float:left; padding: 2px 10px; margin: 0 1px; }
+table.snow thead ul.item li#selected { background-color:#000; }
+
+.cleanTable { margin: 0; padding: 0; border: 0; font-size: 12px; color: #FFFFFF; }
+/* tablesort */
+table.snow thead tr .header {
+	background-image: url(../../../icons/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+table.snow thead tr .headerSortUp {
+	background-image: url(../../../icons/asc.gif);
+}
+table.snow thead tr .headerSortDown {
+	background-image: url(../../../icons/desc.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+background-color: #8dbdd8;
+}

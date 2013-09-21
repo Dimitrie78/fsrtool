@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_user_iplog</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_user_iplog` (
+  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `charID` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `ipv4` char(15) NOT NULL DEFAULT '0.0.0.0',
+  `userAgent` varchar(150) DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`Id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

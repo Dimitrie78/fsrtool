@@ -1,0 +1,149 @@
+<?php
+
+function smarty_function_renderCarebear($params, &$smarty) {
+    global $memberDB;
+	global $User;
+	$last7days = time() - (60*60*24*7);
+	
+	$return = array();
+	if (!isset($params['charID'])) {
+        return null;
+    }
+
+    if (isset($params['charID'])) {
+		$query = "SELECT * FROM characters WHERE charID = '{$params['charID']}'";
+		$results = $memberDB->doQuery($query);
+		
+		if ($char = mysql_fetch_array($results)) {
+			$nameSlash = $char['name'];
+									
+/*			$altQuery = "SELECT distinct characters.charID, characters.name, characters.lastSeen
+				FROM characters JOIN alts ON alts.charID = characters.charID
+				WHERE alts.altOf = '{$params['charID']}'
+				AND characters.inCorp = 1
+				ORDER BY characters.name";
+*/				
+			$altQuery = "SELECT DISTINCT
+				  characters.charID, characters.name, characters.lastSeen,
+				  Sum(walletjournal.amount) as amount
+				FROM characters 
+				INNER JOIN alts ON alts.charID = characters.charID 
+				INNER JOIN walletjournal ON alts.charID = walletjournal.ownerID2
+				WHERE alts.altOf = '{$params['charID']}' 
+				AND characters.inCorp = 1 
+				AND walletjournal.refTypeID = 85
+				AND walletjournal.date > {$last7days}
+				GROUP BY characters.charID
+				ORDER BY characters.name;";
+			$altResults = $memberDB->doQuery($altQuery);
+			$numAlts = mysql_num_rows($altResults);
+			
+			/*** RENDER NAME ***/
+			$return[] = "<a href=\"javascript:showCarebearWin('{$char['charID']}')\">{$char['name']}</a> ";
+			if ($numAlts != 0)  $return[] = "- <a href=\"javascript:toggleDiv('altWin{$char['charID']}')\">show more</a> ";
+			
+			/***RENDER FLAGS ***/
+			if ($char['afk'] == 1) {
+				$return[] = "<img src=\"". MODULE_DIR . ACTIVE_MODULE . "/images/isafk.gif\" alt=\"{$char['afkText']}\"> ";
+				$isFlags = 1;
+			}
+			if ($char['notes'] != NULL) {
+				$return[] = '<img src="'. MODULE_DIR . ACTIVE_MODULE . '/images/iscustom.gif"> ';
+				$isFlags = 1;
+			}
+			if ($char['investigate'] == 1) {
+				$return[] = '<img src="'. MODULE_DIR . ACTIVE_MODULE . '/images/iswarning.gif"> ';
+				$isFlags = 1;
+			}
+			if ($char['inactive'] == 1) {
+				$return[] = '<img src="'. MODULE_DIR . ACTIVE_MODULE . '/images/ismia.gif"> ';
+				$isFlags = 1;
+			}
+			
+			if ($isFlags == 1) $return[] = "| ";
+			
+			/*** RENDER ACTIONS ***/
+			if ($char['afk'] == 1) {
+				$flags['afk'] = 'CHECKED';
+				$flags['afkText'] = addslashes($char['afkText']);
+			}
+			$result = $memberDB->doQuery("SELECT * FROM Jobs WHERE charID = '".$params['charID']."'");
+			$row = mysql_fetch_array($result);
+			if ($char['investigate'] == 1) $flags['investigate'] = 'CHECKED';
+			if ($char['posgunner'] == 1) $flags['posgunner'] = 'CHECKED';
+			if ($row['pos'] == 1) $flags['posd'] = 'CHECKED';
+			if ($row['exempt'] == 1) $flags['exempt'] = 'CHECKED';
+			if ($row['legacy'] == 1) $flags['legacy'] = 'CHECKED';
+			if ($row['probation'] == 1) $flags['probation'] = 'CHECKED';
+			$flags['notes'] = preg_replace("/\r\n|\n|\r/", "<br />", $char['notes']); 
+			$flags['notes'] = str_replace('<br />', '\n', $flags['notes']);
+			
+			//allowing both kinds of quotes to be used in the notes section
+			
+			$flags['notes'] = str_replace(' ','&nbsp;',$flags['notes']);
+			$flags['notes'] = str_replace('\'','c39c',$flags['notes']);
+			$flags['notes'] = str_replace('"','c34c',$flags['notes']);
+			$nameSlash = str_replace('\'','c39c',$nameSlash);
+			$nameSlash = str_replace('"','c34c',$nameSlash);
+			
+			$isaltResult = $memberDB->doQuery("SELECT distinct charID, altOf FROM alts WHERE charID = '{$params['charID']}';");
+			$numisAlt = mysql_num_rows($isaltResult);
+			if ($numisAlt > 0) {
+				$isAlt = mysql_fetch_assoc($isaltResult);
+				$return[] = "<a href=\"".URL_INDEX.'?module='.ACTIVE_MODULE."&action=".ACTION."&charID={$isAlt['charID']}&altOf={$isAlt['altOf']}&del=1\"><img src=\"". MODULE_DIR . ACTIVE_MODULE . "/images/notalt.gif\"></a>";
+			}
+			elseif ($numAlts == 0) 
+				$return[] = "<a href=\"javascript:showIsAltWin('".$nameSlash."', '".$char['charID']."', '".URL_INDEX.'?module='.ACTIVE_MODULE."', '" . ACTION . "', '".$User->corp."')\"><img src=\"". MODULE_DIR . ACTIVE_MODULE . "/images/isalt.gif\"></a> ";
+			
+			$result2 = $memberDB->doQuery("SELECT altOf FROM alts WHERE charID = '".$char['charID']."'");
+			$row2 = mysql_fetch_array($result2);
+			$main = $row2[0];
+			if(empty($main)) $main = $char['charID'];
+			if ($User->corp == 147849586) $stuff = 'FSR Urgestein';
+			elseif ($User->corp == 144965822) $stuff = 'OI Legend';
+			else $stuff = 'Legend';
+			
+			$return[] = "<a href=\"javascript:showFlagWin('" . $nameSlash . "', ".
+				 "'" . $main 				. "', ".
+				 "'" . $char['charID']		. "', ".
+				 "'" . $char['division'] 	. "', ".
+				 "'" . $flags['afk'] 		. "', ".
+				 "'" . $flags['afkText'] 	. "', ".
+				 "'" . $char['tz'] 			. "', ".
+				 "'" . $char['carrier'] 	. "', ".
+				 "'" . $char['dread'] 		. "', ".
+				 "'" . $flags['investigate']. "', ".
+				 "'" . $flags['posgunner'] 	. "', ".
+				 "'" . $flags['notes']		. "', ".
+				 "'" . URL_INDEX .'?module='.ACTIVE_MODULE . "', ".
+				 "'" . $flags['posd'] 		. "', ".
+				 "'" . $flags['exempt'] 	. "', ".
+				 "'" . $flags['legacy'] 	. "', ".
+				 "'" . $flags['probation']	. "', ".
+				 "'" . $stuff          	    . "', ".
+				 "'" . ACTION . "')\"><img src=\"". MODULE_DIR . ACTIVE_MODULE . "/images/plusflag.gif\"></a> ";
+			
+			/*** RENDER POP UPS **/
+			if ($numAlts != 0) {
+				$mainIsk = $memberDB->doQuery("SELECT Sum(amount) as amount FROM walletjournal WHERE ownerID2='{$char['charID']}' AND refTypeID=85 AND date > {$last7days} GROUP BY ownerID2");
+				$isk = mysql_fetch_array($mainIsk);
+				$return[] = "<div class=\"altWin\" id=\"altWin{$char['charID']}\" style=\"display: none\">";
+				$return[] = "<li>{$char['name']}<span style=\"float:right\">".number_format($isk['amount'],2,',','.')."</span></li>";
+				while ($alts = mysql_fetch_array($altResults)) {
+					$return[] = "<li><a href=\"javascript:showCarebearWin('{$alts['charID']}')\">{$alts['name']}</a> <span style=\"float:right\">".number_format($alts['amount'],2,',','.')."</span></li>";
+				}
+				$return[] = "</div>";
+			}
+		}
+	}
+	 
+	$ret = implode($return);
+    if (isset($params['assign']) && !empty($params['assign'])) {
+        $smarty->assign($params['assign'], $ret);
+    } else {
+        return $ret;
+    }
+
+}
+
+?>

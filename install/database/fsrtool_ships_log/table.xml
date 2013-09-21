@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_ships_log</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_ships_log` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `shipID` int(11) NOT NULL DEFAULT '0',
+  `charName` char(32) NOT NULL DEFAULT '',
+  `time` int(11) NOT NULL DEFAULT '0',
+  `timeback` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Id`,`corpID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

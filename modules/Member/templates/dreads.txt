@@ -1,0 +1,5 @@
+0 = None
+1 = Revelation
+2 = Phoenix
+3 = Moros
+4 = Naglfar

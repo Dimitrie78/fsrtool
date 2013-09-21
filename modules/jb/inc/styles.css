@@ -1,0 +1,52 @@
+
+div .jbcontent {
+	width:1000px;
+	text-align:left;
+}
+
+div .jbhead {
+	font-size:16px;
+	font-weight:bold;
+	border-bottom:2px solid #ff0;
+	padding-top:10px;	
+}
+
+.jbform {
+	padding:20px;
+	margin:0px 30px 0px 30px;
+}
+
+.jbformtable {
+	padding:10px 20px ;
+	margin:0px 30px;
+	border-bottom:2px solid #000;
+}
+
+table.selchar {
+	padding-left:20px;
+	margin:0px 30px 0px 30px;
+}
+
+table.selchar tr:hover {
+	background-color:#666;
+}
+
+img.api1 {
+	border:1px solid green;
+}
+
+img.api0 {
+	border:1px solid red;
+}
+
+table.jb {
+	border-collapse:collapse;
+	width:900px;
+}
+table.jb thead{
+	background:#000;
+}
+
+#error {
+	color:red;
+}

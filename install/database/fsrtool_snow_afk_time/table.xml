@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_snow_afk_time</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_snow_afk_time` (
+  `charID` int(11) NOT NULL DEFAULT '0',
+  `date_go` int(11) NOT NULL,
+  `date_back` int(11) NOT NULL DEFAULT '0',
+  `afk_text` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

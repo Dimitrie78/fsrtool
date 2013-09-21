@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_alecache</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_alecache` (
+  `host` varchar(64) NOT NULL,
+  `path` varchar(64) NOT NULL,
+  `params` varchar(64) NOT NULL,
+  `content` longtext NOT NULL,
+  `cachedUntil` datetime DEFAULT NULL,
+  PRIMARY KEY (`host`,`path`,`params`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

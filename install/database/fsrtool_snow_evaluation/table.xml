@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_snow_evaluation</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_snow_evaluation` (
+  `charID` bigint(20) NOT NULL DEFAULT '0',
+  `evaluation` tinyint(1) DEFAULT NULL,
+  `comment` text,
+  `date` date NOT NULL,
+  PRIMARY KEY (`charID`,`date`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

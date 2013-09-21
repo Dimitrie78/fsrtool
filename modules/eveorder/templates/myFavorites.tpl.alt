@@ -1,0 +1,56 @@
+{* Smarty *}
+{************ index.tpl *************************************}
+
+{* ------------------------------- *}
+{include file="header.tpl"}    
+{* ------------------------------- *}
+<h4>{$language.eveorder_submenu}</h4>
+<a href="{$url_index_eveorder}&amp;action=main">{$language.order}</a> - 
+<a href="{$url_index_eveorder}&amp;action=myOrders">{$language.my_orders}</a> -
+<a href="{$url_index_eveorder}&amp;action=myFavorites">{$language.my_favorites}</a>
+{if ($openOrders)}<form action="{$url_index_eveorder}" method="get">
+				{$language.show_orders_with_status}<select name="orderStatus">{foreach from=$status item=thisStatus}
+					{if ((!(($thisStatus.value == "1") AND ($producer != "1"))) AND (!(($thisStatus.value == "-1") AND ($manager != "1"))) AND (!(($thisStatus.value == "2") AND ($supplier != "1"))))}
+					<option value="{$thisStatus.value}"{if ($thisStatus.value == $whichStatus)} selected="selected"{/if}>{$thisStatus.name}</option>{/if}{/foreach}
+				</select><input type="submit" value="{$language.send}">
+				<input type="hidden" name="action" value="openOrders" />
+				<input type="hidden" name="module" value="eveorder" />
+				<input type="hidden" name="SID" value="{$SID}" />
+			</form>
+{/if}<br /><br />
+	
+	<div align="center" style="width:900">
+	<h3 align="center">{$language.my_favorites}</h3>
+	
+	<table width="800">
+	{if ($items)}
+{foreach from=$items item=thisType}
+	<tr>
+		<td width="50">
+			{if ($igb)}<img src="typeicon:{$thisType.typeID}" alt="icon">{/if}
+			{if (!$igb)}<img src="icons/64_64/{$thisType.iconOGB}.png" alt="icon">{/if}
+			
+		</td>
+		<td>
+			<h4>{$thisType.typeName}</h4>
+		</td>
+		<td>{if ($igb)}<a href="showinfo:{$thisType.typeID}"><img src="icon:09_09" width="30" height="30" alt="info"></a>{/if}</td>
+	</tr>
+	<tr><td colspan="3">{$thisType.description}<br />Eve DB Market-Base-{$language.Price}: {$thisType.basePrice|commify:2:',':'.'}<br />Eve-Central-{$language.Price} ({$thisType.fetched|date_format:"%d.%m.%Y %H:%M"}): {$thisType.price|commify:2:',':'.'}</td></tr>
+	<tr><td colspan="3" align="right">
+		<a href="{$url_dowork_delFromMyFavorites}&amp;typeID={$thisType.typeID}">{$language.del_favorites}</a>
+		<form action="{$url_dowork_saveOrder}" method="post">
+			<input type="hidden" name="action" value="saveOrder" />
+			<input type="hidden" name="module" value="eveorder" />
+			<input type="hidden" name="typeID" value="{$thisType.typeID}" />
+			{$language.Count}: <input type="text" name="amount" size="6" maxlength="10" value="1" />
+			<input type="submit" value="{$language.order_item}" />
+		</form>
+	</td></tr>
+	<tr><td colspan="3"><hr /></td></tr>
+{/foreach}{/if}
+	</table>
+	</div>
+{* ------------------------------- *}
+{include file="footer.tpl"}    
+{* ------------------------------- *}

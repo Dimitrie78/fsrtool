@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_logins</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_logins` (
+  `charID` bigint(20) NOT NULL DEFAULT '0',
+  `logins` int(11) NOT NULL DEFAULT '0',
+  `lastlogin` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`charID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

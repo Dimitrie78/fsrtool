@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_skills</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_skills` (
+  `charID` bigint(20) NOT NULL DEFAULT '0',
+  `skillID` bigint(20) NOT NULL DEFAULT '0',
+  `quantity` int(11) DEFAULT NULL,
+  PRIMARY KEY (`charID`,`skillID`),
+  KEY `typeID` (`skillID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

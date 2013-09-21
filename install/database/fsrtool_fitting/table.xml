@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_fitting</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_fitting` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `poster` varchar(100) NOT NULL DEFAULT '',
+  `ship` varchar(100) NOT NULL DEFAULT '',
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`Id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

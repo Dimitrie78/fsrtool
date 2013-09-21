@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_api_log</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_api_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `typ` int(11) NOT NULL DEFAULT '0',
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `date` int(11) NOT NULL DEFAULT '0',
+  `comment` mediumtext NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

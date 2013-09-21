@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_snow_jobs</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_snow_jobs` (
+  `charID` bigint(20) NOT NULL DEFAULT '0',
+  `pos` tinyint(4) NOT NULL,
+  `exempt` tinyint(4) NOT NULL,
+  `legacy` tinyint(4) NOT NULL,
+  `probation` tinyint(4) NOT NULL,
+  PRIMARY KEY (`charID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

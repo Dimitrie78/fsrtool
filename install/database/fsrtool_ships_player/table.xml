@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_ships_player</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_ships_player` (
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `Moros` smallint(2) NOT NULL DEFAULT '0',
+  `Naglfar` smallint(2) NOT NULL DEFAULT '0',
+  `Revelation` smallint(2) NOT NULL DEFAULT '0',
+  `Phoenix` smallint(2) NOT NULL DEFAULT '0',
+  `hattdread` smallint(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

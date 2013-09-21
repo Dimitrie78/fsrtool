@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_api_outposts</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_api_outposts` (
+  `stationID` int(11) NOT NULL,
+  `stationName` varchar(255) NOT NULL,
+  `stationTypeID` int(11) NOT NULL,
+  `solarSystemID` int(11) NOT NULL,
+  `corporationID` int(11) NOT NULL,
+  `corporationName` varchar(255) NOT NULL,
+  PRIMARY KEY (`stationID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

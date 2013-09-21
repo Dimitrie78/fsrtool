@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_jb_apis</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_jb_apis` (
+  `charID` int(11) NOT NULL DEFAULT '0',
+  `ownerID` int(11) NOT NULL DEFAULT '0',
+  `charName` varchar(255) DEFAULT NULL,
+  `corpID` int(11) DEFAULT NULL,
+  `keyID` int(11) DEFAULT NULL,
+  `vCode` varchar(255) DEFAULT NULL,
+  `accessMask` int(11) DEFAULT '0',
+  `status` tinyint(3) DEFAULT '0',
+  `message` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`charID`,`ownerID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

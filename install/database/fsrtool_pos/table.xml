@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_pos</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_pos` (
+  `itemID` bigint(20) NOT NULL DEFAULT '0',
+  `itemName` varchar(255) DEFAULT NULL,
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `typeID` int(11) NOT NULL DEFAULT '0',
+  `locationID` int(11) NOT NULL DEFAULT '0',
+  `moonID` int(11) NOT NULL DEFAULT '0',
+  `state` smallint(2) NOT NULL DEFAULT '0',
+  `stateTimestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `onlineTimestamp` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `usageFlags` tinyint(3) NOT NULL DEFAULT '0',
+  `deployFlags` tinyint(3) NOT NULL DEFAULT '0',
+  `allowCorporationMembers` tinyint(3) NOT NULL DEFAULT '0',
+  `allowAllianceMembers` tinyint(3) NOT NULL DEFAULT '0',
+  `useStandingsFrom` int(11) NOT NULL DEFAULT '0',
+  `onStandingDrop` int(11) NOT NULL DEFAULT '0',
+  `onStatusDrop_enabled` tinyint(3) NOT NULL DEFAULT '0',
+  `onStatusDrop_standing` int(11) NOT NULL DEFAULT '0',
+  `onAggression` tinyint(3) NOT NULL DEFAULT '0',
+  `onCorporationWar` tinyint(3) NOT NULL DEFAULT '0',
+  `manager` varchar(255) NOT NULL DEFAULT '',
+  `sma` tinyint(3) NOT NULL DEFAULT '0',
+  `cha` tinyint(3) NOT NULL DEFAULT '0',
+  `jb` tinyint(3) NOT NULL DEFAULT '0',
+  `cj` tinyint(3) NOT NULL DEFAULT '0',
+  `global` tinyint(3) NOT NULL DEFAULT '0',
+  `cpu` int(11) NOT NULL DEFAULT '0',
+  `pg` int(11) NOT NULL DEFAULT '0',
+  `x` double DEFAULT NULL,
+  `y` double DEFAULT NULL,
+  `z` double DEFAULT NULL,
+  PRIMARY KEY (`itemID`),
+  KEY `corpID` (`corpID`),
+  KEY `typeID` (`typeID`),
+  KEY `locationID` (`locationID`),
+  KEY `moonID` (`moonID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

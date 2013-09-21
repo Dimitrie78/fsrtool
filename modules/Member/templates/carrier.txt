@@ -1,0 +1,6 @@
+0 = None
+1 = Archon
+2 = Chimera
+3 = Thanatos
+4 = Nidhoggur
+	   

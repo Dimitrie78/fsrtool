@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_corps</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_corps` (
+  `id` bigint(20) NOT NULL DEFAULT '0',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `ticker` varchar(255) NOT NULL DEFAULT '',
+  `ally` varchar(32) NOT NULL DEFAULT '',
+  `timestamp` varchar(14) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

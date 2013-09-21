@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_api_sovereignty</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_api_sovereignty` (
+  `solarSystemID` int(11) unsigned NOT NULL DEFAULT '0',
+  `allianceID` int(11) NOT NULL DEFAULT '0',
+  `factionID` int(11) NOT NULL DEFAULT '0',
+  `solarSystemName` varchar(255) NOT NULL DEFAULT '',
+  `corporationID` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`solarSystemID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

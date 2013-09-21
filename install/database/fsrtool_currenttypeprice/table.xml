@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_currenttypeprice</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_currenttypeprice` (
+  `typeID` bigint(20) NOT NULL DEFAULT '0',
+  `all_volume` bigint(20) NOT NULL DEFAULT '0',
+  `all_avg_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `all_max_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `all_min_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `all_stddev_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `all_median_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `all_percentile_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `buy_volume` bigint(20) NOT NULL DEFAULT '0',
+  `buy_avg_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `buy_max_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `buy_min_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `buy_stddev_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `buy_median_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `buy_percentile_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `sell_volume` bigint(20) NOT NULL DEFAULT '0',
+  `sell_avg_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `sell_max_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `sell_min_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `sell_stddev_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `sell_median_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `sell_percentile_price` decimal(14,2) NOT NULL DEFAULT '0.00',
+  `fetched` varchar(14) NOT NULL DEFAULT '',
+  `region` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`typeID`,`region`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

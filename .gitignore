@@ -1,0 +1,6 @@
+config/*.ini
+cache/templates_c/*
+cache/cache/*
+cache/kills/*
+cache/assetsCache/*
+makesql.php

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_snow_ratkills</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_snow_ratkills` (
+  `refID` bigint(20) NOT NULL,
+  `ratid` int(12) NOT NULL,
+  `amount` int(5) NOT NULL,
+  UNIQUE KEY `rat_unq` (`refID`,`ratid`),
+  KEY `amount` (`amount`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_eveorder_user_types</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_eveorder_user_types` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user` varchar(32) NOT NULL DEFAULT '',
+  `typeID` bigint(20) NOT NULL DEFAULT '0',
+  `amount` double DEFAULT NULL,
+  `timestamp` varchar(14) NOT NULL DEFAULT '',
+  `lastchange` varchar(14) NOT NULL DEFAULT '',
+  `status` smallint(6) NOT NULL DEFAULT '0',
+  `supplier` varchar(32) NOT NULL DEFAULT '',
+  `comment` varchar(255) NOT NULL DEFAULT '',
+  `corpid` varchar(32) NOT NULL,
+  `target` int(10) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_corpchange</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_corpchange` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` varchar(32) NOT NULL,
+  `oldcorpid` varchar(32) NOT NULL,
+  `newcorpid` varchar(32) NOT NULL,
+  `changed` varchar(14) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

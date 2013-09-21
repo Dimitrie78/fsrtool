@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_calendar_events</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_calendar_events` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` text,
+  `start` varchar(255) DEFAULT NULL,
+  `end` varchar(255) DEFAULT NULL,
+  `allDay` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

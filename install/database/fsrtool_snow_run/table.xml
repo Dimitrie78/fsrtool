@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_snow_run</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_snow_run` (
+  `run` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`run`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

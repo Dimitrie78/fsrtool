@@ -1,0 +1,4 @@
+0 = Unknown
+1 = European
+2 = American
+3 = Oceanic

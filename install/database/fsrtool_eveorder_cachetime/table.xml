@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_eveorder_cachetime</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_eveorder_cachetime` (
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `cacheTime` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`corpID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

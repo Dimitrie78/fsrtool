@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_user_roles</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_user_roles` (
+  `charID` bigint(20) NOT NULL DEFAULT '0',
+  `roleID` tinyint(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`charID`,`roleID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

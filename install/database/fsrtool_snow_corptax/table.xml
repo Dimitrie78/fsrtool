@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_snow_corptax</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_snow_corptax` (
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `taxRate` char(10) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  PRIMARY KEY (`corpID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

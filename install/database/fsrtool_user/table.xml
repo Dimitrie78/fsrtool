@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_user</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_user` (
+  `charID` bigint(20) NOT NULL DEFAULT '0',
+  `username` varchar(255) NOT NULL DEFAULT '',
+  `password` varchar(50) NOT NULL DEFAULT '',
+  `vCODE` varchar(100) NOT NULL DEFAULT '',
+  `keyID` bigint(20) NOT NULL DEFAULT '0',
+  `accessMask` bigint(20) NOT NULL DEFAULT '0',
+  `userIP` varchar(50) NOT NULL DEFAULT '0.0.0.0',
+  `description` varchar(100) NOT NULL DEFAULT '',
+  `email` varchar(50) NOT NULL DEFAULT '',
+  `corpID` bigint(20) NOT NULL DEFAULT '0',
+  `active` smallint(6) NOT NULL DEFAULT '0',
+  `timestamp` varchar(14) NOT NULL DEFAULT '',
+  `newPass` varchar(255) NOT NULL DEFAULT '',
+  `code` varchar(50) NOT NULL DEFAULT '',
+  `lang` varchar(10) NOT NULL DEFAULT 'DE',
+  `errorcount` tinyint(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`charID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

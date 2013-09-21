@@ -1,0 +1,6 @@
+1 = PVP
+2 = Mining
+3 = POS
+4 = Support
+5 = High Command
+6 = Leader

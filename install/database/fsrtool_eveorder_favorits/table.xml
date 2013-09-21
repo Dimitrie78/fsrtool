@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_eveorder_favorits</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_eveorder_favorits` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` bigint(20) NOT NULL DEFAULT '0',
+  `typeID` bigint(20) NOT NULL DEFAULT '0',
+  `groupID` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

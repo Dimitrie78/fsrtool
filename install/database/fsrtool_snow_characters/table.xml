@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_snow_characters</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_snow_characters` (
+  `charID` bigint(20) NOT NULL DEFAULT '0',
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `name` text NOT NULL,
+  `division` tinyint(1) NOT NULL DEFAULT '0',
+  `tz` tinyint(4) NOT NULL DEFAULT '0',
+  `posgunner` tinyint(1) NOT NULL DEFAULT '0',
+  `dread` tinyint(4) NOT NULL DEFAULT '0',
+  `carrier` tinyint(4) NOT NULL DEFAULT '0',
+  `joined` int(11) NOT NULL DEFAULT '0',
+  `lastSeen` int(11) NOT NULL DEFAULT '0',
+  `inactive` tinyint(1) NOT NULL DEFAULT '0',
+  `inCorp` tinyint(1) NOT NULL DEFAULT '1',
+  `afk` tinyint(1) NOT NULL DEFAULT '0',
+  `afkText` text NOT NULL,
+  `investigate` tinyint(1) NOT NULL DEFAULT '0',
+  `notes` text NOT NULL,
+  PRIMARY KEY (`charID`,`corpID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

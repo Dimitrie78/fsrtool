@@ -1,0 +1,138 @@
+/* CSS Document */
+
+#fittings{
+  width:385px;
+  text-align:left;
+  border:solid 1px #000;
+  padding:5px;
+  background-color:#333;
+}
+#fittings1 ul{
+  padding:2px;
+  margin:0 0 0 20px;
+}
+#fittings1 a{
+  display:block;
+}
+#fittings1 li.shipFitt:hover {
+  cursor:pointer;
+  background-color:#000;
+}
+div#addFit {
+	position: fixed;
+	z-index: 3;
+	width: 390px;
+	padding: 10px;
+	background: #333;	
+	border: 1px solid #000;
+	display: none;
+}
+div#fittop {
+	margin-top:3px;
+	height:20px;
+	border-top:3px solid #000;
+	background-color:#626456
+}
+div#fittop ul.top{
+	text-align:left;
+	list-style-type:none;
+	padding: 0;
+	margin: 0;
+}
+div#fittop ul.top li{
+	float:left;
+	padding: 3px 10px;
+	margin: 0 1px;
+	cursor: pointer;
+}
+div#fittop ul.top li.right{
+	float:right;
+}
+div#fittop ul.top li:hover,
+div#fittop ul.top li.selected{
+	background-color:#000;
+}
+
+/* fitting ring */
+div#fitting div{
+	position:absolute;
+}
+div#fitting img{
+	border:none;
+}
+div#fitting div.structure{
+	left:0;
+	top:0;
+	z-index:1;
+}
+div#fitting div.slots div{
+	width:32px;
+	height:32px;
+	z-index:2;
+}
+div#fitting div.slots div.small{
+	width:24px;
+	height:24px;
+}
+div#fitting div#bigship{
+	left:72px;
+	top:71px;
+	width:256px;
+	height:256px;
+	z-index:0;
+}
+
+/* Fitting Tabelle*/
+.fittable{
+  border: 1px solid #000;
+  border-collapse: separate;
+  border-spacing: 1px;
+}
+
+.fittable td{
+  padding: 3px;
+}
+.fittable td.icon{
+	padding: 1px;
+	height: 34px;
+	width: 32px;
+	vertical-align:top;
+}
+.fittable tr{
+  background: #222;
+}
+.fittable tr.top{
+  background: #000;
+}
+.fittable tr.row{
+  background: #333;
+}
+
+
+table.data{
+	border: solid 3px #000;
+	width: 1000px;
+	text-align:left;
+}
+table.data thead, table.data tfoot{
+	background-color:#000;
+}
+table.data thead td{
+	padding-bottom:2px;
+}
+table.data thead span.head{
+	font-size:18px;
+}
+table.data thead tr.headcol{
+	font-weight:bold;
+	background-color:#626456;
+}
+table.data thead tr.headcol td{
+	border-bottom: solid 2px #000;
+}
+tr.light_red{
+	background-color:#600000;
+}
+tr.medium_red{
+	background-color:#400000;
+}

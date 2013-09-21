@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_silos_reactions</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_silos_reactions` (
+  `typeID` int(11) NOT NULL DEFAULT '0',
+  `quantity` double DEFAULT NULL,
+  `input` smallint(6) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`typeID`,`input`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED</structure>
+</fsrtool>

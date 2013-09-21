@@ -1,0 +1,8 @@
+-1 = auf Eis gelegt
+0 = unbearbeitet
+1 = wird produziert
+2 = wird eingekauft
+3 = Zur Auslieferung bereit
+4 = &Uuml;bergeben
+5 = Lagernd im Empire
+6 = im transport

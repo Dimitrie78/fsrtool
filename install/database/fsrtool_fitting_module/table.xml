@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_fitting_module</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_fitting_module` (
+  `fitID` bigint(20) NOT NULL DEFAULT '0',
+  `itemID` int(11) NOT NULL DEFAULT '0',
+  `ammo` int(11) NOT NULL DEFAULT '0',
+  `drone` int(11) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

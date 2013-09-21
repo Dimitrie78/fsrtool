@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_user_fullapi</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_user_fullapi` (
+  `charID` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `userName` varchar(255) NOT NULL,
+  `keyID` bigint(20) NOT NULL DEFAULT '0',
+  `vCODE` varchar(100) NOT NULL DEFAULT '',
+  `corpID` bigint(20) NOT NULL DEFAULT '0',
+  `allyID` bigint(20) NOT NULL DEFAULT '0',
+  `accessMask` bigint(20) NOT NULL DEFAULT '0',
+  `status` tinyint(3) NOT NULL DEFAULT '1',
+  `lowfueltime` mediumint(9) DEFAULT '24',
+  `errorcount` tinyint(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`corpID`,`allyID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

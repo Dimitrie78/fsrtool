@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_user_online</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_user_online` (
+  `IP` varchar(15) NOT NULL DEFAULT '',
+  `charID` bigint(20) NOT NULL DEFAULT '0',
+  `url` varchar(255) DEFAULT NULL,
+  `Datum` datetime DEFAULT NULL,
+  PRIMARY KEY (`IP`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

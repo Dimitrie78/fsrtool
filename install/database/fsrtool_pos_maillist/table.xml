@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fsrtool>
+ <name>fsrtool_pos_maillist</name>
+ <rows>0</rows>
+ <structure>CREATE TABLE `fsrtool_pos_maillist` (
+  `corpID` int(11) NOT NULL DEFAULT '0',
+  `email` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`corpID`,`email`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+</fsrtool>

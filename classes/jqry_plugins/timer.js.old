@@ -1,0 +1,47 @@
+(function($){
+
+$.fn.timer = function(){
+	
+	if(arguments.length == 0){
+		var end = Math.round((new Date().getTime()+($(this).text()*1000))/1000);
+		var cycle = 3600; 
+		$(this).css('display','inline');
+	}else{
+		var end = arguments[0];
+		var cycle = arguments[1]
+	} 
+	var time = Math.round(new Date().getTime()/1000);
+	var timer = end-time;
+	
+	var entity = new Object();
+	entity['d'] = Math.floor(timer/60/60/24);
+	entity['h'] = Math.floor(timer/60/60)-entity['d']*24;
+	entity['m'] = Math.floor(timer/60)-entity['h']*60-entity['d']*24*60;
+	//entity['s'] = timer-entity['m']*60-entity['h']*60*60-entity['d']*24*60*60;
+	
+	var output = '';
+	
+	for(var i in entity){
+		if(entity[i]>0){
+			output+=entity[i]+i+' ';
+		}
+	}
+	if(timer<300) $(this).css('font-weight','bold').css('color','#ffa500');
+  else $(this).css('font-weight','').css('color','');
+	if(timer>61){
+		$(this).text(output).doTimeout(10000, function(){
+			$(this).timer(end, cycle);
+		});
+	}else{
+		if(timer<=0){
+	    $(this).timer(Math.round((new Date().getTime()+(cycle*1000))/1000),cycle);
+	    return true;
+    }
+	  $(this).text('< 1m').doTimeout(1000, function(){
+			$(this).timer(end, cycle);
+		});;
+	}
+	
+};
+
+})(jQuery);
