@@ -280,7 +280,7 @@ class eveorderWorld extends world
 				$i++;
 			}
 			if ( isset($ids) && is_array($ids) ) {
-				if ($prices = $this->getCurrentEvecentralPrice(10000002,$ids)) {
+				if ($prices = $this->getCurrentEvecentralPrice(30000142,$ids)) {
 					foreach ( $return as $key => $type ) {
 						$return[$key]['fetched'] = $prices['date'];
 						$return[$key]['price'] = $prices[$type['typeID']];
@@ -300,16 +300,36 @@ class eveorderWorld extends world
 		if ($region == "0")
 			$params = array('typeid'=>$ids);			
 		else
-			$params = array('typeid'=>$ids, 'regionlimit'=>$region);	
+			$params = array('typeid'=>$ids, 'usesystem'=>$region);	
 		try {
 			$xml = $ale->marketstat( $params );
-			#echo '<pre>';print_r($xml);echo '</pre>'; die;
-			/* 
-			$insert = "REPLACE INTO %tab_currentTypePrice% SET typeID='%typeID%', all_volume='%all_volume%', all_avg_price='%all_avg%', all_max_price='%all_max%', all_min_price='%all_min%', all_stddev_price='%all_stddev%', all_median_price='%all_median%', all_percentile_price='%all_percentile%', buy_volume='%buy_volume%', buy_avg_price='%buy_avg%', buy_max_price='%buy_max%', buy_min_price='%buy_min%', buy_stddev_price='%buy_stddev%', buy_median_price='%buy_median%', buy_percentile_price='%buy_percentile%', sell_volume='%sell_volume%', sell_avg_price='%sell_avg%', sell_max_price='%sell_max%', sell_min_price='%sell_min%', sell_stddev_price='%sell_stddev%', sell_median_price='%sell_median%', sell_percentile_price='%sell_percentile%', fetched='%fetched%',region='%region%';";
-			$update = "UPDATE %tab_currentTypePrice% SET all_volume='%all_volume%', all_avg_price='%all_avg%', all_max_price='%all_max%', all_min_price='%all_min%', all_stddev_price='%all_stddev%', all_median_price='%all_median%', all_percentile_price='%all_percentile%, buy_volume='%buy_volume%', buy_avg_price='%buy_avg%', buy_max_price='%buy_max%', buy_min_price='%buy_min%', buy_stddev_price='%buy_stddev%', buy_median_price='%buy_median%', buy_percentile_price='%buy_percentile%', sell_volume='%sell_volume%', sell_avg_price='%sell_avg%', sell_max_price='%sell_max%', sell_min_price='%sell_min%', sell_stddev_price='%sell_stddev%', sell_median_price='%sell_median%', sell_percentile_price='%sell_percentile%', fetched='%fetched%' WHERE typeID='%typeID%' AND region='%region%';";
-			*/
-			$insert = "REPLACE INTO %tab_currentTypePrice% SET typeID='%typeID%', all_volume='%all_volume%', all_avg_price='%all_avg%', all_max_price='%all_max%', all_min_price='%all_min%', all_stddev_price='%all_stddev%', all_median_price='%all_median%', buy_volume='%buy_volume%', buy_avg_price='%buy_avg%', buy_max_price='%buy_max%', buy_min_price='%buy_min%', buy_stddev_price='%buy_stddev%', buy_median_price='%buy_median%', sell_volume='%sell_volume%', sell_avg_price='%sell_avg%', sell_max_price='%sell_max%', sell_min_price='%sell_min%', sell_stddev_price='%sell_stddev%', sell_median_price='%sell_median%', fetched='%fetched%',region='%region%';";
-			$update = "UPDATE %tab_currentTypePrice% SET all_volume='%all_volume%', all_avg_price='%all_avg%', all_max_price='%all_max%', all_min_price='%all_min%', all_stddev_price='%all_stddev%', all_median_price='%all_median%', buy_volume='%buy_volume%', buy_avg_price='%buy_avg%', buy_max_price='%buy_max%', buy_min_price='%buy_min%', buy_stddev_price='%buy_stddev%', buy_median_price='%buy_median%', sell_volume='%sell_volume%', sell_avg_price='%sell_avg%', sell_max_price='%sell_max%', sell_min_price='%sell_min%', sell_stddev_price='%sell_stddev%', sell_median_price='%sell_median%', fetched='%fetched%' WHERE typeID='%typeID%' AND region='%region%';";
+			
+			$insert = "REPLACE INTO %tab_currentTypePrice% SET 
+				typeID='%typeID%', 
+				all_volume='%all_volume%', 
+				all_avg_price='%all_avg%', 
+				all_max_price='%all_max%', 
+				all_min_price='%all_min%', 
+				all_stddev_price='%all_stddev%', 
+				all_median_price='%all_median%', 
+				all_percentile_price='%all_percentile%', 
+				buy_volume='%buy_volume%', 
+				buy_avg_price='%buy_avg%', 
+				buy_max_price='%buy_max%', 
+				buy_min_price='%buy_min%', 
+				buy_stddev_price='%buy_stddev%', 
+				buy_median_price='%buy_median%', 
+				buy_percentile_price='%buy_percentile%', 
+				sell_volume='%sell_volume%', 
+				sell_avg_price='%sell_avg%', 
+				sell_max_price='%sell_max%', 
+				sell_min_price='%sell_min%', 
+				sell_stddev_price='%sell_stddev%', 
+				sell_median_price='%sell_median%', 
+				sell_percentile_price='%sell_percentile%', 
+				fetched='%fetched%',
+				region='%region%';";
+			
 			$changed = time();
 			$return = array('date' => $changed);
 			$insert = str_replace("%tab_currentTypePrice%", $this->_table['fsrtool_currentTypePrice'], $insert);
@@ -322,7 +342,7 @@ class eveorderWorld extends world
 						$str = str_replace("%".$typ."_".$key."%", $val, $str);
 					}
 				}
-				$return[(int)$type->attributes()->id] = (float)$type->sell->median;
+				$return[(int)$type->attributes()->id] = (float)$type->buy->percentile;
 				$this->db->exec_query( $str );
 				#break;
 			}
@@ -399,11 +419,11 @@ class eveorderWorld extends world
 				$orderby = 'ORDER BY quantity DESC'; 
 			break;
 		}
-		$query = ("SELECT i.typeID, i.typeName as name, Sum(o.amount) AS quantity, (p.sell_min_price * Sum(o.amount)) as price, p.fetched
+		$query = ("SELECT i.typeID, i.typeName as name, Sum(o.amount) AS quantity, (p.buy_percentile_price * Sum(o.amount)) as price, p.fetched
 				FROM {$this->_table['fsrtool_user']} u 
 				INNER JOIN {$this->_table['eveorder_user_types']} o ON u.charID = o.user 
 				INNER JOIN {$this->_table['invtypes']} i ON o.typeID = i.typeID 
-				LEFT JOIN {$this->_table['fsrtool_currentTypePrice']} p ON i.typeID = p.typeID AND p.region = 10000002
+				LEFT JOIN {$this->_table['fsrtool_currentTypePrice']} p ON i.typeID = p.typeID AND p.region = 30000142
 				WHERE u.corpID = '".$this->User->corpID."' 
 				  /*AND p.region = 10000002*/
 				GROUP BY i.typeName
@@ -422,8 +442,8 @@ class eveorderWorld extends world
 				$a = ceil(count($ids)/30);
 				$new = array_chunk($ids,$a);
 				foreach($new as $next)
-					$prices = $this->getCurrentEvecentralPrice(10000002,$next);
-			} else $prices = $this->getCurrentEvecentralPrice(10000002,$ids);
+					$prices = $this->getCurrentEvecentralPrice(30000142,$next);
+			} else $prices = $this->getCurrentEvecentralPrice(30000142,$ids);
 		}
 		$res->close();
 		return $return;

@@ -28,7 +28,7 @@ class Type
 	var $techLevel = 1;
 	//var $metaLVL;
 	
-	public function Type( $id=null, $world=null, $region='10000002' ) {
+	public function Type( $id=null, $world=null, $region='30000142' ) {
 		$this->db = $world->db;
 		$this->_table = $world->_table;
 		if ( $id != null ) {
@@ -39,7 +39,7 @@ class Type
 			$str = "SELECT it.*, ei.iconFile AS icon, ig.categoryID AS categoryID, bp.techLevel, IfNull(dmg.valueInt, dmg.valueFloat) itm_techlevel,
 			(SELECT p.fetched FROM {$this->_table['fsrtool_currentTypePrice']} as p 
 			 WHERE p.typeID = '".$typeID."' AND p.region = ".$region.") as fetched,  
-			(SELECT p1.sell_median_price FROM {$this->_table['fsrtool_currentTypePrice']} as p1
+			(SELECT p1.buy_percentile_price FROM {$this->_table['fsrtool_currentTypePrice']} as p1
 			 WHERE p1.typeID = '".$typeID."' AND p1.region = ".$region.") as price
 				  FROM {$this->_table['invtypes']} AS it 
 				  LEFT JOIN {$this->_table['eveicons']} AS ei ON it.iconID = ei.iconID

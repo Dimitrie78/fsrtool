@@ -9,10 +9,6 @@ class test {
 	private $_SovereigntyCache = null;
 	private $_towerresurceCache = null;
 	
-	private $_table_pos 	= 'fsrtool_pos';
-	private $_table_silos 	= 'fsrtool_silos';
-	private $_table_silos_reactors = 'fsrtool_silos_reactors';
-	
 	public function __construct($corpID, World $world) {
 		$this->_corpID = $corpID;
 		$this->_db = $world->db;
@@ -22,7 +18,7 @@ class test {
 	
 	public function test() {
 		$r = array();
-		$res = $this->_db->query("SELECT * FROM {$this->_table_silos_reactors} WHERE corpID = {$this->_corpID} ORDER BY typeID ASC");
+		$res = $this->_db->query("SELECT * FROM {$this->_table['fsrtool_silos_reactors']} WHERE corpID = {$this->_corpID} ORDER BY typeID ASC");
 		if( $res->num_rows >= 1 ) {
 			while( $row = $res->fetch_assoc() ) {
 				$react = $this->_db->query("SELECT r.typeID, r.input, r.quantity * IFNULL(IFNULL(da.valueInt, da.valueFloat), 1) as qty, i.typeName, p.sell_min_price, p.buy_max_price
@@ -81,9 +77,9 @@ class test {
 			}
 			
 			$str = "SELECT r.pos, p.typeID,	p.locationID, res.resourceTypeID, res.quantity,	price.buy_max_price AS price
-					FROM {$this->_table_silos_reactors} r
-						INNER JOIN fsrtool_pos p ON r.pos = p.moonID
-						INNER JOIN fsrtool_eve_invcontroltowerresources res ON p.typeID = res.controlTowerTypeID
+					FROM {$this->_table['fsrtool_silos_reactors']} r
+						INNER JOIN {$this->_table['fsrtool_pos']} p ON r.pos = p.moonID
+						INNER JOIN {$this->_table['invcontroltowerresources']} res ON p.typeID = res.controlTowerTypeID
 						LEFT JOIN {$this->_table['fsrtool_currentTypePrice']} price ON res.resourceTypeID = price.typeID
 					WHERE r.corpID = {$this->_corpID} 
 						AND	res.resourceTypeID IN (4051, 4312, 4247, 4246) 
