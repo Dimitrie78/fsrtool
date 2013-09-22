@@ -8,3 +8,4 @@ cache/assetsCache/*.txt
 icons/Renders/*
 icons/Types/*
 icons/Icons/*
+install/install.lock
