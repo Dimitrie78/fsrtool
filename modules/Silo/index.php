@@ -30,6 +30,7 @@ if ($User->Manager || $corpid){
 	
 	$corpID = $_SESSION['corpID'];
 	$world->makeMenue($corpID);
+	$smarty->assign("manager",   $world->getManager($corpID));
 	$smarty->assign("corps",     $corps);
 	$smarty->assign("sel_corp",  $_SESSION['corpID']);
 	$smarty->assign('CacheTime', $world->getAssetsCacheTime(  $_SESSION['corpID'] ));
@@ -53,7 +54,8 @@ if ($User->Manager || $corpid){
 	$silos  = new Silos($corpID, $world);
 	
 	$id = isset($_GET['id']) ? $_GET['id'] : '';
-	if(empty($id) && $action =='system')
+	$man = isset($_GET['manager']) ? $_GET['manager'] : '';
+	if((empty($id) && empty($man)) && $action =='system')
 		$action = 'Silos';
 	
 	switch ($action) {
@@ -74,8 +76,10 @@ if ($User->Manager || $corpid){
 		break;
 	
 		case 'system':
-			$assets = $silos->getSilosByLocation($id);
+			if(!empty($id)) $assets = $silos->getSilosByLocation($id);
+			if(!empty($man)) $assets = $silos->getSilosByManager($man);
 			$smarty->assign('MySelectetMenue', $id);
+			$smarty->assign('MySelectetManager', $man);
 			$smarty->assign('Towers', $assets);
 			$smarty->display('file:['.ACTIVE_MODULE.']system.tpl');
 		break;

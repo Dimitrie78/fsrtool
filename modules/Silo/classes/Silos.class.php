@@ -366,6 +366,37 @@ class Silos {
 		return $return;	
 	}
 	
+	public function getSilosByManager($manager) {
+		$corpID = $this->corpID;
+		$query  = ("SELECT s.pos, p.manager
+					FROM {$this->_table_silos} s
+					INNER JOIN {$this->_table_pos} p ON s.pos = p.moonID
+					WHERE
+					  p.manager = '$manager' AND
+					  s.pos != '' AND
+					  s.corpID = '$corpID'
+					GROUP BY s.pos
+					ORDER BY s.sort, s.pos;");
+		$res = $this->db->query( $query );
+		if ( $res->num_rows > 0 ) {
+			$a=0;
+			while ( $row = $res->fetch_assoc() ) {
+				if ($row) {
+					$towers[$a]['pos'] = $row['pos'];
+					$towers[$a]['manager'] = $row['manager'];
+					$a++;
+				}
+			}
+			
+			foreach ($towers as $tower) {
+				$return[] = $this->table($this->assets,$tower,$locationID); 
+			}
+		}
+		$res->close();
+		
+		return $return;	
+	}
+	
 	public function getSilosByAlarm() {
 		$return = array();
 		$corpID = $this->corpID;

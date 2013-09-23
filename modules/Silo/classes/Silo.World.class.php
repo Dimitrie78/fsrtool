@@ -330,6 +330,13 @@ class SiloWorld extends World {
 		
 		return 'Bye Bye...';
 	}
+	
+	public function getManager($corpID) {
+		$str = "SELECT manager FROM {$this->_table['fsrtool_pos']} WHERE corpID = '{$corpID}' AND manager != '' GROUP BY manager";
+		$res = $this->db->fetch_all($str, 'manager');
+		
+		return $res;
+	}
 }
 
 ?>
