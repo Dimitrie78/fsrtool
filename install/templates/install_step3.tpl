@@ -12,6 +12,7 @@
 	<tr><td width="120"><b>User:</b></td><td><input type=text name=user id=user size=20 maxlength=80 value="{$db_user}"></td></tr>
 	<tr><td width="120"><b>Password:</b></td><td><input type=password name=dbpass id=pass size=20 maxlength=80 value="{$db_pass}"></td></tr>
 	<tr><td width="120"><b>Database:</b></td><td><input type=text name=db id=db size=20 maxlength=80 value="{$db_db}"></td></tr>
+	<tr><td width="120"><b>EVE-Database:</b></td><td><input type=text name=dbeve id=dbeve size=20 maxlength=80 value="{$db_dbeve}"></td></tr>
 	<tr><td width="120"><b>Engine:</b></td><td>
 	<input type="radio" name="engine" value="InnoDB"{if $db_engine != "MyISAM"} checked{/if}>InnoDB
 	<input type="radio" name="engine" value="MyISAM"{if $db_engine == "MyISAM"} checked{/if}>MyISAM
@@ -29,9 +30,9 @@
 		running Version '{$test_version}'.<br/>
 		{if $version_ok}
 			{if $test_select}
-			Successfully selected database '{$db_db}', everything seems fine. Please continue.<br/>
+			<img src="{$db_image}" border="0" alt="">Successfully selected database '{$db_db}', everything seems fine. Please continue.<br/>
 			{else}
-			Could not select the database: '{$test_error}'<br/>
+			<img src="{$db_image_eve}" border="0" alt="">Could not select the database: '{$test_error}'<br/>
 			{/if}
 			{if $test_inno}
 			<br/>Checking database engine InnoDB... <br/>
@@ -40,6 +41,13 @@
 				{else}
 					Error: InnoDB is not supported on your MySQL Server.<br />
 				{/if}
+			{/if}
+			{if $test_select_eve}
+			<img src="{$db_image_eve}" border="0" alt="">Successfully selected database '{$db_dbeve}', everything seems fine. Please continue.<br/>
+			{else}
+			<img src="{$db_image_eve}" border="0" alt="">Could not select the database: '{$test_error_eve}'<br/>
+			You must have installed the 'evedb' under the same user as the other db.<br/>
+			You can fetch the newest here: <a href="http://zofu.no-ip.de/" target="_blank">LINK</a>
 			{/if}
 		{else}
 		This version of MySQL is not supported. You must ask your host to upgrade.

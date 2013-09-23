@@ -23,7 +23,7 @@ require_once ('class.httprequest.php');
 if(is_file(CONFIG)) {
 	$c = Settings::getInstance(CONFIG);
 	define('TBL_PREFIX', $c->dbprefix);
-	define('TBL_EVEDB', 'ody11.');
+	define('TBL_EVEDB', $c->dbeve);
 	define('PWSALT', $c->salt);
 }
 

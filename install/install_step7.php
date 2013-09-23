@@ -46,7 +46,7 @@ function writeConfig() {
 			'dbpass'   => $pass,
 			'dbname'   => $db,
 			'dbprefix' => 'fsrtool_',
-			'dbeve'    => 'ody11.',
+			'dbeve'    => $dbeve.'.',
 			'dbengine' => $engine
 		), 'main' => array(
 			'request'  => $request,
