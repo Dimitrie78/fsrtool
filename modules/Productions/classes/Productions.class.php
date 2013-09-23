@@ -4,7 +4,7 @@ defined('ACTIVE_MODULE') or die('Restricted access');
 class Productions {
 	
 	private $_corpID = null;
-	private $_db = null;
+	//private $_db = null;
 	
 	private $_table_api = 'fsrtool_jb_apis';
 	private $_table_corp = 'fsrtool_corps';
@@ -97,17 +97,17 @@ class Productions {
 		  }
 		  
 		  # outputItemTypeID -> TypeName 
-		  $qry = 'SELECT i.`typeID`,i.`typeName`,i.`groupID`,ig.`groupName`,ig.`categoryID`,ic.`categoryName` 
-				FROM `fsrtool_eve_invtypes` as i 
-				LEFT JOIN `fsrtool_eve_invgroups` as ig ON ig.`groupID` = i.`groupID` 
-				LEFT JOIN `fsrtool_eve_invcategories` as ic ON ic.`categoryID` = ig.`categoryID` 
-				WHERE `typeID` = '.implode(' OR `typeID` = ',array_merge(array_keys($stat_jobs),array_keys($this->_assets)));
+		  $qry = "SELECT i.typeID,i.typeName,i.groupID,ig.groupName,ig.categoryID,ic.categoryName 
+				FROM {$this->_db->_table['invtypes']} as i 
+				LEFT JOIN {$this->_db->_table['invgroups']} as ig ON ig.groupID = i.groupID 
+				LEFT JOIN {$this->_db->_table['invcategories']} as ic ON ic.categoryID = ig.categoryID 
+				WHERE i.typeID = ".implode(' OR i.typeID = ',array_merge(array_keys($stat_jobs),array_keys($this->_assets)));
 		  $res_type = $this->_db->query($qry, false);
-		  if (!$res_type) { $json['error'] = 'Ungültige Anfrage: ' . $this->_db->db->error; return $json; }
+		  if (!$res_type) { $json['error'] = 'Ungültige Anfrage: ' . $this->_db->error; return $json; }
 		  # systemID -> systemName
-		  $qry = 'SELECT `solarSystemID`,`solarSystemName` FROM `fsrtool_eve_mapsolarsystems` WHERE `solarSystemID` = '.implode(' OR `solarSystemID` = ',array_keys($stat_sys));
+		  $qry = "SELECT solarSystemID,solarSystemName FROM {$this->_db->_table['mapsolarsystems']} WHERE solarSystemID = ".implode(' OR solarSystemID = ',array_keys($stat_sys));
 		  $res_sys = $this->_db->query($qry);
-		  if (!$res_sys) { $json['error'] = 'Ungültige Anfrage: ' . $this->_db->db->error; return $json; }
+		  if (!$res_sys) { $json['error'] = 'Ungültige Anfrage: ' . $this->_db->error; return $json; }
 		  
 		  for($i=0;$i<count($_jobs);$i++){
 			$_jobs[$i]['installer'] = $stat_chars[$_jobs[$i]['installerID']]['name'];
@@ -146,7 +146,7 @@ class Productions {
 		  
 		}
 		catch(Exeption $e){
-		  $json['error'] = $e->getMessage();
+		  $json['error'] = $e->getCode(). ' - ' .$e->getMessage();
 		  return $json;
 		}
 
