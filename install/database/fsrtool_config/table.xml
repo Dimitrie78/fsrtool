@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fsrtool>
  <name>fsrtool_config</name>
- <rows>0</rows>
+ <rows>1</rows>
  <structure>CREATE TABLE `fsrtool_config` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `value` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</structure>
 </fsrtool>

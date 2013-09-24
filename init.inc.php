@@ -8,6 +8,7 @@ if (!defined('FSR_CONFIG_DIR')) {
 require_once (FSR_BASE . DIRECTORY_SEPARATOR . "classes/class.php");
 require_once (FSR_BASE . DIRECTORY_SEPARATOR . "config.inc.php");
 
+$version = '1.0';
 
 $smarty = loadSmarty();
 //$smarty->testInstall();
@@ -100,6 +101,12 @@ if (!isset($_SERVER['HTTP_EVE_TRUSTED'])) {
 	}
 }
 $smarty->assign('action', $action);
+
+if($User->Admin == 1) {
+	if(!$world->versionCheck($version))
+		$Messages->showerror('Sie müssen ein update ausführen um die Database änderungen zu übernehmen <a href="update">Link</a>');
+}
+
 $current_file_name = basename($_SERVER['REQUEST_URI'], ".php");
 
 $currentFile = $_SERVER["SCRIPT_NAME"];

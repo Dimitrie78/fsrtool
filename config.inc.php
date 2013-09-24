@@ -2,8 +2,9 @@
 defined('FSR_BASE') or die('Restricted access');
 date_default_timezone_set('Europe/Berlin');
 
-#ini_set('display_errors', 1);
-//error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+
 $old_error_handler = set_error_handler("myErrorHandler");
 Smarty::unmuteExpectedErrors();
 

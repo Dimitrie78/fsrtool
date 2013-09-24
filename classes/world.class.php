@@ -169,6 +169,13 @@ class World
 			return json_encode($return_array);
 		}
 	}
+	
+	public function versionCheck($ver) {
+		$instver = $this->db->fetch_one("SELECT value FROM {$this->_table['fsrtool_config']} WHERE name='Version'", 'value');
+		if($instver == $ver)
+			return true;
+		else return false;
+	}
 }
 
 ?>

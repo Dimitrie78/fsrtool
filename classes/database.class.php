@@ -70,6 +70,7 @@ class Database extends mysqli
 			'fsrtool_logins'		 			=> TBL_PREFIX.'logins',
 			'fsrtool_roles'			 			=> TBL_PREFIX.'roles',
 			'fsrtool_cron'			 			=> TBL_PREFIX.'cron',
+			'fsrtool_config'					=> TBL_PREFIX.'config',
 			
 			'fsrtool_api_outposts'			 	=> TBL_PREFIX.'api_outposts',
 			'fsrtool_api_reftypes'			 	=> TBL_PREFIX.'api_reftypes',
