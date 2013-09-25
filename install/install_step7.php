@@ -38,7 +38,7 @@ $smarty->display('install_step7.tpl');
 function writeConfig() {
     extract($_SESSION['sql']);
 	$address = $_SERVER['HTTP_HOST'];
-	if (strpos($address,"www.")) {
+	if (strpos($address, 'www.') !== false) {
 		$address = substr($address,4);
 	}
 	$request = 'Curl';
