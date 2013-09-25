@@ -52,6 +52,7 @@ function writeConfig() {
 			'request'  => $request,
 			'alehost'  => $alehost,
 			'salt'     => md5($host.$user.$pass.$db.'fsrtool_'),
+			'email'    => 'noreplay@'.$_SERVER['HTTP_HOST'],
 		)
 	);
 

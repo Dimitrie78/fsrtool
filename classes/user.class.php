@@ -14,6 +14,7 @@ class User
 	private $remTime = 2592000; // One month
 	private $remCookieName = 'ckSavePass';
 	private $remCookieDomain = '';
+	private $Path = '';
 	private $sessionVariable = 'userSessionValue';
 	private $absenderMail = 'fsrtool@free-space-ranger.de';
 	private $url = URL_DOWORK;
@@ -23,6 +24,7 @@ class User
 	
 	public function __construct( $db = null ) {
 	    $this->remCookieDomain = $this->remCookieDomain == '' ? $_SERVER['HTTP_HOST'] : $this->remCookieDomain;
+		$this->Path = dirname($_SERVER['PHP_SELF']);
 	    $this->db = $db;
 		$this->_table = $this->db->_table;
 		
@@ -79,7 +81,7 @@ class User
 			$_SESSION['username'] = str_replace($gesucht, $ersetzt, strtolower($uname));
 			if ( $remember ){
 			  $cookie = base64_encode(serialize(array('uname'=>$uname,'password'=>$originalPassword)));
-			  $a = setcookie($this->remCookieName, $cookie, time()+$this->remTime, '/', $this->remCookieDomain);
+			  $a = setcookie($this->remCookieName, $cookie, time()+$this->remTime, $this->Path, $this->remCookieDomain);
 			}
 		}
 		return true;
@@ -91,7 +93,7 @@ class User
   	* @return bool
     */
 	public function logout($redirectTo = '') {
-		$a = setcookie($this->remCookieName, '', time()-3600, '/', $this->remCookieDomain);
+		$a = setcookie($this->remCookieName, '', time()-3600, $this->Path, $this->remCookieDomain);
 		unset($_SESSION[$this->sessionVariable]);
 		$this->userData = '';
 		session_destroy();

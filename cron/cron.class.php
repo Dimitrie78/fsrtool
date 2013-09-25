@@ -29,6 +29,7 @@ class cron extends Database
 		if ( $run === null && !self::$charID && !self::$corpID) {
 			$res = $this->query("SELECT c.id, c.name from fsrtool_cron c WHERE DATE_SUB(NOW(), INTERVAL c.interwal MINUTE) >= c.time AND status = 1 ORDER BY c.id LIMIT 5;");
 			while($row = $res->fetch_assoc()) {
+				$time_start = microtime(true);
 				$this->cronID = $row['id'];
 				if(method_exists($this, $row['name'])) { 
 					$out .= $this->$row['name']();
@@ -41,6 +42,9 @@ class cron extends Database
 					$this->queries_time += $pos->queries_time;
 				}
 				$this->exec_query("UPDATE fsrtool_cron SET time=DATE_ADD(NOW(),INTERVAL -10 MINUTE) WHERE id={$row['id']};");
+				$time_end = microtime(true);
+				$time = $time_end - $time_start;
+				$out .= $row['name']() . ' done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
 			}
 		}
 		
@@ -74,7 +78,7 @@ class cron extends Database
 		$this->queries_time += $pos->queries_time;
 		*/
 		
-		//return $out;
+		return self::format( $out );
 	}
 	
 	private function checkMains() {
@@ -121,14 +125,14 @@ class cron extends Database
 				unset($APIKeyInfo);
 				$x++;
 			} catch (Exception $e) {
-				$out .= $e->getCode().' - '.$e->getMessage();
+				$out .= $e->getCode().' - '.$e->getMessage()."\n";
 				$this->errorHandler('Problem in checkMains::'.$e->getMessage(), $e->getCode(), $char['charID'], $char);
 				//$this->logerror( $e->getMessage(), $this->cronID, 0 );
 			}
 		}
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		$out .= 'checkMains: ' . $x . '/' . count($mains) . ' account(s), done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
+		//$out .= 'checkMains: ' . $x . '/' . count($mains) . ' account(s), done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
 		
 		return self::format( $out );	
 		
@@ -171,15 +175,14 @@ class cron extends Database
 				unset($APIKeyInfo);
 				$x++;
 			} catch (Exception $e) {
-				$out .= $e->getCode().' - '.$e->getMessage();
-				#throw new cronException('Problem in checkAlts::'.$e->getMessage(), $e->getCode(), $char['charID']);
+				$out .= $e->getCode().' - '.$e->getMessage()."\n";
 				$this->errorHandler('Problem in checkAlts::'.$e->getMessage(), $e->getCode(), $char['charID'], $char);
 				//$this->logerror( $e->getMessage(), $this->cronID, 0 );
 			}
 		}
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		$out .= 'checkAlts: ' . $x . '/' . count($alts) . ' account(s), done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
+		//$out .= 'checkAlts: ' . $x . '/' . count($alts) . ' account(s), done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
 		
 		return self::format( $out );
 	}
@@ -209,10 +212,11 @@ class cron extends Database
 			unset($Sovereignty);
 		} catch (Exception $e) {
 			//$this->logerror( $e->getMessage(), $this->cronID, 0 );
+			$out .= $e->getCode().' - '.$e->getMessage()."\n";
 		}
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		$out .= 'Sovereignty update:: done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
+		//$out .= 'Sovereignty update:: done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
 		
 		return self::format($out);
 	}
@@ -243,10 +247,11 @@ class cron extends Database
 			unset($ConquerableStationList);
 		} catch (Exception $e) {
 			//$this->logerror( $e->getMessage(), $this->cronID, 0 );
+			$out .= $e->getCode().' - '.$e->getMessage()."\n";
 		}
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		$out .= 'ConquerableStationList update:: done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
+		//$out .= 'ConquerableStationList update:: done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
 		
 		return self::format($out);
 	}
@@ -270,10 +275,11 @@ class cron extends Database
 			unset($RefTypes);
 		} catch (Exception $e) {
 			//$this->logerror( $e->getMessage(), $this->cronID, 0 );
+			$out .= $e->getCode().' - '.$e->getMessage()."\n";
 		}
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		$out .= 'refTypes update:: done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
+		//$out .= 'refTypes update:: done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
 		
 		return self::format($out);
 	}
@@ -377,7 +383,7 @@ class cron extends Database
 		$allystmt->close();
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		$out .= 'Corporations update:: done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
+		//$out .= 'Corporations update:: done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
 		
 		return self::format($out);
 	}
@@ -947,7 +953,7 @@ class cron extends Database
 		
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		$out .= 'sendEveNotivications: done in ' . round($time, 4) . ' sec, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
+		//$out .= 'sendEveNotivications: done in ' . round($time, 4) . ' sec, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
 		
 		return self::format($out);
 	}
