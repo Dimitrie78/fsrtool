@@ -39,7 +39,7 @@ function writeConfig() {
     extract($_SESSION['sql']);
 	$address = $_SERVER['HTTP_HOST'];
 	if (strpos($address,"www.")) {
-		$address = str_replace("www.","",$address);
+		$address = substr($address,4);
 	}
 	$request = 'Curl';
     $alehost = 'https://api.eveonline.com/';
