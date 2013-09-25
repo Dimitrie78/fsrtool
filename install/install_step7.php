@@ -37,6 +37,10 @@ $smarty->display('install_step7.tpl');
 
 function writeConfig() {
     extract($_SESSION['sql']);
+	$address = $_SERVER['HTTP_HOST'];
+	if (strpos($address,"www.")) {
+		$address = str_replace("www.","",$address);
+	}
 	$request = 'Curl';
     $alehost = 'https://api.eveonline.com/';
 	$assoc_arr = array(
@@ -52,7 +56,7 @@ function writeConfig() {
 			'request'  => $request,
 			'alehost'  => $alehost,
 			'salt'     => md5($host.$user.$pass.$db.'fsrtool_'),
-			'email'    => 'noreplay@'.$_SERVER['HTTP_HOST'],
+			'email'    => 'noreplay@'.$address,
 		)
 	);
 
