@@ -25,6 +25,7 @@ if(is_file(CONFIG)) {
 	define('TBL_PREFIX', $c->dbprefix);
 	define('TBL_EVEDB', $c->dbeve);
 	define('PWSALT', $c->salt);
+	define('EMAIL', $c->email);
 }
 
 $parms = array(

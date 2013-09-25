@@ -18,6 +18,7 @@ if(is_file(CONFIG)) {
 	define('TBL_PREFIX', $c->dbprefix);
 	define('TBL_EVEDB', $c->dbeve);
 	define('PWSALT', $c->salt);
+	define('EMAIL', $c->email);
 } else if(strpos($_SERVER['SCRIPT_NAME'], 'install.php') === false) {
 	echo 'sorry, not installed!!!';
 	die;
@@ -25,7 +26,7 @@ if(is_file(CONFIG)) {
 
 ########################################################################
 # General config
-if($_SERVER['HTTPS'] == 'on') $http = 'https://'; else $http = 'http://';
+if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') $http = 'https://'; else $http = 'http://';
 /* get the domain name. */
 $DOMAIN = $_SERVER['HTTP_HOST'];
 $SCRIPT = dirname($_SERVER['SCRIPT_NAME']);

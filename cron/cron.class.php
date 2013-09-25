@@ -21,7 +21,7 @@ class cron extends Database
 		$this->mail->IsHTML(true);
 		$this->mail->IsMail();
 		//$this->mail->IsSMTP();
-		$this->mail->From = $this->absenderMail;
+		$this->mail->From = EMAIL;
 	}
 	
 	public function run() {

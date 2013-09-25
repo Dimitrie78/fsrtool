@@ -23,7 +23,8 @@ class User
 	private $displayErrors = true;
 	
 	public function __construct( $db = null ) {
-	    $this->remCookieDomain = $this->remCookieDomain == '' ? $_SERVER['HTTP_HOST'] : $this->remCookieDomain;
+		$this->absenderMail = EMAIL;
+		$this->remCookieDomain = $this->remCookieDomain == '' ? $_SERVER['HTTP_HOST'] : $this->remCookieDomain;
 		$this->Path = dirname($_SERVER['PHP_SELF']);
 	    $this->db = $db;
 		$this->_table = $this->db->_table;
