@@ -24,6 +24,7 @@
 	<li {if $action == ''}id="selected"{/if}><a href="{$index}">userList</a></li>
 	<li {if $action == 'roleList'}id="selected"{/if}><a href="{$index}&action=roleList">roleList</a></li>
 	{if $curUser->Manager}<li {if $action == 'roleListAlts'}id="selected"{/if}><a href="{$index}&action=roleListAlts">roleListAlts</a></li>{/if}
+	{if $curUser->Admin}<li {if $action == 'cron'}id="selected"{/if}><a href="{$index}&action=cron">cronSettings</a></li>{/if}
 </ul>
 </div>
 </div> {* end of div started in header.tpl *}

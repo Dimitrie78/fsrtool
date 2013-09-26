@@ -1,7 +1,6 @@
 <?php
 defined('ACTIVE_MODULE') or die('Restricted access');
 
-$smarty->assign('action', $action);
 $smarty->assign('addheader', array( '<link rel="stylesheet" type="text/css" href="modules/userManager/inc/style.css" />'."\n",
 									'<script type="text/javascript" src="classes/jqry_plugins/jquery.quicksearch.js"></script>'."\n",
 									'<script type="text/javascript" src="modules/userManager/inc/user.js"></script>'."\n",
@@ -18,22 +17,27 @@ if ( $User->Manager ) {
 		case "userList":
 		default:
 			$smarty->assign( 'users', $world->getUsers( $corpID ) );
-			#$smarty->assign( 'pre', print_r($world->getUsers( $corpID ),true) );
 		break;
 		
 		case "roleList":
 			$smarty->assign( 'roles', $world->getUsers( $corpID, true ) );
-			#$smarty->assign( 'pre', print_r($world->getUsers( $corpID, true ),true) );
 		break;
 		
 		case "roleListAlts":
 			$smarty->assign( 'roles', $world->getUsers( $corpID, false, true ) );
-			#$smarty->assign( 'pre', print_r($world->getUsers( $corpID, false, true ),true) );
 		break;
-
+		
+		case "cron":
+			if ($User->Admin) {
+				$smarty->assign( 'jobs', $world->getCronJobs() );
+			} else {
+				$action = '';
+				$smarty->assign( 'users', $world->getUsers( $corpID ) );
+			}
+		break;
 	}
+	$smarty->assign('action', $action);
 	$smarty->display('file:['.ACTIVE_MODULE.']main.tpl'); 
-	#$smarty->display( TPL_DIR . 'main.tpl' );
 } else {
 	header("Location: ".URL_INDEX."\n");
 	exit;

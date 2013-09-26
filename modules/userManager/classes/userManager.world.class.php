@@ -87,6 +87,7 @@ class userManagerWorld extends world {
 	}
 	
 	private function getRoles($where) {
+		$roles = array();
 		$str = ("SELECT u.charID AS _charID, u.username, u.active as _act, c.name AS _corpName, GROUP_CONCAT(r.roleID) AS _roles
 			FROM {$this->_table['fsrtool_user']} u 
 			LEFT JOIN {$this->_table['fsrtool_corps']} c ON u.corpID = c.id
@@ -113,6 +114,7 @@ class userManagerWorld extends world {
 	}
 	
 	private function getRolesAlts( $where ) {
+		$roles = array();
 		$str = ("SELECT u.active AS _act, a.mainCharID as _mainCharID, u.username as _mname, uc.name as _mainCorp, 
 				a.charID as _charID, a.charName, ac.name as altCorp, a.pos, a.pos_edit, a.silo
 			FROM {$this->_table['fsrtool_alts']} a 
@@ -129,6 +131,16 @@ class userManagerWorld extends world {
 			$roles[ $row['_mainCharID'] ]['_alts'][] = $row;
 		}
 		return $roles;
+	}
+	
+	public function getCronJobs() {
+		$jobs = array();
+		$str = "SELECT * FROM {$this->_table['fsrtool_cron']}";
+		$res = $this->db->query( $str );
+		while ($row = $res->fetch_assoc()) {
+			$jobs[$row['id']] = $row;
+		}
+		return $jobs;
 	}
 }
 
