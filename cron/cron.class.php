@@ -44,7 +44,7 @@ class cron extends Database
 				$this->exec_query("UPDATE fsrtool_cron SET time=DATE_ADD(NOW(),INTERVAL -10 MINUTE) WHERE id={$row['id']};");
 				$time_end = microtime(true);
 				$time = $time_end - $time_start;
-				$out .= $row['name']() . ' done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
+				$out .= $row['name'] . ' done in ' . round($time, 4) . ' seconds, ' . round((memory_get_usage()/1024), 2) . "kb memory used.\n";
 			}
 		}
 		
