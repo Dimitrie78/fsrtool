@@ -670,7 +670,7 @@ class Ratter extends MemberWorld {
 		foreach( $args as $corpID => $name ) {
 			#$ti = microtime(true);
 			$res = array();
-			$result = $this->db->doQuery("SELECT Sum(amount2) as amount 
+			$result = $this->db->query("SELECT Sum(amount2) as amount 
 					FROM {$this->_table['snow_wallet']} 
 					WHERE corpid = '{$corpID}'
 					AND date between DATE_SUB(NOW(),INTERVAL 8 day) AND DATE_SUB(NOW(),INTERVAL 7 day)
@@ -723,7 +723,7 @@ class Ratter extends MemberWorld {
 					FROM {$this->_table['snow_wallet']} 
 					WHERE corpid = '{$corpID}'
 					AND date between DATE_SUB(NOW(),INTERVAL 1 day) AND NOW();");
-			while( $row = $this->db->fetch_assoc($result) ){
+			while( $row = $result->fetch_assoc() ){
 				if( $row ) 
 					$res[] = round($row['amount']);
 			}

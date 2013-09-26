@@ -497,8 +497,8 @@ class cronMember extends cron
 	}
 	
 	private function logerror($mesg) {
-		$callee = next(debug_backtrace());
-		$msg = $mesg."in ".$callee['file']." on line: ".$callee['line'];
+		//$callee = next(debug_backtrace());
+		//$msg = $mesg."in ".$callee['file']." on line: ".$callee['line'];
 		//if ( !is_dir( $this->logdir ) ) mkdir( $this->logdir );
 		//$logfile = $this->logdir . 'SnowCron' . date('dmY') . '.log';
 		//file_put_contents( $logfile, "\n".date('c')."\n".$msg."\n", FILE_APPEND );
