@@ -12,7 +12,7 @@ class User
 	public $_table = array();
 	
 	private $remTime = 2592000; // One month
-	private $remCookieName = 'ckSavePass';
+	private $remCookieName = 'ckSaveFSR';
 	private $remCookieDomain = '';
 	private $Path = '';
 	private $sessionVariable = 'userSessionValue';
