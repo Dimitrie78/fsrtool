@@ -617,11 +617,11 @@ class cron extends Database
 			$res = $this->exec_query( $str );
 			
 			if ( $this->addAlly( $allyID, $allyName ) ) {
-				$this->logerror("Alliance: ".$allyName." wurde der Datenbank hinzugefügt", $this->cronID, 0);
+				//$this->logerror("Alliance: ".$allyName." wurde der Datenbank hinzugefügt", $this->cronID, 0);
 			}
 			
 			if ( $this->addCorp( $corpID, $corpName, $allyID ) ) {
-				$this->logerror("Corperation: ".$corpName." wurde der Datenbank hinzugefügt", $this->cronID, 0);
+				//$this->logerror("Corperation: ".$corpName." wurde der Datenbank hinzugefügt", $this->cronID, 0);
 			}
 			
 		} catch (Exception $e) {
