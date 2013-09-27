@@ -176,6 +176,90 @@ class World
 			return true;
 		else return false;
 	}
+	
+	public function calendarAddEvent() {
+		$data = $this->db->escape($_POST);
+		$corpID = $this->User->corpID;
+		$insert = "INSERT INTO {$this->_table['fsrtool_calendar_events']} (corpID, title, start, end, allDay) VALUES ('%s', '%s', '%s', '%s', %s)";
+		$insert = sprintf($insert,
+			$corpID,
+			$data['data']['title'],
+			date('Y-m-d H:i:s', strtotime($data['data']['start'])),
+			date('Y-m-d H:i:s', strtotime($data['data']['end'])),
+			$data['data']['allDay']);
+		
+		$res = $this->db->query($insert);
+		
+		return $this->db->insert_id;
+	}
+	
+	public function calendarDropEvent() {
+		$data 	= $this->db->escape($_POST);
+		$corpID = $this->User->corpID;
+		$id 	= $data['data']['id'];
+		$day 	= $data['data']['day'];
+		$min 	= $data['data']['min'];
+		$allDay = $data['data']['allDay'];
+		if($data['data']['allDay'] == 1) {
+			$str = "UPDATE {$this->_table['fsrtool_calendar_events']} SET start = DATE_ADD(start, INTERVAL $day DAY), end = DATE_ADD(end, INTERVAL $day DAY), allDay = $allDay WHERE id=$id AND corpID=$corpID";
+			$this->db->query($str);
+		} else {
+			$str = "UPDATE {$this->_table['fsrtool_calendar_events']} SET 
+					start = DATE_ADD(start, INTERVAL $day DAY), 
+					start = DATE_ADD(start, INTERVAL $min MINUTE), 
+					end = DATE_ADD(end, INTERVAL $day DAY), 
+					end = DATE_ADD(end, INTERVAL $min MINUTE), 
+					allDay = $allDay 
+				WHERE id=$id AND corpID=$corpID";
+			$this->db->query($str);
+		}
+		
+		return json_encode($data);
+	}
+	
+	public function calendarResizeEvent() {
+		$data 	= $this->db->escape($_POST);
+		$corpID = $this->User->corpID;
+		$id 	= $data['data']['id'];
+		$day 	= $data['data']['day'];
+		$min 	= $data['data']['min'];
+		//$allDay = $data['data']['allDay']);
+		
+			$str = "UPDATE {$this->_table['fsrtool_calendar_events']} SET 
+					end = DATE_ADD(end, INTERVAL $day DAY), 
+					end = DATE_ADD(end, INTERVAL $min MINUTE)
+				WHERE id=$id AND corpID=$corpID";
+			$this->db->query($str);
+		
+		
+		return json_encode($data);
+	}
+	
+	public function calendarDelEvent() {
+		$data = $this->db->escape($_POST);
+		$corpID = $this->User->corpID;
+		$del = "DELETE FROM {$this->_table['fsrtool_calendar_events']} WHERE id = %d AND corpID=$corpID";
+		$del = sprintf($del, $data['id']);
+		$this->db->query($del);
+	}
+	
+	public function calendarGetEvent() {
+		$events=array();
+		$corpID = $this->User->corpID;
+		$get = "SELECT * FROM {$this->_table['fsrtool_calendar_events']} WHERE corpID=$corpID";
+		$res = $this->db->query($get);
+		while ($row = $res->fetch_assoc()) {
+			$event['id'] 	= $row['id'];
+			$event['title'] = $row['title'];
+			$event['start'] = $row['start'];
+			if($row['end'] != null) $event['end'] = $row['end'];
+			if($row['allDay'] == 0) $event['allDay'] = false;
+			$event['color'] = 'yellow';
+			$event['textColor'] = 'black';
+			$events[] = $event;
+		}
+		return $events;
+	}
 }
 
 ?>

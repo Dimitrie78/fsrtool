@@ -91,32 +91,48 @@ switch($action)
 		//echo print_r($_POST);
 	break;
 	
+	case 'addEvent':
+		echo $world->calendarAddEvent();
+	break;
+	case 'dropEvent':
+		echo $world->calendarDropEvent();
+	break;
+	case 'resizeEvent':
+		echo $world->calendarResizeEvent();
+	break;
+	case 'delEvent':
+		echo $world->calendarDelEvent();
+	break;
+		
 	case 'calendar':
 		header('Content-type: application/json');
-		$x=array();
+		$events=array();
 		
-		$silos = new Silos($corpID, $world);
-		$events = $silos->getMinTimeLeft();
-		$pos = $silos->StarbaseFuel();
+		$silos 	= new Silos($corpID, $world);
+		$silo 	= $silos->getMinTimeLeft();
+		$pos 	= $silos->StarbaseFuel();
+		$events	= $world->calendarGetEvent();
 		
-		foreach($events as $key => $val) {
-			$x[] = array(
+		foreach($silo as $key => $val) {
+			$events[] = array(
 				'title' => "Silos: $key",
 				'start' => $val['event'],
 				'allDay' => false,
-				'color' => 'green'
+				'color' => 'green',
+				'editable' => false
 				);
 		}
 		
 		foreach($pos as $key => $val) {
-			$x[] = array(
+			$events[] = array(
 				'title' => $key,
 				'start' => $val,
-				'allDay' => false
+				'allDay' => false,
+				'editable' => false
 				);
 		}
 
-		echo json_encode($x);
+		echo json_encode($events);
 	break;
 }
 

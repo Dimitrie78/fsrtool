@@ -2,7 +2,7 @@ div.msgBox
 {
     padding: 4px 10px 4px 10px;
     position: fixed;
-    z-index: 1000;
+    z-index: 1050;
     font-family:Verdana;
     width: 430px;
     min-height:160px;
@@ -75,6 +75,34 @@ div.msgBoxContent span
     color: #00335e;
 }
 
+/* Content class for IE7*/
+
+div.msgBoxContentIEOld
+{
+    font-size:11pt;
+    margin:0 3px 6px 3px;
+    display:inline-block;
+    float:left;
+    height:90px;
+    width:319px;
+	position: relative;
+}
+div.msgBoxContentIEOld p
+{
+    padding:0;
+    margin:0;
+    position: absolute;
+	top: 50%;
+}
+
+div.msgBoxContentIEOld span 
+{
+    position: relative;
+	top: -50%;
+}
+
+/* Content class for IE7*/
+
 div.msgBoxButtons
 {
     display:inline-block;
@@ -93,6 +121,7 @@ div.msgBoxButtons input[type='button']
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
+    outline: none;
 }
 div.msgBoxButtons input[type='button']:hover
 {
@@ -105,20 +134,40 @@ div.msgBoxButtons input[type='button']:active
     color:White;
 }
 
+div.msgBoxButtons input[type='button']:focus
+{
+    outline: none; 
+    border: solid 2px #FFCC66; /* replace outline by a border */
+	-o-transform:rotate(0); /*remove opera outline*/
+}
+
+div.msgBoxButtons input[type='button']::-moz-focus-inner /*remove firefox inner outline*/
+{ 
+    outline: none; 
+    border: none;
+}
+
 div.msgBoxInputs
 {
     margin:0 auto;
     padding-top:2px;
     padding-bottom:2px;
     margin-top:5px;
-    width:275px;
+    width:395px;
 }
 div.msgInput input[type='text'],div.msgInput input[type='password']
 {
     padding:4px;
     border:1px solid #DFDFDF;
-    color:#eee;
-    width:260px;
+    color:#2f2f2f;
+    width:180px;
+}
+div.msgInput input[type='textarea']
+{
+    padding:4px;
+    border:1px solid #DFDFDF;
+    color:#2f2f2f;
+    width:180px;
 }
 div.msgInput text
 {
