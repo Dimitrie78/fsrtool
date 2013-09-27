@@ -35,7 +35,7 @@
 {if $this.type == "2"}
   <tr bgcolor="#a0ffa0">
     <td style="text-align: center">{$this.dateTime|date_format:"%d/%m/%Y"}</td>
-	<td style="text-align: left">{renderName charID=$this.charID} has joined the corp.</td>
+	<td style="text-align: left">{renderNameNew char=$this} has joined the corp.</td>
   </tr>
 {/if}
 {if $this.type == "3"}
