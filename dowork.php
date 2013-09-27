@@ -400,7 +400,7 @@ if ( !isset($_REQUEST['module']) )
 							) {
 								$vCODE = $database->escape( $_POST['user']['api'] );
 								$keyID = $database->escape( $_POST['user']['id'] );
-								$res = $database->exec_query("UPDATE ".db_tab_user." SET keyID='{$keyID}', vCODE='{$vCODE}', accessMask='{$xml['accessMask']}', active=1 WHERE charID='{$User->charID}';");
+								$res = $database->exec_query("UPDATE {$database->_table['fsrtool_user']} SET keyID='{$keyID}', vCODE='{$vCODE}', accessMask='{$xml['accessMask']}', active=1 WHERE charID='{$User->charID}';");
 								if ($res) $Messages->addconfirm("account Updated");
 							} else {
 								$_SESSION['modules']['login']['accessMask'] = (int)$xml['accessMask'];
@@ -416,7 +416,7 @@ if ( !isset($_REQUEST['module']) )
 				
 			
 				if ( isset($email) ) {
-					$result = $database->exec_query("UPDATE ".db_tab_user." SET email='".$email."' WHERE charID='".$User->charID."';");
+					$result = $database->exec_query("UPDATE {$database->_table['fsrtool_user']} SET email='".$email."' WHERE charID='".$User->charID."';");
 					if ($result)
 						$Messages->addconfirm("Email updated.");
 					else
@@ -448,7 +448,7 @@ if ( !isset($_REQUEST['module']) )
 							) {
 								$api = $database->escape( $_POST['alt']['api'] );
 								$keyID = $database->escape( $_POST['alt']['id'] );
-								$query   = "UPDATE ".db_tab_alts." SET userID='".$keyID."', userAPI='".$api."', accessMask='{$xml['accessMask']}', newAPI=1 WHERE charID='".$charID."' AND mainCharID = '".$User->charID."';";
+								$query   = "UPDATE {$database->_table['fsrtool_alts']} SET userID='".$keyID."', userAPI='".$api."', accessMask='{$xml['accessMask']}', newAPI=1 WHERE charID='".$charID."' AND mainCharID = '".$User->charID."';";
 								$result  = $database->exec_query( $query );
 								if ($result) $Messages->addconfirm("API up to date");
 							} else {
@@ -465,7 +465,7 @@ if ( !isset($_REQUEST['module']) )
 				}
 			} elseif (isset($_POST['alt']['id'],$_POST['alt']['api'],$_POST['alt']['del']) && $_POST['alt']['del'] == 'delete') {
 				$charID = $_POST['alt']['char'];
-				$query = "DELETE FROM ".db_tab_alts." WHERE charID='".$charID."' AND mainCharID = '".$User->charID."';";
+				$query = "DELETE FROM {$database->_table['fsrtool_alts']} WHERE charID='".$charID."' AND mainCharID = '".$User->charID."';";
 				$result = $database->exec_query( $query );
 				if ($result) 
 					$Messages->addconfirm("Alt deleted");
