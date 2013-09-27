@@ -396,7 +396,7 @@ function startChatSession(){
 
 var formText = (function () {
 	//replace smileys
-	var url = "/chat/img/";
+	var url = "chat/img/";
 	var emt = {
        ":D"  : 'smileys-d.png',
        ":-D" : 'smileys-d.png',
