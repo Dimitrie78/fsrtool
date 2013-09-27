@@ -716,6 +716,7 @@ class cron extends Database
 				
 				if( !(intval($keyinfo->result->key->attributes()['accessMask']) & 16777216) ) {
 					$out .= 'You need a Key with access to Locations'."\n";
+					$this->ale->setConfig('parserClass', $parserClass);
 					return $out;
 				}
 				$str = "SELECT * FROM {$this->_tableLoc} WHERE corpID='{$this->_corpID}'";
