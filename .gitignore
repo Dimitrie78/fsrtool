@@ -3,8 +3,10 @@ makesql.php
 config/*.ini
 cache/templates_c/*.php
 cache/imgcache/*.jpg
+cache/imgcache/*.png
 cache/cache/*.txt
 cache/kills/*.txt
+cache/kills/*.xml
 cache/assetsCache/*.txt
 icons/Renders/*
 icons/Types/*
