@@ -2,6 +2,7 @@
 makesql.php
 config/*.ini
 cache/templates_c/*.php
+cache/imgcache/*.jpg
 cache/cache/*
 cache/kills/*
 cache/assetsCache/*.txt
