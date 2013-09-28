@@ -727,21 +727,21 @@ class cron extends Database
 						$item[$row['itemID']] = $row['locationID'];
 					}
 				}
-
-				$parmsID = array('ids' => implode(',', $ids)); 
-				$Locations = $this->ale->corp->Locations($parmsID);
-				// print_it($Locations->asXML());
-				
-				foreach($Locations->result->locations as $loc) {
-					$str = "UPDATE {$this->_tableLoc} SET 
-						itemName = '".$this->escape((string)$loc->itemName)."', 
-						x = '".(string)$loc->x."', 
-						y = '".(string)$loc->y."', 
-						z = '".(string)$loc->z."' 
-						WHERE itemID = '".(string)$loc->itemID."'";
-					if (!$this->query($str)) { break; }
+				if(count($ids) >= 1) {
+					$parmsID = array('ids' => implode(',', $ids)); 
+					$Locations = $this->ale->corp->Locations($parmsID);
+					// print_it($Locations->asXML());
+					
+					foreach($Locations->result->locations as $loc) {
+						$str = "UPDATE {$this->_tableLoc} SET 
+							itemName = '".$this->escape((string)$loc->itemName)."', 
+							x = '".(string)$loc->x."', 
+							y = '".(string)$loc->y."', 
+							z = '".(string)$loc->z."' 
+							WHERE itemID = '".(string)$loc->itemID."'";
+						if (!$this->query($str)) { break; }
+					}
 				}
-				
 			} catch (Exception $e) {
 				$out .= $e->getMessage()."\n";
 				throw new Exception('Problem in doLocations::'.$e->getMessage(),$e->getCode());
