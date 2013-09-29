@@ -321,7 +321,7 @@ class fitting
 		$this->db->exec_query("INSERT INTO $table ($columns) VALUES ($values);");
 		
 		
-		$fitID = $this->db->insert_id();
+		$fitID = $this->db->insert_id;
 		// The following code will print all the modules
 		$num_elements=count($fitarray);
 		$i = 1;

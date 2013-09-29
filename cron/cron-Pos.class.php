@@ -229,7 +229,8 @@ class cronPos extends cron
 			break;
 			
 			case 4:
-				$this->del_fullApi($charID);
+				if($code != 400)
+					$this->del_fullApi($charID);
 			break;
 			
 			case 5:
