@@ -51,7 +51,7 @@ switch($action)
 		if( isset($_GET['term']) && strlen($_GET['term']) > 2 ) {  // Post Variable Input Feld ?
 			$corpID = $User->corpID;
 					
-			$sql = "SELECT charID, name FROM ".db_snow_characters."	
+			$sql = "SELECT charID, name FROM ".$world->_table['snow_characters']."	
 				WHERE name LIKE '".$world->db->escape( $_GET['term'] )."%'
 				AND corpID = '{$corpID}'
 				ORDER BY name ASC;";
