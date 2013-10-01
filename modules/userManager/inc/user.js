@@ -98,6 +98,24 @@ $(document).ready(function(){
 	//alert(charID + role);
   });
   
+  $('img.cron').click(function(){
+	var cronID = $(this).attr('id');
+	var x = $(this);
+	if ( $(this).attr('src') == 'icons/cross.png' ) {
+		$.post('dowork.php', {module:'userManager', action:'editCron', cronID:cronID, edit:1}, function(data) {
+			if (data == 1) $(x).attr('src', 'icons/tick.png');
+			else alert('noooo...');
+		});
+	}
+	else {
+		$.post('dowork.php', {module:'userManager', action:'editCron', cronID:cronID, edit:0}, function(data) {
+			if (data == 1) $(x).attr('src', 'icons/cross.png');
+			else alert('noooo...');
+		});
+	}
+	
+  });
+  
   $('input#id_search').quicksearch('table.user tbody tr');
 });
 

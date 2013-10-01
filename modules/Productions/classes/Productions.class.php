@@ -6,15 +6,14 @@ class Productions {
 	private $_corpID = null;
 	//private $_db = null;
 	
-	private $_table_api = 'fsrtool_jb_apis';
+	private $_table_api = 'fsrtool_user_fullapi';
 	private $_table_corp = 'fsrtool_corps';
 	
 	public function __construct(World $world) {
-		global $parms;
 		
 		$this->_corpID = $world->User->corpID;//$corpID;
 		$this->_db = $world->db;
-		$this->_ale = AleFactory::getEVEOnline($parms);
+		$this->_ale = AleFactory::getEVEOnline();
 		// echo '<pre>'; print_r($this); echo '</pre>';die;
 	}
 	
@@ -35,17 +34,19 @@ class Productions {
 	}
 	
 	public function getApis() {
-		return $this->_db->fetch_all("SELECT a.*, c.name AS corpName FROM {$this->_table_api} AS a 
-			LEFT JOIN {$this->_table_corp} AS c ON a.corpID = c.id
-			ORDER BY a.charName");
+		return $this->_db->fetch_one("SELECT a.*, c.name AS corpName FROM {$this->_table_api} AS a 
+			LEFT JOIN {$this->_db->_table['fsrtool_corps']} AS c ON a.corpID = c.id
+			WHERE a.corpID = {$this->_corpID}");
 	}
 	
 	public function getJobs() {
-		$userID = '2316674';
-		$apiKey = '7qZtSilrBW7ksaVExL3ZmDiDCrF8VdPlW7HBdEnkIZ4pfZRxGdcsrIh4Cmx9YxX9';
-		$charID = '483953569';
+		$api = $this->getApis();
+		
+		$userID = $api['keyID'];
+		$apiKey = $api['vCODE'];
+		$charID = $api['charID'];
 
-		try{
+		try {
 		  //$ale = AleFactory::getEvEOnline();
 		  $this->_ale->setKey($userID,$apiKey,$charID);
 		  $jobs = $this->_ale->corp->IndustryJobs();
@@ -106,7 +107,7 @@ class Productions {
 		  if (!$res_type) { $json['error'] = 'Ungültige Anfrage: ' . $this->_db->error; return $json; }
 		  # systemID -> systemName
 		  $qry = "SELECT solarSystemID,solarSystemName FROM {$this->_db->_table['mapsolarsystems']} WHERE solarSystemID = ".implode(' OR solarSystemID = ',array_keys($stat_sys));
-		  $res_sys = $this->_db->query($qry);
+		  $res_sys = $this->_db->query($qry, false);
 		  if (!$res_sys) { $json['error'] = 'Ungültige Anfrage: ' . $this->_db->error; return $json; }
 		  
 		  for($i=0;$i<count($_jobs);$i++){
@@ -145,7 +146,7 @@ class Productions {
 		  //mysql_free_result($res_type);
 		  
 		}
-		catch(Exeption $e){
+		catch (Exception $e) {
 		  $json['error'] = $e->getCode(). ' - ' .$e->getMessage();
 		  return $json;
 		}

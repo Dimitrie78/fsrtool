@@ -142,6 +142,13 @@ class userManagerWorld extends world {
 		}
 		return $jobs;
 	}
+	
+	public function setCron() {
+		$data = $this->db->escape($_POST);
+		$str = "UPDATE {$this->_table['fsrtool_cron']} SET status = '{$data['edit']}' WHERE id = '{$data['cronID']}';";
+		
+		return $this->db->query( $str );
+	}
 }
 
 ?>

@@ -53,5 +53,12 @@ switch($action)
 		}
 		else echo '0';
 	break;
+	
+	case "editCron":
+		if ($User->Admin) {
+			echo $world->setCron();
+		}
+		else echo '0';
+	break;
 }
 ?>

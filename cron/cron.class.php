@@ -27,7 +27,7 @@ class cron extends Database
 	public function run() {
 		$out = '';
 		if ( $run === null && !self::$charID && !self::$corpID) {
-			$res = $this->query("SELECT c.id, c.name from fsrtool_cron c WHERE DATE_SUB(NOW(), INTERVAL c.interwal MINUTE) >= c.time AND status = 1 ORDER BY c.id LIMIT 5;");
+			$res = $this->query("SELECT c.id, c.name from fsrtool_cron c WHERE DATE_SUB(NOW(), INTERVAL c.interwal MINUTE) >= c.time AND status = 1 ORDER BY c.id;");
 			while($row = $res->fetch_assoc()) {
 				$time_start = microtime(true);
 				$this->cronID = $row['id'];
@@ -796,7 +796,10 @@ class cron extends Database
 		$now = (time()-$offset)/3600;
 		
 		$apis = array();
-		$res = $this->query("SELECT * FROM {$this->_table['fsrtool_user_fullapi']} WHERE status=1;");
+		$res = $this->query("SELECT a.*, c.name AS corpName 
+			FROM {$this->_table['fsrtool_user_fullapi']} a
+			LEFT JOIN {$this->_table['fsrtool_corps']} c ON a.corpID = c.id
+			WHERE a.status=1;");
 		while ( $row = $res->fetch_assoc() ) {
 			if($row) $apis[] = $row;
 		} $res->close();
@@ -845,7 +848,7 @@ class cron extends Database
 						}
 					}
 				}
-				$text = '';
+				$text = $key['corpName'].'<br />';
 				if(count($lowFuel) >= 1) {
 					foreach($lowFuel as $moonID => $time) {
 						$text .= $this->moonIDtoName($moonID)." - low on Fuel ({$time} hours)<br />";

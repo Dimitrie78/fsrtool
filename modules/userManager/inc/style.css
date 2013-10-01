@@ -22,7 +22,7 @@
 .down {
 	background-color:#444444;
 }
-img.del, img.edit, img.role , img.altrole {
+img.del, img.edit, img.role , img.altrole, img.cron {
 	cursor:pointer;
 }
 

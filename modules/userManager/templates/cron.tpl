@@ -19,7 +19,7 @@
 	  <td>{$v.interwal}</td>
 	  <td>{$v.time}</td>
 	  <td>{$v.description}</td>
-	  <td>{if $v.status == '1'}<img id="{$k}" src="icons/tick.png" />{else}<img id="{$k}" src="icons/cross.png" />{/if}</td>
+	  <td>{if $v.status == '1'}<img class="cron" id="{$k}" src="icons/tick.png" />{else}<img class="cron" id="{$k}" src="icons/cross.png" />{/if}</td>
 	</tr>
 {/foreach}
   </tbody>
