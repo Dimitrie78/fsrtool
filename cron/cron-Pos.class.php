@@ -103,7 +103,7 @@ class cronPos extends cron
 					}
 				} 
 				unset($StarbaseList);
-				$out .= $this->doLocations($key);
+				if (!$this->ale->isFromCache()) $out .= $this->doLocations($key);
 			} catch (Exception $e) {
 				$out .= $e->getCode().' - '.$e->getMessage()."\n";
 				$this->errorHandler('Problem in StarbaseDetail::'.$e->getMessage(), $e->getCode(), $key['charID'], $key);

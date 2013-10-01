@@ -816,11 +816,12 @@ class cron extends Database
 			$corpID = $key['corpID'];
 			$allyID = $key['allyID'];
 			$_min_time = $key['lowfueltime'];
+			$mailrow = array();
 			
 			$resmail = $this->query("SELECT email FROM {$_table_mail} WHERE corpID = {$corpID}");
 			if($resmail->num_rows >= 1) {
 				while($rowmail = $resmail->fetch_assoc()){
-					$mailrow[] = $rowmail['email'];
+					if ($rowmail['email']) $mailrow[] = $rowmail['email'];
 				}
 			
 				$sovres = $this->query("SELECT solarSystemID FROM {$_table_sov} WHERE allianceID = {$allyID}");
@@ -861,9 +862,11 @@ class cron extends Database
 	
 	private function send_lowFuelMail(array $emails, $text) {
 		$this->mail->to = array();
+		
 		foreach($emails as $to) {
 			$this->mail->AddAddress($to);
 		}
+		
 		$Subject = 'Control Tower low on Fuel';
 		$Body = 'Hello,<br />'
 			.'<br />'
