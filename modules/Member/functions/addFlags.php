@@ -60,7 +60,7 @@ function updateFlags() {
 		$res = $world->db->query("SELECT * FROM ".$world->_table['snow_jobs']." WHERE charID = ".$charID);
 		$row = $res->fetch_array();
 		if( !empty($row[0]) )	{
-			$query = "UPDATE ".db_snow_jobs." SET
+			$query = "UPDATE ".$world->_table['snow_jobs']." SET
 			   pos       = '".$posd."',
 			   exempt    = '".$exempt."',
 			   legacy    = '".$legacy."',

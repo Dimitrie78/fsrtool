@@ -38,8 +38,7 @@ switch($action)
 	break;
 	
 	case 'addFlag':
-		#print 'test';
-		#print_r($_POST); 
+		//echo '<pre>'; print_r($_POST); die;
 		echo updateFlags();
 	break;
 	
