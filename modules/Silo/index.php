@@ -93,6 +93,7 @@ if ($User->Manager || $corpid){
 			$test = new test($corpID, $world);
 			$smarty->assign('MySelectetMenue', 'Silos');
 			$smarty->assign('pre', print_r($test->test(), true));
+			$smarty->assign('price', $test->test());
 			$smarty->display('file:['.ACTIVE_MODULE.']settings.tpl');
 		break;
 		

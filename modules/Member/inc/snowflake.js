@@ -26,7 +26,7 @@ $(document).ready(function(){
 	if (id == 9) $('#player_'+id).tablesorter( { widgets: ['zebra'],	headers: { 9: { sorter: "g_float", } } } );
 	if (id == 23) $('#player_'+id).tablesorter( { widgets: ['zebra'],	headers: { 2: { sorter: "g_float", } , 3: { sorter: "g_float", } } } );
 	
-	$('table tbody tr').hover(
+	$('table.snow tbody tr').hover(
 			function(){
 				$(this).css('background-color','#467c15');
 			},

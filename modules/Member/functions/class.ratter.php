@@ -212,8 +212,17 @@ class Ratter extends MemberWorld {
 		}
 		
 		unset($a);
+		$x=0; $json=array();
+		foreach($this->char as $char) {
+			if ($char['ratBountys']) {
+				$json[$x][] = $char['name'];
+				$json[$x][] = $char['ratBountys'];
+				$x++;
+			}
+		}
+		
 		$head = array('Name', 'Bountys');
-		return array( 'sort' => 1, 'head' => $head, 'body' => $this->char);
+		return array( 'sort' => 1, 'head' => $head, 'body' => $this->char, 'json' => json_encode($json));
 	
 	}
 	
@@ -432,7 +441,7 @@ class Ratter extends MemberWorld {
 	}
 	
 	private function ratting_by_system() {
-		$str = "SELECT w.system AS systemName, evr.regionName as regionName, es.security as truesec, SUM( w.amount2 ) AS ratBountys
+		$str = "SELECT w.system AS systemName, evr.regionName as regionName, ROUND(es.security, 3) as truesec, SUM( w.amount2 ) AS ratBountys
 				FROM {$this->_table['snow_wallet']} w
 				INNER JOIN {$this->_table['mapsolarsystems']} es ON es.solarSystemID = w.system_id
 				INNER JOIN {$this->_table['mapconstellations']} ec ON es.constellationID = ec.constellationID
@@ -442,12 +451,24 @@ class Ratter extends MemberWorld {
 				ORDER BY SUM( amount2 ) DESC
 				LIMIT 100 ";
 		# print $str;  die;
+		
+		$system = $this->db->fetch_all( $str );
+		
+		$x=0; $json=array();
+		foreach($system as $sys) {
+			if ($sys['ratBountys']) {
+				$json[$x][] = $sys['systemName'];
+				$json[$x][] = floor($sys['ratBountys']);
+				$x++;
+			}
+		}
+		
 		$head = array('systemName', 'regionName', 'truesec', 'ratBountys');
-		return array( 'sort' => 3, 'head' => $head, 'body' => $this->db->fetch_all( $str )); 
+		return array( 'sort' => 3, 'head' => $head, 'body' => $system, 'json' => json_encode($json)); 
 	}
 	
 	private function ratting_by_region() {
-		$str = "SELECT evr.regionName as regionName, avg(es.security) as avg_truesec, COUNT(distinct w.system_id) AS dif_sys, SUM( w.amount2 ) AS ratBountys
+		$str = "SELECT evr.regionName as regionName, ROUND(avg(es.security), 3) as avg_truesec, COUNT(distinct w.system_id) AS dif_sys, SUM( w.amount2 ) AS ratBountys
 				FROM {$this->_table['snow_wallet']} w
 				INNER JOIN {$this->_table['mapsolarsystems']} es ON es.solarSystemID = w.system_id
 				INNER JOIN {$this->_table['mapconstellations']} ec ON es.constellationID = ec.constellationID
@@ -456,8 +477,20 @@ class Ratter extends MemberWorld {
 				GROUP BY evr.regionID
 				ORDER BY SUM( amount2 ) DESC
 				LIMIT 100 ";
+		
+		$region = $this->db->fetch_all( $str );
+		
+		$x=0; $json=array();
+		foreach($region as $sys) {
+			if ($sys['ratBountys']) {
+				$json[$x][] = $sys['regionName'];
+				$json[$x][] = floor($sys['ratBountys']);
+				$x++;
+			}
+		}
+		
 		$head = array('regionName', 'avg_truesec', 'dif_sys', 'ratBountys');
-		return array( 'sort' => 3, 'head' => $head, 'body' => $this->db->fetch_all( $str ));
+		return array( 'sort' => 3, 'head' => $head, 'body' => $region, 'json' => json_encode($json)); 
 	}
 	
 	private function domi_kills() {

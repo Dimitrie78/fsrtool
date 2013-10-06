@@ -14,6 +14,7 @@ $(document).ready(function(){
 		$("#result").html('Wait while loading Data...');
 		$.post('dowork.php', {module:'Silo', action:'eve-central'}, function(data) {
 			$("#result").html(data);
+			location.reload();
 		});
 	});
 	
