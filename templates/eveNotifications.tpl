@@ -57,7 +57,7 @@
 	
 	<span id="mail">
 	{if isset($eveNotifications->pushMail[0].email)}<br />
-	Status:&nbsp;{if $eveNotifications->pushMail[0].mail_valid}<span class="ok">ok</span>{else}<span class="bad">bad</span>{/if}
+	Status:&nbsp;{if $eveNotifications->pushMail[0].email_valid}<span class="ok">ok</span>{else}<span class="bad">bad</span>{/if}
 	<br />
 		{$eveNotifications->pushMail[0].email}&nbsp;
 		<img id="delMail" src="icons/delete.png" title="delete" alt="delete" />

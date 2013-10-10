@@ -10,7 +10,7 @@ $timeZ =   ReadConfigFile(MODULE_DIR . ACTIVE_MODULE . '/templates/timezone.txt'
 
 $smarty->assign('addheader', array( '<link rel="stylesheet" type="text/css" href="modules/Member/inc/styles.css" />'."\n",
 								));
-
+//$User->corpID = 1323940247;
 $_SESSION['corpID'] = $User->corpID;
 
 define('ACTION', $action);
