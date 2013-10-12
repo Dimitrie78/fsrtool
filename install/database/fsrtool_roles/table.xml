@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fsrtool>
  <name>fsrtool_roles</name>
- <rows>9</rows>
+ <rows>10</rows>
  <structure>CREATE TABLE `fsrtool_roles` (
   `roleID` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `roleName` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`roleID`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8</structure>
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8</structure>
 </fsrtool>

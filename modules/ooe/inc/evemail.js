@@ -51,7 +51,7 @@ $.fn.addmail = function (data) {
 	var table = '<table width="100%">'
 		+ '<tr><td style="text-align: right; vertical-align: top;">'
 		+ '<a href="#" class="close">'
-		+ '<img class="btn_close" src="icons/close_pop.png" title="Close Window" alt="Close"></a></td></tr>'
+		+ '<img class="btn_close" src="icons/cross.png" title="Close Window" alt="Close"></a></td></tr>'
 		+ '<tr><td>'+data+'</td></tr>'
 		+ '</table>';
 	return $(this).html(table);

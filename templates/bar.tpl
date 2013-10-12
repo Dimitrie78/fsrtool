@@ -14,7 +14,7 @@
 		{if $curUser->SiloManager || $curUser->SiloAlt} // <a href="{$url_index}?module=Silo" title="Silo verwaltungstool">SILO</a>{/if}
 		{if $curUser->DreadManager} // <a href="{$url_index}?module=Dread">Dread-tool</a>{/if}
 		{if $curUser->Admin} // <a href="{$url_index}?module=jb" title="JumpBridgeFuel">JB</a>{/if}
-		{if $curUser->Admin} // <a href="{$url_index}?module=Productions" title="Industry">Productions</a>{/if}
+		{if $curUser->Manager || $curUser->InduJobs} // <a href="{$url_index}?module=Productions" title="Industry">Productions</a>{/if}
 		 // <a href="{$url_index}?module=Member" title="Membertool">Membertool</a>
 	{else}&nbsp; {/if}
 	</div>

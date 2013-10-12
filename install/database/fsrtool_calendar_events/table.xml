@@ -3,7 +3,8 @@
  <name>fsrtool_calendar_events</name>
  <rows>0</rows>
  <structure>CREATE TABLE `fsrtool_calendar_events` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `corpID` int(11) unsigned DEFAULT NULL,
   `title` text,
   `start` varchar(255) DEFAULT NULL,
   `end` varchar(255) DEFAULT NULL,

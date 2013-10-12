@@ -5,7 +5,7 @@ $smarty->assign('action', $action);
 $smarty->assign('addheader', array( '<link rel="stylesheet" type="text/css" href="modules/Productions/inc/styles.css" />'."\n", ));
 
 
-if ( $User->Manager ){
+if ($User->Manager || $User->InduJobs){
 	$Productions = new Productions($world);
 	switch ($action) {
 		case 'main':
