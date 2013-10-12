@@ -35,6 +35,8 @@ if ( !isset($_REQUEST['module']) )
 				$ale->setConfig('serverError', 'returnParsed');
 				$ale->setKey($data['keyID'],$data['vCODE'],$_REQUEST['charID']);
 				
+				$string = URL_INDEX."?action=showCharSelection";
+				
 				try {
 					$CharacterInfo = $ale->eve->CharacterInfo();
 					if ( $CharacterInfo->error ) {
