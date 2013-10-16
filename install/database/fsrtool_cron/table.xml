@@ -7,7 +7,8 @@
   `name` varchar(255) DEFAULT NULL,
   `interwal` mediumint(3) DEFAULT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `description` varchar(255) DEFAULT NULL,
   `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC</structure>
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</structure>
 </fsrtool>
