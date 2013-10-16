@@ -112,173 +112,138 @@ class cronSilos extends cron
 				/* $stmt = $this->prepare($insert);
 				$stmt->bind_param("ssiiiiiiii", $itemID, $corpID, $locationID, $typeID, $quantity, $flag, $singleton, $rawQuantity, $contents, $lastFetch); */
 				/* test */
-				foreach ($xml->result->rowset->row as $row)	{
-					
-					/* test */
-					
-					/* $itemID 	 = (string)$row['itemID'];
-					$locationID	 = (string)$row['locationID'];
-					$typeID		 = (string)$row['typeID'];
-					$quantity	 = (string)$row['quantity'];
-					$flag		 = (string)$row['flag'];
-					$singleton	 = (string)$row['singleton'];
-					$rawQuantity = (string)$row['rawQuantity'];
-					$contents    = 0;
-					$lastFetch   = $cachetime;
-					
-					if (count((array)$row->children()) >= 1 && is_object($row->children()->rowset->row)) {
-						$contents = 1;
-						$this->assetsContent($row->children()->rowset->row, $itemID, $corpID, $cachetime);
-					}
-					// Execute the statement 
-					$stmt->execute();
-					
-					if ($stmt->error) {
-						$out .= $stmt->error."\n";
-					} */
-					
-					/* test */
-					
-					/* CorpHanger */
-					if ( ((string) $row['typeID'] == '17621' || (string) $row['typeID'] == '27') && (int) $row['singleton'] == 1 ) {
-						foreach ($row->attributes() as $key => $val) {
-							$output[(string) $key] = (string) $val;					
-						}
+				if (isset($xml->result->rowset->row)) {
+					foreach ($xml->result->rowset->row as $row)	{
+						
+						/* test */
+						
+						/* $itemID 	 = (string)$row['itemID'];
+						$locationID	 = (string)$row['locationID'];
+						$typeID		 = (string)$row['typeID'];
+						$quantity	 = (string)$row['quantity'];
+						$flag		 = (string)$row['flag'];
+						$singleton	 = (string)$row['singleton'];
+						$rawQuantity = (string)$row['rawQuantity'];
+						$contents    = 0;
+						$lastFetch   = $cachetime;
+						
 						if (count((array)$row->children()) >= 1 && is_object($row->children()->rowset->row)) {
-						//$out .= count((array)$row->children())."\n";
-						//$out .= (string) $row['itemID']."\n";
-						//$out .= gettype($row->children()->rowset->row)."\n";
-							
-							foreach ($row->children()->rowset->row as $row) {
-								if ( in_array((string) $row['typeID'],$fuelarray) ) {
-									foreach ($row->attributes() as $name => $value) {
-										$output['in'][(string) $name] = (string) $value;
-									}
-									$query = ("REPLACE INTO {$this->_table['fsrtool_pos_corphanger']} SET
-										corpID		= '".$corpID."',
-										itemID      = '".$output['in']['itemID']."',
-										locationID  = '".$output['locationID']."',
-										type      	= '".$output['typeID']."',
-										typeID   	= '".$output['in']['typeID']."',
-										quantity 	= '".$output['in']['quantity']."',
-										flag     	= '".$output['in']['flag']."' ;");
-									$this->exec_query( $query ); //  'Set Asset -> CorpHanger'
-									unset ($output['in']);
-								}
+							$contents = 1;
+							$this->assetsContent($row->children()->rowset->row, $itemID, $corpID, $cachetime);
+						}
+						// Execute the statement 
+						$stmt->execute();
+						
+						if ($stmt->error) {
+							$out .= $stmt->error."\n";
+						} */
+						
+						/* test */
+						
+						/* CorpHanger */
+						if ( ((string) $row['typeID'] == '17621' || (string) $row['typeID'] == '27') && (int) $row['singleton'] == 1 ) {
+							foreach ($row->attributes() as $key => $val) {
+								$output[(string) $key] = (string) $val;					
 							}
-						}
-						unset ($output);
-					}
-					
-					/* Silos */
-					if ( in_array((string) $row['typeID'], $silos) && (int) $row['singleton'] == 1 && (int) $row['flag'] == 0 ) {
-						foreach ($row->attributes() as $key => $val) {
-							$output[(string) $key] = (string) $val;
-						}
-						if (count((array)$row->children()) >= 1 && is_object($row->children()->rowset->row)) {
-							foreach ($row->children()->rowset->row as $row) {
-								foreach ($row->attributes() as $name => $value) {
-									$output['silo'][(string) $name] = (string) $value;
-								}
-							}
-						}
-						// sort Couplin Arrays out that contain no mineral in groupID 18
-						if ($output['typeID'] == 17982 && in_array($output['silo']['typeID'], $mins) || $output['typeID'] != 17982) {
-							
-							$apiSilos[] = $output['itemID'];
-							// print_it ( $output );
-							$res = $this->query("SELECT itemID, locationID, typeID FROM {$this->_table['fsrtool_silos']} WHERE itemID = '".$output['itemID']."';");
-							if ( $res->num_rows > 0 ) {
+							if (count((array)$row->children()) >= 1 && is_object($row->children()->rowset->row)) {
+							//$out .= count((array)$row->children())."\n";
+							//$out .= (string) $row['itemID']."\n";
+							//$out .= gettype($row->children()->rowset->row)."\n";
 								
-								$silores = $res->fetch_assoc();
-								if( $silores['locationID'] != $output['locationID'] ) 
-									$location = "locationID = '".$output['locationID']."', pos = NULL,"; 
-								else $location = "";
-								if ( isset($output['silo']['typeID']) && $silores['typeID'] == $output['silo']['typeID'] ) {
-									$query = "UPDATE {$this->_table['fsrtool_silos']} 
-											  SET typeID	 = '".$output['silo']['typeID']."',
-												  ".$location."
-												  quantity	 = '".$output['silo']['quantity']."',
-												  emptyTime	 = '0'
-											  WHERE itemID = '".$output['itemID']."';";
+								foreach ($row->children()->rowset->row as $row) {
+									if ( in_array((string) $row['typeID'],$fuelarray) ) {
+										foreach ($row->attributes() as $name => $value) {
+											$output['in'][(string) $name] = (string) $value;
+										}
+										$query = ("REPLACE INTO {$this->_table['fsrtool_pos_corphanger']} SET
+											corpID		= '".$corpID."',
+											itemID      = '".$output['in']['itemID']."',
+											locationID  = '".$output['locationID']."',
+											type      	= '".$output['typeID']."',
+											typeID   	= '".$output['in']['typeID']."',
+											quantity 	= '".$output['in']['quantity']."',
+											flag     	= '".$output['in']['flag']."' ;");
+										$this->exec_query( $query ); //  'Set Asset -> CorpHanger'
+										unset ($output['in']);
+									}
 								}
-								elseif( isset($output['silo']['typeID']) && $silores['typeID'] != $output['silo']['typeID']) {
-									$query = "UPDATE {$this->_table['fsrtool_silos']} 
-											  SET ".$location."
-												  typeID	 = '".$output['silo']['typeID']."',
-												  alarm		 = '0',
-												  quantity   = '".$output['silo']['quantity']."',
-												  emptyTime  = '0'
-											  WHERE itemID = '".$output['itemID']."';";
-								}
-								elseif( isset($output['silo']['typeID']) && $silores['typeID'] != $output['silo']['typeID'] && $output['silo']['typeID'] != 0) {
-									$query = "UPDATE {$this->_table['fsrtool_silos']} 
-											  SET typeID	 = '".$output['silo']['typeID']."',
-												  locationID = '".$output['locationID']."',
-												  pos 		 = NULL,
-												  turn		 = '0',
-												  input		 = '0',
-												  stack		 = '0',
-												  alarm		 = '0',
-												  quantity   = '".$output['silo']['quantity']."',
-												  emptyTime  = '0'
-											  WHERE itemID = '".$output['itemID']."';";
-								}
-								else {
-								// echo $output['silo']['typeID'].' x<br>';
-									$query = "UPDATE {$this->_table['fsrtool_silos']} 
-											  SET locationID = '".$output['locationID']."',
-												  /*typeID	 = '0',*/
-												  quantity   = '0',
-												  emptyTime  = '0'
-											  WHERE itemID = '".$output['itemID']."';";
-								}
-								$this->exec_query( $query );
-								//print $query. '<br>';
-							} else {
-								$query = "INSERT INTO {$this->_table['fsrtool_silos']} 
-										  SET itemID 	 = '".$output['itemID']."',
-											  corpID 	 = '".$corpID."',
-											  locationID = '".$output['locationID']."',
-											  siloTypeID = '".$output['typeID']."',
-											  typeID	 = '".$output['silo']['typeID']."',
-											  quantity	 = '".$output['silo']['quantity']."';";
-								// echo $query.'<br>';
-								$this->exec_query( $query );
 							}
-							$res->close();
+							unset ($output);
 						}
-						unset ($output);
-					}
-					
-					/* Reactors */
-					if ( in_array((string) $row['typeID'], $reactors) && (int) $row['singleton'] == 1 && (int) $row['flag'] == 0 ) {
-						foreach ($row->attributes() as $key => $val) {
-							$output[(string) $key] = (string) $val;
-						}
-						$apiReactors[] = $output['itemID'];
-						if (count((array)$row->children()) >= 1 && is_object($row->children()->rowset->row)) {
-							foreach ($row->children()->rowset->row as $row) {
-								foreach ($row->attributes() as $name => $value) {
-									$output['reactor'][(string) $name] = (string) $value;
+						
+						/* Silos */
+						if ( in_array((string) $row['typeID'], $silos) && (int) $row['singleton'] == 1 && (int) $row['flag'] == 0 ) {
+							foreach ($row->attributes() as $key => $val) {
+								$output[(string) $key] = (string) $val;
+							}
+							if (count((array)$row->children()) >= 1 && is_object($row->children()->rowset->row)) {
+								foreach ($row->children()->rowset->row as $row) {
+									foreach ($row->attributes() as $name => $value) {
+										$output['silo'][(string) $name] = (string) $value;
+									}
 								}
-								$res = $this->query("SELECT itemID FROM {$this->_table['fsrtool_silos_reactors']} WHERE itemID = '".$output['itemID']."';");
-								if ( $res->num_rows == 0 ) {
-									$query = "INSERT INTO {$this->_table['fsrtool_silos_reactors']} 
+							}
+							// sort Couplin Arrays out that contain no mineral in groupID 18
+							if ($output['typeID'] == 17982 && in_array($output['silo']['typeID'], $mins) || $output['typeID'] != 17982) {
+								
+								$apiSilos[] = $output['itemID'];
+								// print_it ( $output );
+								$res = $this->query("SELECT itemID, locationID, typeID FROM {$this->_table['fsrtool_silos']} WHERE itemID = '".$output['itemID']."';");
+								if ( $res->num_rows > 0 ) {
+									
+									$silores = $res->fetch_assoc();
+									if( $silores['locationID'] != $output['locationID'] ) 
+										$location = "locationID = '".$output['locationID']."', pos = NULL,"; 
+									else $location = "";
+									if ( isset($output['silo']['typeID']) && $silores['typeID'] == $output['silo']['typeID'] ) {
+										$query = "UPDATE {$this->_table['fsrtool_silos']} 
+												  SET typeID	 = '".$output['silo']['typeID']."',
+													  ".$location."
+													  quantity	 = '".$output['silo']['quantity']."',
+													  emptyTime	 = '0'
+												  WHERE itemID = '".$output['itemID']."';";
+									}
+									elseif( isset($output['silo']['typeID']) && $silores['typeID'] != $output['silo']['typeID']) {
+										$query = "UPDATE {$this->_table['fsrtool_silos']} 
+												  SET ".$location."
+													  typeID	 = '".$output['silo']['typeID']."',
+													  alarm		 = '0',
+													  quantity   = '".$output['silo']['quantity']."',
+													  emptyTime  = '0'
+												  WHERE itemID = '".$output['itemID']."';";
+									}
+									elseif( isset($output['silo']['typeID']) && $silores['typeID'] != $output['silo']['typeID'] && $output['silo']['typeID'] != 0) {
+										$query = "UPDATE {$this->_table['fsrtool_silos']} 
+												  SET typeID	 = '".$output['silo']['typeID']."',
+													  locationID = '".$output['locationID']."',
+													  pos 		 = NULL,
+													  turn		 = '0',
+													  input		 = '0',
+													  stack		 = '0',
+													  alarm		 = '0',
+													  quantity   = '".$output['silo']['quantity']."',
+													  emptyTime  = '0'
+												  WHERE itemID = '".$output['itemID']."';";
+									}
+									else {
+									// echo $output['silo']['typeID'].' x<br>';
+										$query = "UPDATE {$this->_table['fsrtool_silos']} 
+												  SET locationID = '".$output['locationID']."',
+													  /*typeID	 = '0',*/
+													  quantity   = '0',
+													  emptyTime  = '0'
+												  WHERE itemID = '".$output['itemID']."';";
+									}
+									$this->exec_query( $query );
+									//print $query. '<br>';
+								} else {
+									$query = "INSERT INTO {$this->_table['fsrtool_silos']} 
 											  SET itemID 	 = '".$output['itemID']."',
 												  corpID 	 = '".$corpID."',
 												  locationID = '".$output['locationID']."',
-												  typeID	 = '".$output['typeID']."',
-												  typeIDx	 = '".$output['reactor']['typeID']."';";
-									// echo $query.'<br>';
-									$this->exec_query( $query );
-								} else {
-									$query = "UPDATE {$this->_table['fsrtool_silos_reactors']} 
-											  SET corpID 	 = '".$corpID."',
-												  locationID = '".$output['locationID']."',
-												  typeID	 = '".$output['typeID']."',
-												  typeIDx	 = '".$output['reactor']['typeID']."'
-											  WHERE itemID 	 = '".$output['itemID']."';";
+												  siloTypeID = '".$output['typeID']."',
+												  typeID	 = '".$output['silo']['typeID']."',
+												  quantity	 = '".$output['silo']['quantity']."';";
 									// echo $query.'<br>';
 									$this->exec_query( $query );
 								}
@@ -286,49 +251,85 @@ class cronSilos extends cron
 							}
 							unset ($output);
 						}
+						
+						/* Reactors */
+						if ( in_array((string) $row['typeID'], $reactors) && (int) $row['singleton'] == 1 && (int) $row['flag'] == 0 ) {
+							foreach ($row->attributes() as $key => $val) {
+								$output[(string) $key] = (string) $val;
+							}
+							$apiReactors[] = $output['itemID'];
+							if (count((array)$row->children()) >= 1 && is_object($row->children()->rowset->row)) {
+								foreach ($row->children()->rowset->row as $row) {
+									foreach ($row->attributes() as $name => $value) {
+										$output['reactor'][(string) $name] = (string) $value;
+									}
+									$res = $this->query("SELECT itemID FROM {$this->_table['fsrtool_silos_reactors']} WHERE itemID = '".$output['itemID']."';");
+									if ( $res->num_rows == 0 ) {
+										$query = "INSERT INTO {$this->_table['fsrtool_silos_reactors']} 
+												  SET itemID 	 = '".$output['itemID']."',
+													  corpID 	 = '".$corpID."',
+													  locationID = '".$output['locationID']."',
+													  typeID	 = '".$output['typeID']."',
+													  typeIDx	 = '".$output['reactor']['typeID']."';";
+										// echo $query.'<br>';
+										$this->exec_query( $query );
+									} else {
+										$query = "UPDATE {$this->_table['fsrtool_silos_reactors']} 
+												  SET corpID 	 = '".$corpID."',
+													  locationID = '".$output['locationID']."',
+													  typeID	 = '".$output['typeID']."',
+													  typeIDx	 = '".$output['reactor']['typeID']."'
+												  WHERE itemID 	 = '".$output['itemID']."';";
+										// echo $query.'<br>';
+										$this->exec_query( $query );
+									}
+									$res->close();
+								}
+								unset ($output);
+							}
 
-					}
-				}
-				/* close statement */
-				/* $stmt->close(); */
-				
-				/* Reactors cleaning */
-				$res = $this->query("SELECT itemID FROM {$this->_table['fsrtool_silos_reactors']} WHERE corpID = '$corpID';");
-				while ( $row = $res->fetch_assoc() ) {
-					if ($row) {
-						if (!in_array($row['itemID'], $apiReactors)) {
-							$this->exec_query("DELETE FROM {$this->_table['fsrtool_silos_reactors']} WHERE itemID = '{$row['itemID']}';");
 						}
 					}
-				}
-				$res->close();
-				
-				/* Silos cleaning */
-				$res = $this->query("SELECT itemID, quantity, suspect FROM {$this->_table['fsrtool_silos']} WHERE corpID = '$corpID';");
-				while ( $row = $res->fetch_assoc() ) {
-					if ($row) {
-						if (!in_array($row['itemID'], $apiSilos)) {
-							$this->exec_query("DELETE FROM {$this->_table['fsrtool_silos']} WHERE itemID = '{$row['itemID']}';");
-						}
-						if (isset($silobefore[$row['itemID']]) && $silobefore[$row['itemID']]['quantity'] == $row['quantity']) {
-							//$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$row['itemID']}';");
-						}
-						elseif ($row['suspect'] == 1) {
-							$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$row['itemID']}';");
+					/* close statement */
+					/* $stmt->close(); */
+					
+					/* Reactors cleaning */
+					$res = $this->query("SELECT itemID FROM {$this->_table['fsrtool_silos_reactors']} WHERE corpID = '$corpID';");
+					while ( $row = $res->fetch_assoc() ) {
+						if ($row) {
+							if (!in_array($row['itemID'], $apiReactors)) {
+								$this->exec_query("DELETE FROM {$this->_table['fsrtool_silos_reactors']} WHERE itemID = '{$row['itemID']}';");
+							}
 						}
 					}
+					$res->close();
+					
+					/* Silos cleaning */
+					$res = $this->query("SELECT itemID, quantity, suspect FROM {$this->_table['fsrtool_silos']} WHERE corpID = '$corpID';");
+					while ( $row = $res->fetch_assoc() ) {
+						if ($row) {
+							if (!in_array($row['itemID'], $apiSilos)) {
+								$this->exec_query("DELETE FROM {$this->_table['fsrtool_silos']} WHERE itemID = '{$row['itemID']}';");
+							}
+							if (isset($silobefore[$row['itemID']]) && $silobefore[$row['itemID']]['quantity'] == $row['quantity']) {
+								//$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$row['itemID']}';");
+							}
+							elseif ($row['suspect'] == 1) {
+								$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$row['itemID']}';");
+							}
+						}
+					}
+					$res->close();
+					
+					unset ($apiSilos, $apiReactors, $silobefore, $xml);
+					
+					/* Assign Locations from API */
+					$this->_tableLoc = $this->_table['fsrtool_silos_reactors']; /* set $this->_tableLoc for doLocations() first. */
+					$out .= $this->doLocations($apikey, true);
+					
+					$this->_tableLoc = $this->_table['fsrtool_silos']; /* set $this->_tableLoc for doLocations() first. */
+					$out .= $this->doLocations($apikey, true);
 				}
-				$res->close();
-				
-				unset ($apiSilos, $apiReactors, $silobefore, $xml);
-				
-				/* Assign Locations from API */
-				$this->_tableLoc = $this->_table['fsrtool_silos_reactors']; /* set $this->_tableLoc for doLocations() first. */
-				$out .= $this->doLocations($apikey, true);
-				
-				$this->_tableLoc = $this->_table['fsrtool_silos']; /* set $this->_tableLoc for doLocations() first. */
-				$out .= $this->doLocations($apikey, true);
-				
 			} catch (Exception $e) {
 				$out .= $e->getCode().' - '.$e->getMessage()."\n";
 				$this->errorHandler('Problem in getAssets::'.$e->getMessage(), $e->getCode(), $apikey['charID'], $apikey);
