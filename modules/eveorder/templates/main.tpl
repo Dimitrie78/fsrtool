@@ -23,8 +23,18 @@
 {literal}<script type="text/javascript">
 $(document).ready(function(){
 	$('#search').autocomplete({
-		minLength: 3,
-		source: "dowork.php?module=eveorder&action=ajaxSearch"
+		source: function (request, response) {
+			$.ajax({
+				data: {"term": request.term},
+				global: false,
+				dataType: "json",
+				type: 'GET',
+				url: 'dowork.php?module=eveorder&action=ajaxSearch',
+				success: function( data ) {
+					response(data);
+				}
+			});
+		}
 	});
 });
 </script>{/literal}
