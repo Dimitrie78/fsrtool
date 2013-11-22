@@ -20,6 +20,7 @@ require_once ('cron.class.php');
 require_once ('cron-user.class.php');
 require_once ('class.httprequest.php');
 
+
 if(is_file(CONFIG)) {
 	$c = Settings::getInstance(CONFIG);
 	define('TBL_PREFIX', $c->dbprefix);

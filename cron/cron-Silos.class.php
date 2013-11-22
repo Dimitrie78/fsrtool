@@ -74,6 +74,14 @@ class cronSilos extends cron
 		$apis = $this->get_fullApis();
 		
 		foreach( $apis as $apikey ) {
+			$Database = new Database();
+			$User = new User($Database);
+			$worldClass = new SiloWorld($User);
+			$silosClass = new Silos($apikey['corpID'], $worldClass);
+			$oldAssets = $silosClass->assets;
+			//echo '<pre>';print_r($silosClass);die();
+			
+			
 			$this->ale->setKey( $apikey['keyID'], $apikey['vCODE'], $apikey['charID'] );
 			$corpID = $apikey['corpID'];
 			$allyID = $apikey['allyID'];
@@ -311,12 +319,6 @@ class cronSilos extends cron
 							if (!in_array($row['itemID'], $apiSilos)) {
 								$this->exec_query("DELETE FROM {$this->_table['fsrtool_silos']} WHERE itemID = '{$row['itemID']}';");
 							}
-							if (isset($silobefore[$row['itemID']]) && $silobefore[$row['itemID']]['quantity'] == $row['quantity']) {
-								//$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$row['itemID']}';");
-							}
-							elseif ($row['suspect'] == 1) {
-								$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$row['itemID']}';");
-							}
 						}
 					}
 					$res->close();
@@ -329,6 +331,28 @@ class cronSilos extends cron
 					
 					$this->_tableLoc = $this->_table['fsrtool_silos']; /* set $this->_tableLoc for doLocations() first. */
 					$out .= $this->doLocations($apikey, true);
+					
+					/* NEW STUFF TEST */
+					$silosClass = new Silos($apikey['corpID'], $worldClass);
+					$newAssets = $silosClass->assets;
+					if(is_array($oldAssets)){
+						foreach($oldAssets as $assetItem) {
+							foreach($newAssets as $assetItemNew) {
+								if($assetItem['itemID'] == $assetItemNew['itemID']){
+									if($assetItem['quantity'] != $assetItemNew['quantity']){
+										$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$assetItemNew['itemID']}';");
+									} else {
+										$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$assetItemNew['itemID']}';");
+									}
+								}
+							}
+						}
+					}
+					/* echo '<pre>';
+					print_r($oldAssets);
+					print_r($newAssets);
+					echo '</pre>';
+					die; */
 				}
 			} catch (Exception $e) {
 				$out .= $e->getCode().' - '.$e->getMessage()."\n";

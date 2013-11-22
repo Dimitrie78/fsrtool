@@ -1,4 +1,7 @@
 <?php
+require_once (FSR_BASE.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'world.class.php');
+require_once (FSR_BASE.DIRECTORY_SEPARATOR.'modules'.DIRECTORY_SEPARATOR.'Silo'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Silo.World.class.php');
+require_once (FSR_BASE.DIRECTORY_SEPARATOR.'modules'.DIRECTORY_SEPARATOR.'Silo'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Silos.class.php');
 
 class cron extends Database
 {
@@ -26,7 +29,7 @@ class cron extends Database
 	
 	public function run() {
 		$out = '';
-		if ( $run === null && !self::$charID && !self::$corpID) {
+		if ( !self::$charID && !self::$corpID) {
 			$res = $this->query("SELECT c.id, c.name from fsrtool_cron c WHERE DATE_SUB(NOW(), INTERVAL c.interwal MINUTE) >= c.time AND status = 1 ORDER BY c.id;");
 			while($row = $res->fetch_assoc()) {
 				$time_start = microtime(true);
@@ -890,7 +893,8 @@ class cron extends Database
 		$mains = $this->getMains();
 		/* charID, username, keyID, vCODE, accessMask, corpID, email */
 		
-		$User = new user();
+		$Database = new Database();
+		$User = new User($Database);
 		
 		$str = "SELECT * FROM {$_table_eveNotifications}";
 		$res = $this->query($str);

@@ -1,5 +1,5 @@
 <?php
-defined('ACTIVE_MODULE') or die('Restricted access');
+defined('FSR_BASE') or die('Restricted access');
 
 class Silos {
 	
