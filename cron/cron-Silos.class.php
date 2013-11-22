@@ -79,7 +79,7 @@ class cronSilos extends cron
 			$worldClass = new SiloWorld($User);
 			$silosClass = new Silos($apikey['corpID'], $worldClass);
 			$oldAssets = $silosClass->assets;
-			//echo '<pre>';print_r($silosClass);die();
+			// echo '<pre>';print_r($silosClass);die();
 			
 			
 			$this->ale->setKey( $apikey['keyID'], $apikey['vCODE'], $apikey['charID'] );
@@ -99,7 +99,7 @@ class cronSilos extends cron
 				$row = $res->fetch_assoc();
 				$cachetime = strtotime((string) $xml->cachedUntil) - 21600;
 				if ( $row['cacheTime'] == $cachetime ) {
-					unset($xml); continue;
+					#unset($xml); continue;
 				}
 				
 				//$this->exec_query("REPLACE INTO {$this->_table['fsrtool_silos_cachetimes']} SET type = '1', corpID = '$corpID', cacheTime = '".strtotime((string) $xml->currentTime)."';");
@@ -339,7 +339,7 @@ class cronSilos extends cron
 						foreach($oldAssets as $assetItem) {
 							foreach($newAssets as $assetItemNew) {
 								if($assetItem['itemID'] == $assetItemNew['itemID']){
-									if($assetItem['quantity'] != $assetItemNew['quantity']){
+									if($assetItem['quantity'] != $assetItemNew['quantity'] && $assetItem['emptyTime'] == 0){
 										$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$assetItemNew['itemID']}';");
 									} else {
 										$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$assetItemNew['itemID']}';");
