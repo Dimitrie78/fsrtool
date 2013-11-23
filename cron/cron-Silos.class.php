@@ -99,7 +99,7 @@ class cronSilos extends cron
 				$row = $res->fetch_assoc();
 				$cachetime = strtotime((string) $xml->cachedUntil) - 21600;
 				if ( $row['cacheTime'] == $cachetime ) {
-					#unset($xml); continue;
+					unset($xml); continue;
 				}
 				
 				//$this->exec_query("REPLACE INTO {$this->_table['fsrtool_silos_cachetimes']} SET type = '1', corpID = '$corpID', cacheTime = '".strtotime((string) $xml->currentTime)."';");
