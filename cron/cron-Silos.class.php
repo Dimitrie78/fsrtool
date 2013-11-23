@@ -339,8 +339,10 @@ class cronSilos extends cron
 						foreach($oldAssets as $assetItem) {
 							foreach($newAssets as $assetItemNew) {
 								if($assetItem['itemID'] == $assetItemNew['itemID']){
-									if($assetItem['quantity'] != $assetItemNew['quantity'] && $assetItem['emptyTime'] == 0){
+									if($assetItem['quantity'] != $assetItemNew['quantity'] && $assetItem['emptyTime'] == 0 &&
+										$assetItem['quantity'] > $assetItemNew['quantity']){
 										$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$assetItemNew['itemID']}';");
+										//echo $assetItem['quantity'] .' - '. $assetItemNew['quantity']. '<br>';
 									} else {
 										$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$assetItemNew['itemID']}';");
 									}
