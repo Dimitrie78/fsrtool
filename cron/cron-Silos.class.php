@@ -336,12 +336,19 @@ class cronSilos extends cron
 					$silosClass = new Silos($apikey['corpID'], $worldClass);
 					$newAssets = $silosClass->assets;
 					if(is_array($oldAssets)){
+						$msg='';
 						foreach($oldAssets as $assetItem) {
 							foreach($newAssets as $assetItemNew) {
 								if($assetItem['itemID'] == $assetItemNew['itemID']){
 									if($assetItem['quantity'] != $assetItemNew['quantity'] && $assetItem['emptyTime'] == 0 &&
 										$assetItem['quantity'] > $assetItemNew['quantity']){
 										$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$assetItemNew['itemID']}';");
+										$msg .= $assetItem['itemID'].'<br/>';
+										$msg .= $assetItem['emptyTime'].'<br/>';
+										$msg .= $assetItem['quantity'].'<br/>';
+										$msg .=	$assetItemNew['quantity'].'<br/>';
+										$msg .=	print_r($assetItem,true).'<br/>';
+										$msg .=	print_r($assetItemNew,true).'<br/>';
 										//echo $assetItem['quantity'] .' - '. $assetItemNew['quantity']. '<br>';
 									} else {
 										$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$assetItemNew['itemID']}';");
@@ -349,12 +356,13 @@ class cronSilos extends cron
 								}
 							}
 						}
+						if($msg != '') $this->sendMail(array('pi@fsrtool.de'), $msg);
 					}
 					/* echo '<pre>';
 					print_r($oldAssets);
 					print_r($newAssets);
-					echo '</pre>';
-					die; */
+					echo '</pre>'; */
+					//die;
 				}
 			} catch (Exception $e) {
 				$out .= $e->getCode().' - '.$e->getMessage()."\n";
@@ -414,6 +422,28 @@ class cronSilos extends cron
 		}
 		/* close statement */
 		$stmt->close();
+	}
+	
+	private function sendMail(array $emails, $text) {
+		$this->mail->to = array();
+		
+		foreach($emails as $to) {
+			$this->mail->AddAddress($to);
+		}
+		
+		$Subject = 'Control Tower alert';
+		$Body = 'Hello,<br />'
+			.'<br />'
+			.$text
+			.'<br />'
+			.'-- <br />'
+			.'Regards Site Admin<br />';
+		
+		$this->mail->FromName  = 'FSR-Tool';
+		$this->mail->Subject   = $Subject;
+		$this->mail->Body      = $Body;
+		
+		return $this->mail->send();
 	}
 	
 	private function errorHandler($message, $code, $charID, $data=array()) {

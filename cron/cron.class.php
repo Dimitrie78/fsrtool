@@ -6,7 +6,7 @@ require_once (FSR_BASE.DIRECTORY_SEPARATOR.'modules'.DIRECTORY_SEPARATOR.'Silo'.
 class cron extends Database
 {
 	protected $ale = null;
-	private $mail = null;
+	protected $mail = null;
 	
 	private $absenderMail = 'noreplay@fsrtool.de';
 	
