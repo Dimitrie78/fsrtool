@@ -340,18 +340,26 @@ class cronSilos extends cron
 						foreach($oldAssets as $assetItem) {
 							foreach($newAssets as $assetItemNew) {
 								if($assetItem['itemID'] == $assetItemNew['itemID']){
-									if($assetItem['quantity'] != $assetItemNew['quantity'] && $assetItem['emptyTime'] == 0 &&
-										$assetItem['quantity'] > $assetItemNew['quantity']){
-										$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$assetItemNew['itemID']}';");
-										$msg .= $assetItem['itemID'].'<br/>';
-										$msg .= $assetItem['emptyTime'].'<br/>';
-										$msg .= $assetItem['quantity'].'<br/>';
-										$msg .=	$assetItemNew['quantity'].'<br/>';
-										$msg .=	print_r($assetItem,true).'<br/>';
-										$msg .=	print_r($assetItemNew,true).'<br/>';
-										//echo $assetItem['quantity'] .' - '. $assetItemNew['quantity']. '<br>';
+									if($assetItem['quantity'] != $assetItemNew['quantity'] && 
+										$assetItem['emptyTime'] == 0 &&
+										$assetItem['typeID'] != 0 &&
+										$assetItem['quantity'] > $assetItemNew['quantity'])
+									{
+										$value = $assetItem['quantity'] - $assetItemNew['quantity'];
+										if($value <= 400) {
+											$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$assetItemNew['itemID']}';");
+											$msg .= $assetItem['itemID'].'<br/>';
+											$msg .= $assetItem['emptyTime'].'<br/>';
+											$msg .= $assetItem['quantity'].'<br/>';
+											$msg .=	$assetItemNew['quantity'].'<br/>';
+											$msg .=	print_r($assetItem,true).'<br/>';
+											$msg .=	print_r($assetItemNew,true).'<br/>';
+											//echo $assetItem['quantity'] .' - '. $assetItemNew['quantity']. '<br>';
+										} else {
+											$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$assetItemNew['itemID']}';");
+										}
 									} else {
-										$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$assetItemNew['itemID']}';");
+										//$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$assetItemNew['itemID']}';");
 									}
 								}
 							}
