@@ -7,6 +7,9 @@ class Silos {
 	private $cacheTime;
 	private $towerCache;
 	private $towerCacheCalc;
+	private $towerCacheCalcNEW;
+	private $assetTowerCache;
+	private $towerCacheAgo;
 	private $y;
 	private $corpID;
 	private $atime = 24; // Stunden
@@ -33,7 +36,8 @@ class Silos {
 		$this->_table = $world->_table;
 		$cacheTime  = $this->getCacheTime($this->typ);
 		$this->y	= date('G', $cacheTime) * 60;
-		$cacheTime  = date('Y-m-d H', $cacheTime).':00:00';
+		$cacheTime  = date('Y-m-d H:i:s', $cacheTime);//.':00:00';
+		$this->assetCacheTime = $cacheTime;
 		$cacheTime  = strtotime($cacheTime);
 		$this->now        = (time() / 3600);
 		$this->cacheTime  = $cacheTime;
@@ -433,6 +437,8 @@ class Silos {
 		foreach ($assets as $key => $row) {
 			
 			$this->thisCacheTime = ($this->cacheTime + $this->towerCacheCalc[$row['pos']]) - 3600;
+			//$thisago = floor($this->now - ($this->thisCacheTime / 3600));
+			//$this->towerCacheCalcNEW[ $row['pos'] ] = $thisago;
 			// $this->db->msg->addwarning( date( 'Y-m-d H:i:s', $this->thisCacheTime ) );
 			// $this->db->msg->addconfirm( date( 'Y-m-d H:i:s', $this->xxx[$row['pos']] ) );
 			
@@ -533,7 +539,8 @@ class Silos {
 			if ($row['input'] == 1 && $row['turn'] == 0) { $fuel = $row['quantity'] + ($row['stk'] * $thisago); }
 			if ($row['input'] == 1 && $row['turn'] == 1) { $fuel = $row['quantity'] - ($row['stk'] * $thisago); }
 		} else {
-			$thisago = floor($this->now - ($this->thisCacheTime / 3600));				
+			//$thisago = floor($this->now - ($this->thisCacheTime / 3600));
+			$thisago = $this->towerCacheAgo[ $row['pos'] ];			
 			if ($row['input'] == 0) 					 { $fuel = $row['quantity'] + ($row['stk'] * $thisago); }
 			if ($row['input'] == 1 && $row['turn'] == 0) { $fuel = $row['quantity'] + ($row['stk'] * $thisago); }
 			if ($row['input'] == 1 && $row['turn'] == 1) { $fuel = $row['quantity'] - ($row['stk'] * $thisago); }
@@ -558,13 +565,43 @@ class Silos {
 	private function getTowerCycleTimes() {
 		$corpID = $this->corpID;
 		$times = array();
+		$cacheTimeCalc = strtotime(date('Y-m-d H', $this->cacheTime).':00:00');
 		$query  = ("SELECT moonID, stateTimestamp FROM {$this->_table_pos} WHERE corpID = '$corpID';");
 		$res = $this->db->query( $query );
 		if ( $res->num_rows > 0 ) {
 			while ( $row = $res->fetch_assoc() ) {
 				if ($row) {
+					$stateTimestamp = strtotime($row['stateTimestamp']);
+					if( $this->cacheTime < $stateTimestamp ) {
+						$cacheTime = $cacheTimeCalc + ((substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17));
+						if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
+							//$this->towerCacheAgo[ $row['moonID'] ] = date('i', $stateTimestamp);
+							//$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - (($this->cacheTime + (date('i', $stateTimestamp)*60))/3600));
+							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($cacheTime/3600))+1;
+						} else {
+							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($cacheTime/3600));
+						}
+						$this->towerCacheCalcNEW[ $row['moonID'] ] = 'jep';
+					} else {
+						$cacheTime = $cacheTimeCalc + ((substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17));
+						if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
+							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($stateTimestamp/3600));
+						} else {
+							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($stateTimestamp/3600));
+						}
+						$this->towerCacheCalcNEW[ $row['moonID'] ] = 'no';
+					}
+					
+					
+					//$this->thisCacheTime = ($this->cacheTime + $this->towerCacheCalc[$row['pos']]) - 3600;
+					//$thisago = floor($this->now - ($this->thisCacheTime / 3600));
+					#$this->towerCacheAgo[ $row['moonID'] ] = date('i', $stateTimestamp);
+					
+					
 					$times[ $row['moonID'] ] = (substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17); // sekunden
 					$x = (substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17);
+					$this->assetTowerCache[ $row['moonID'] ] = $row['stateTimestamp'];
+					//$this->towerCacheCalcNEW[ $row['moonID'] ] = $row['stateTimestamp'];
 					// $this->db->msg->addwarning( substr($row['stateTimestamp'],14) );
 					if ( $x < $this->y )					
 						$this->towerCacheCalc[ $row['moonID'] ] = $x + 3600;
