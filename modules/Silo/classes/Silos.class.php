@@ -243,7 +243,7 @@ class Silos {
 						FROM (SELECT sub_ir.reactionTypeID, sub_ir.input, sub_ir.typeID, sub_ir.quantity
 							FROM {$this->_table['fsrtool_silos_reactors']} sub_r
 							INNER JOIN {$this->_table['invtypereactions']} sub_ir ON sub_r.typeIDx = sub_ir.reactionTypeID
-							WHERE sub_r.corpID = 98118880) as r
+							WHERE sub_r.corpID = {$corpID}) as r
 						LEFT JOIN {$this->_table['dgmtypeattributes']} da ON r.typeID = da.typeID AND da.attributeID = 726
 						WHERE r.typeID = s.typeID and r.input = s.input
 						GROUP BY r.typeID, r.input),100) as stk
