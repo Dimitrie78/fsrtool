@@ -652,6 +652,7 @@ class Silos {
 			$ttc = 60*60-date('i',$time)*60-date('s',$time)+$this->towerCache[$moonID];
 		}
 		$alert = false;
+		$suspect = false;
 		foreach($assets as $item) {
 			if ($item['pos'] == $moonID) {
 				if (!empty($item['boni']) && $item['volume']) {
@@ -671,13 +672,17 @@ class Silos {
 				$silos[$item['itemID']]['pro'] = $pro;
 				$silos[$item['itemID']]['endTime'] = $endTime;
 				$silos[$item['itemID']]['alarm'] = $item['alarm'];
+				$silos[$item['itemID']]['suspect'] = $item['suspect'];
 			}
 			if($item['pos']==$moonID && $item['alarm']){
 				$alert = true;
 			}
+			if($item['pos']==$moonID && $item['suspect']){
+				$suspect = true;
+			}
 			
 		}
-		return array('ttc'=>$ttc,'silos'=>$silos,'alert'=>$alert,'lang'=>$language);
+		return array('ttc'=>$ttc,'silos'=>$silos,'alert'=>$alert,'suspect'=>$suspect,'lang'=>$language);
 	}
 
 	private function table($assets, $tower, $locationID) {
@@ -808,7 +813,10 @@ class Silos {
 				<div class="qty" style="margin-top:3px;margin-left:120px"><span>'.number_format($item['quantity'],'0',',','.').'</span>/'.number_format($menge,'0',',','.').'</div>
 				<div style="clear:both;margin-left:5px">'.$item['typeName'].'</div>
 				</td>
-				<td align="right" style="padding-right:2px"><a id="lorry" href="javascript:empty('.$id.','.$item['itemID'].')"><img src="icons/'.$desc[3].'" alt="empty" title="'.$desc[2].'"/></a>
+				<td align="right" style="padding-right:2px">';
+				if($item['suspect'])
+					$table .= '<a id="online" href="javascript:online('.$id.','.$item['itemID'].')"><img src="icons/delete.png" alt="online" title="set online"/></a>';
+				$table .= '<a id="lorry" href="javascript:empty('.$id.','.$item['itemID'].')"><img src="icons/'.$desc[3].'" alt="empty" title="'.$desc[2].'"/></a>
 				</td></tr>';  		
 				// <td align="right" style="padding-right:2px"><a class="delete" href="'.URL_INDEX .'?module='.ACTIVE_MODULE.'&action=system&id='.$locationID.'&emptyItemID='.$item['itemID'].'"><img src="icons/'.$desc[3].'" alt="empty" title="'.$desc[2].'"/></a>
 				

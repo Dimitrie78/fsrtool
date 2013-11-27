@@ -86,6 +86,40 @@ function empty(moonID, emptyItemID) {
 	});
 }
 
+function online(moonID, itemID) {
+	var request = 'dowork.php?module=Silo&action=jsononline'
+	$.ajax({
+		type:"POST",
+		url:request,
+		processData:true,
+		dataType: "json",
+		data: {moonID:moonID, itemID:itemID},
+		success: function(json){
+			//console.log(new Date().toGMTString(),json,moonID);
+			if(json){
+				for(var i in json.silos){
+					$('tr#'+i)
+						.find('div.pc').text(json.silos[i].endTime).end()
+						.find('div.pcbar_pos').css('width',(json.silos[i].pro)+'px').end()
+						.find('div.pcbar_neg').css('width',(100-json.silos[i].pro)+'px').end()
+						.find('div.qty span').text(json.silos[i].quantity)
+					;
+					if(json.silos[i].alarm == '0') $('tr#'+i).removeClass("alert");
+					if(json.silos[i].suspect == '0') $('tr#'+i).removeClass("suspect");
+				}
+				$('tr#'+itemID).find('a#online').remove();
+				if(json.alert == false) {
+					$('table#'+moonID).removeClass("alert");
+					$('table#'+moonID+' tr.alert').remove();
+				}
+				if(json.suspect == false) {
+					$('table#'+moonID).removeClass("suspect");
+					$('table#'+moonID+' tr.suspect').remove();
+				}
+			}
+		}
+	});
+}
 
 function setfillempty(moonID, itemID, status) {
 	var request = 'dowork.php?module=Silo&action=jsonsetsilo'

@@ -347,7 +347,7 @@ class cronSilos extends cron
 									{
 										$value = $assetItem['quantity'] - $assetItemNew['quantity'];
 										if($value <= 400) {
-											//$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$assetItemNew['itemID']}';");
+											$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$assetItemNew['itemID']}';");
 											$msg .= $assetItem['itemID'].'<br/>';
 											$msg .= $assetItem['emptyTime'].'<br/>';
 											$msg .= $assetItem['quantity'].'<br/>';

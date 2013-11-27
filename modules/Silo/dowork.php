@@ -22,6 +22,15 @@ switch($action)
 		}		
 	break;
 	
+	case 'jsononline':#itemID
+		if(isset($_POST['moonID']) && isset($_POST['itemID'])){
+			$world->onlineSilo($_POST['itemID']);
+			$silos = new Silos($corpID, $world);
+			header('Content-type: application/json');
+			echo json_encode($silos->getFillStatus($_POST['moonID']));
+		}		
+	break;
+	
 	case 'jsonsetsilo':
 		if(isset($_POST['moonID']) && isset($_POST['IDtofill'])){
 			$world->setSiloInput($_POST['IDtofill']);
