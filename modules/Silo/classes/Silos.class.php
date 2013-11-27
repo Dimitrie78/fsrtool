@@ -211,7 +211,7 @@ class Silos {
 				WHERE
 				  s.corpID = '$corpID'
 				ORDER BY
-				  s.pos, s.typeID DESC, s.stack, s.quantity;"); */
+				  s.pos, s.typeID DESC, s.stack, s.quantity;"); 
 		
 		$query  = ("SELECT s.*, it.volume, it.typeName, it2.capacity AS silocapacity,
 				  (((SELECT IfNull(d.valueFloat, d.valueInt)
@@ -221,6 +221,29 @@ class Silos {
 				  100) AS boni,
 				  IFNULL((SELECT r.quantity * IFNULL(IFNULL(da.valueInt, da.valueFloat), 1) as qty
 						FROM {$this->_table['invtypereactions']} r 
+						LEFT JOIN {$this->_table['dgmtypeattributes']} da ON r.typeID = da.typeID AND da.attributeID = 726
+						WHERE r.typeID = s.typeID and r.input = s.input
+						GROUP BY r.typeID, r.input),100) as stk
+				FROM
+				  {$this->_table_silos} s 
+				LEFT JOIN {$this->_table['invtypes']} it ON s.typeID = it.typeID
+				LEFT JOIN {$this->_table['invtypes']} it2 ON s.siloTypeID = it2.typeID
+				WHERE
+				  s.corpID = '{$corpID}'
+				ORDER BY
+				  s.pos, s.typeID DESC, s.stack, s.quantity;");
+		*/
+		$query  = ("SELECT s.*, it.volume, it.typeName, it2.capacity AS silocapacity,
+				  (((SELECT IfNull(d.valueFloat, d.valueInt)
+				  FROM {$this->_table['dgmtypeattributes']} d INNER JOIN {$this->_table_pos} p ON p.typeID =
+					  d.typeID
+				  WHERE d.attributeID = 757 AND p.moonID = s.pos) + 100) /
+				  100) AS boni,
+				  IFNULL((SELECT r.quantity * IFNULL(IFNULL(da.valueInt, da.valueFloat), 1) as qty
+						FROM (SELECT sub_ir.reactionTypeID, sub_ir.input, sub_ir.typeID, sub_ir.quantity
+							FROM {$this->_table['fsrtool_silos_reactors']} sub_r
+							INNER JOIN {$this->_table['invtypereactions']} sub_ir ON sub_r.typeIDx = sub_ir.reactionTypeID
+							WHERE sub_r.corpID = 98118880) as r
 						LEFT JOIN {$this->_table['dgmtypeattributes']} da ON r.typeID = da.typeID AND da.attributeID = 726
 						WHERE r.typeID = s.typeID and r.input = s.input
 						GROUP BY r.typeID, r.input),100) as stk
