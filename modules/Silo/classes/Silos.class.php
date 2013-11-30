@@ -8,7 +8,7 @@ class Silos {
 	private $towerCache;
 	private $towerCacheCalc;
 	private $towerCacheCalcNEW;
-	private $assetTowerCache;
+	public $assetTowerCache;
 	private $towerCacheAgo;
 	private $y;
 	private $corpID;
@@ -595,11 +595,9 @@ class Silos {
 			while ( $row = $res->fetch_assoc() ) {
 				if ($row) {
 					$stateTimestamp = strtotime($row['stateTimestamp']);
-					if( $this->cacheTime < $stateTimestamp ) {
+					if( $this->cacheTime <= $stateTimestamp ) {
 						$cacheTime = $cacheTimeCalc + ((substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17));
 						if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
-							//$this->towerCacheAgo[ $row['moonID'] ] = date('i', $stateTimestamp);
-							//$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - (($this->cacheTime + (date('i', $stateTimestamp)*60))/3600));
 							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($cacheTime/3600))+1;
 						} else {
 							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($cacheTime/3600));
@@ -608,7 +606,7 @@ class Silos {
 					} else {
 						$cacheTime = $cacheTimeCalc + ((substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17));
 						if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
-							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($stateTimestamp/3600));
+							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($stateTimestamp/3600))+1;
 						} else {
 							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($stateTimestamp/3600));
 						}

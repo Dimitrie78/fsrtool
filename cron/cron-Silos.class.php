@@ -333,17 +333,17 @@ class cronSilos extends cron
 					$out .= $this->doLocations($apikey, true);
 					
 					/* NEW STUFF TEST */
-					$silosClass = new Silos($apikey['corpID'], $worldClass);
-					$newAssets = $silosClass->assets;
+					$silosClassNew = new Silos($apikey['corpID'], $worldClass);
+					$newAssets = $silosClassNew->assets;
 					if(is_array($oldAssets)){
 						$msg='';
 						foreach($oldAssets as $assetItem) {
 							foreach($newAssets as $assetItemNew) {
 								if($assetItem['itemID'] == $assetItemNew['itemID']){
-									if($assetItem['quantity'] != $assetItemNew['quantity'] && 
-										$assetItem['emptyTime'] == 0 &&
-										$assetItem['typeID'] != 0 &&
-										$assetItem['quantity'] > $assetItemNew['quantity'])
+									if($assetItem['quantity'] != $assetItemNew['quantity']
+										&& $assetItem['emptyTime'] == 0
+										&& $assetItem['typeID'] != 0)
+										//&& $assetItem['quantity'] > $assetItemNew['quantity'])
 									{
 										$value = $assetItem['quantity'] - $assetItemNew['quantity'];
 										if($value <= 400) {
@@ -364,7 +364,11 @@ class cronSilos extends cron
 								}
 							}
 						}
-						if($msg != '') $this->sendMail(array('pi@fsrtool.de'), $msg);
+						if($msg != '') {
+							$msg .= print_r($silosClass->assetTowerCache, true).'<br/>';
+							$msg .= print_r($silosClassNew->assetTowerCache, true).'<br/>';
+							$this->sendMail(array('pi@fsrtool.de'), $msg);
+						}
 					}
 					/* echo '<pre>';
 					print_r($oldAssets);
