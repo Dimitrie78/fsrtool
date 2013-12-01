@@ -590,7 +590,7 @@ class Silos {
 		$times = array();
 		$cacheTimeCalc = strtotime(date('Y-m-d H', $this->cacheTime).':00:00');
 		$towerCache = unserialize($this->getCacheTime(2));
-		if( count($towerCache) >= 1 ) {
+		if( is_array($towerCache) && count($towerCache) >= 1 ) {
 			foreach( $towerCache as $moonID => $stateTime ) {
 				$stateTimestamp = strtotime($stateTime);
 				if( $this->cacheTime >= $stateTimestamp ) {
