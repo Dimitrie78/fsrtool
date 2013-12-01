@@ -95,13 +95,26 @@ class cronSilos extends cron
 						continue;
 					}
 				} */
+				$saveTowerCache = true;
 				$res = $this->query("SELECT cacheTime FROM {$this->_table['fsrtool_silos_cachetimes']} WHERE type = '1' AND corpID = '$corpID';");
 				$row = $res->fetch_assoc();
 				$cachetime = strtotime((string) $xml->cachedUntil) - 21600;
 				if ( $row['cacheTime'] == $cachetime ) {
 					unset($xml); continue;
+					$saveTowerCache = false;
 				}
-				
+				$towerCache = array();
+				$query  = "SELECT moonID, stateTimestamp FROM {$this->_table['fsrtool_pos']} WHERE corpID = '$corpID';";
+				$res = $this->query( $query );
+				if ( $res->num_rows > 0 ) {
+					while ( $row = $res->fetch_assoc() ) {
+						if ($row) {
+							$towerCache[ $row['moonID'] ] = $row['stateTimestamp'];
+						}
+					}
+				}
+				if ($saveTowerCache)
+					$this->exec_query("REPLACE INTO {$this->_table['fsrtool_silos_cachetimes']} SET type = '2', corpID = '$corpID', cacheTime = '".serialize($towerCache)."';");
 				//$this->exec_query("REPLACE INTO {$this->_table['fsrtool_silos_cachetimes']} SET type = '1', corpID = '$corpID', cacheTime = '".strtotime((string) $xml->currentTime)."';");
 				$this->exec_query("REPLACE INTO {$this->_table['fsrtool_silos_cachetimes']} SET type = '1', corpID = '$corpID', cacheTime = '".$cachetime."';");
 				$this->exec_query("DELETE FROM {$this->_table['fsrtool_pos_corphanger']} WHERE corpID = '$corpID';");

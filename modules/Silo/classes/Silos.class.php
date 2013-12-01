@@ -589,50 +589,83 @@ class Silos {
 		$corpID = $this->corpID;
 		$times = array();
 		$cacheTimeCalc = strtotime(date('Y-m-d H', $this->cacheTime).':00:00');
-		$query  = ("SELECT moonID, stateTimestamp FROM {$this->_table_pos} WHERE corpID = '$corpID';");
-		$res = $this->db->query( $query );
-		if ( $res->num_rows > 0 ) {
-			while ( $row = $res->fetch_assoc() ) {
-				if ($row) {
-					$stateTimestamp = strtotime($row['stateTimestamp']);
-					if( $this->cacheTime <= $stateTimestamp ) {
-						$cacheTime = $cacheTimeCalc + ((substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17));
-						if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
-							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($cacheTime/3600))+1;
-						} else {
-							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($cacheTime/3600));
-						}
-						$this->towerCacheCalcNEW[ $row['moonID'] ] = 'jep';
+		$towerCache = unserialize($this->getCacheTime(2));
+		if( count($towerCache) >= 1 ) {
+			foreach( $towerCache as $moonID => $stateTime ) {
+				$stateTimestamp = strtotime($stateTime);
+				if( $this->cacheTime >= $stateTimestamp ) {
+					$cacheTime = $cacheTimeCalc + ((substr($stateTime,14,2) *60) + substr($stateTime,17));
+					if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
+						$this->towerCacheAgo[ $moonID ] = floor($this->now - ($cacheTime/3600))+1;
 					} else {
-						$cacheTime = $cacheTimeCalc + ((substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17));
-						if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
-							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($stateTimestamp/3600))+1;
-						} else {
-							$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($stateTimestamp/3600));
-						}
-						$this->towerCacheCalcNEW[ $row['moonID'] ] = 'no';
+						$this->towerCacheAgo[ $moonID ] = floor($this->now - ($cacheTime/3600));
 					}
-					
-					
-					//$this->thisCacheTime = ($this->cacheTime + $this->towerCacheCalc[$row['pos']]) - 3600;
-					//$thisago = floor($this->now - ($this->thisCacheTime / 3600));
-					#$this->towerCacheAgo[ $row['moonID'] ] = date('i', $stateTimestamp);
-					
-					
-					$times[ $row['moonID'] ] = (substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17); // sekunden
-					$x = (substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17);
-					$this->assetTowerCache[ $row['moonID'] ] = $row['stateTimestamp'];
-					//$this->towerCacheCalcNEW[ $row['moonID'] ] = $row['stateTimestamp'];
-					// $this->db->msg->addwarning( substr($row['stateTimestamp'],14) );
-					if ( $x < $this->y )					
-						$this->towerCacheCalc[ $row['moonID'] ] = $x + 3600;
-					else
-						$this->towerCacheCalc[ $row['moonID'] ] = $x;
+					$this->towerCacheCalcNEW[ $moonID ] = 'jep';
+				} else {
+					$cacheTime = $cacheTimeCalc + ((substr($stateTime,14,2) *60) + substr($stateTime,17));
+					if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
+						$this->towerCacheAgo[ $moonID ] = floor($this->now - ($stateTimestamp/3600))+1;
+					} else {
+						$this->towerCacheAgo[ $moonID ] = floor($this->now - ($stateTimestamp/3600));
+					}
+					$this->towerCacheCalcNEW[ $moonID ] = 'no';
+				}
+				
+				$times[ $moonID ] = (substr($stateTime,14,2) *60) + substr($stateTime,17); // sekunden
+				$x = (substr($stateTime,14,2) *60) + substr($stateTime,17);
+				$this->assetTowerCache[ $moonID ] = $stateTime;
+				//$this->towerCacheCalcNEW[ $moonID ] = $stateTime;
+				// $this->db->msg->addwarning( substr($stateTime,14) );
+				if ( $x < $this->y )					
+					$this->towerCacheCalc[ $moonID ] = $x + 3600;
+				else
+					$this->towerCacheCalc[ $moonID ] = $x;
+			}
+		} else {
+			$query  = ("SELECT moonID, stateTimestamp FROM {$this->_table_pos} WHERE corpID = '$corpID';");
+			$res = $this->db->query( $query );
+			if ( $res->num_rows > 0 ) {
+				while ( $row = $res->fetch_assoc() ) {
+					if ($row) {
+						$stateTimestamp = strtotime($row['stateTimestamp']);
+						if( $this->cacheTime >= $stateTimestamp ) {
+							$cacheTime = $cacheTimeCalc + ((substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17));
+							if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
+								$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($cacheTime/3600))+2;
+							} else {
+								$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($cacheTime/3600))+1;
+							}
+							$this->towerCacheCalcNEW[ $row['moonID'] ] = 'jep';
+						} else {
+							$cacheTime = $cacheTimeCalc + ((substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17));
+							if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
+								$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($stateTimestamp/3600))+2;
+							} else {
+								$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($stateTimestamp/3600))+1;
+							}
+							$this->towerCacheCalcNEW[ $row['moonID'] ] = 'no';
+						}
+						
+						
+						//$this->thisCacheTime = ($this->cacheTime + $this->towerCacheCalc[$row['pos']]) - 3600;
+						//$thisago = floor($this->now - ($this->thisCacheTime / 3600));
+						#$this->towerCacheAgo[ $row['moonID'] ] = date('i', $stateTimestamp);
+						
+						
+						$times[ $row['moonID'] ] = (substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17); // sekunden
+						$x = (substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17);
+						$this->assetTowerCache[ $row['moonID'] ] = $row['stateTimestamp'];
+						//$this->towerCacheCalcNEW[ $row['moonID'] ] = $row['stateTimestamp'];
+						// $this->db->msg->addwarning( substr($row['stateTimestamp'],14) );
+						if ( $x < $this->y )					
+							$this->towerCacheCalc[ $row['moonID'] ] = $x + 3600;
+						else
+							$this->towerCacheCalc[ $row['moonID'] ] = $x;
+					}
 				}
 			}
+			$res->close();
 		}
-		$res->close();
-		
 		return $times;
 	}
 	
