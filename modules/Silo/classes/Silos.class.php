@@ -30,6 +30,7 @@ class Silos {
 	private $_table_cachetimes 		= 'fsrtool_silos_cachetimes';
 	
 	public function __construct($corpID, World $world) {
+		date_default_timezone_set('UTC');
 		$this->corpID = $corpID;
 		$this->db 	 = $world->db;
 		$this->world = $world;
@@ -631,17 +632,17 @@ class Silos {
 						if( $this->cacheTime >= $stateTimestamp ) {
 							$cacheTime = $cacheTimeCalc + ((substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17));
 							if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
-								$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($cacheTime/3600))+2;
-							} else {
 								$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($cacheTime/3600))+1;
+							} else {
+								$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($cacheTime/3600));
 							}
 							$this->towerCacheCalcNEW[ $row['moonID'] ] = 'jep';
 						} else {
 							$cacheTime = $cacheTimeCalc + ((substr($row['stateTimestamp'],14,2) *60) + substr($row['stateTimestamp'],17));
 							if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
-								$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($stateTimestamp/3600))+2;
-							} else {
 								$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($stateTimestamp/3600))+1;
+							} else {
+								$this->towerCacheAgo[ $row['moonID'] ] = floor($this->now - ($stateTimestamp/3600));
 							}
 							$this->towerCacheCalcNEW[ $row['moonID'] ] = 'no';
 						}
