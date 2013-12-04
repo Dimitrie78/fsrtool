@@ -361,10 +361,15 @@ class cronSilos extends cron
 										$value = $assetItem['quantity'] - $assetItemNew['quantity'];
 										if($value <= 400) {
 											$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$assetItemNew['itemID']}';");
+											$posID = $assetItem['pos'];
 											$msg .= $assetItem['itemID'].'<br/>';
 											$msg .= $assetItem['emptyTime'].'<br/>';
 											$msg .= $assetItem['quantity'].'<br/>';
 											$msg .=	$assetItemNew['quantity'].'<br/>';
+											$msg .=	'old - '.$silosClass->towerCacheAgo[$posID].'<br/>';
+											$msg .=	'new - '.$silosClassNew->towerCacheAgo[$posID].'<br/>';
+											$msg .=	'old - '.$silosClass->assetTowerCache[$posID].'<br/>';
+											$msg .=	'new - '.$silosClassNew->assetTowerCache[$posID].'<br/>';
 											$msg .=	print_r($assetItem,true).'<br/>';
 											$msg .=	print_r($assetItemNew,true).'<br/>';
 											//echo $assetItem['quantity'] .' - '. $assetItemNew['quantity']. '<br>';
@@ -378,8 +383,8 @@ class cronSilos extends cron
 							}
 						}
 						if($msg != '') {
-							$msg .= print_r($silosClass->assetTowerCache, true).'<br/>';
-							$msg .= print_r($silosClassNew->assetTowerCache, true).'<br/>';
+							//$msg .= print_r($silosClass->assetTowerCache, true).'<br/>';
+							//$msg .= print_r($silosClassNew->assetTowerCache, true).'<br/>';
 							$this->sendMail(array('pi@fsrtool.de'), $msg);
 						}
 					}
