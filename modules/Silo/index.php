@@ -51,7 +51,13 @@ if ($User->Manager || $corpid){
 		$ass->assignAll($_GET['id']);
 	}
 	
+	if ( isset($_GET['onlineall'])) {
+		$world->onlineSilo(NULL, $corpID);
+	}
+	
 	$silos  = new Silos($corpID, $world);
+	
+	$smarty->assign('suspect',$silos->suspect);
 	
 	$id = isset($_GET['id']) ? $_GET['id'] : '';
 	$man = isset($_GET['manager']) ? $_GET['manager'] : '';

@@ -10,6 +10,7 @@ class Silos {
 	private $towerCacheCalcNEW;
 	public $assetTowerCache;
 	public $towerCacheAgo;
+	public $suspect = false;
 	private $y;
 	private $corpID;
 	private $atime = 24; // Stunden
@@ -348,6 +349,7 @@ class Silos {
 					}
 					$assets[$key]['atime'] = $x;
 				}
+				if($item['suspect']) $this->suspect = true;
 				$typ3 = $typ2;
 				$typ2 = $typ;
 				$typ = $item['typeID'].$item['pos'].$item['input'];

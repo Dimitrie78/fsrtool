@@ -94,8 +94,10 @@ class SiloWorld extends World {
 		return $res;
 	}
 	
-	public function onlineSilo($itemID) {		
-		$query  = "UPDATE {$this->_table_silo} SET suspect=0 WHERE itemID = '$itemID';";
+	public function onlineSilo($itemID=NULL, $corpID=NULL) {		
+		if($itemID!==NULL) $query  = "UPDATE {$this->_table_silo} SET suspect=0 WHERE itemID = '$itemID';";
+		if($corpID!==NULL) $query  = "UPDATE {$this->_table_silo} SET suspect=0 WHERE corpID = '$corpID';";
+		
 		$res = $this->db->exec_query( $query );
 		
 		return $res;

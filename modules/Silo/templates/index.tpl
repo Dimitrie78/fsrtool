@@ -2,7 +2,9 @@
 {include file="file:[Silo]menue.tpl"}
 
 <div style="width:1000px">
-
+{if $suspect}
+<div><a href="{$index}&onlineall=1">Set all Silos Online</a></div>
+{/if}
 {foreach from=$minTime item=time key=sys}
 <br />{$sys} - {$time.days} - {$time.time}
 {/foreach}
