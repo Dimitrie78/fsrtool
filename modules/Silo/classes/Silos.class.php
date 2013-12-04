@@ -605,9 +605,9 @@ class Silos {
 				} else {
 					$cacheTime = $cacheTimeCalc + ((substr($stateTime,14,2) *60) + substr($stateTime,17));
 					if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
-						$this->towerCacheAgo[ $moonID ] = floor($this->now - ($stateTimestamp/3600))+1;
+						$this->towerCacheAgo[ $moonID ] = floor($this->now - ($stateTimestamp/3600))+2;
 					} else {
-						$this->towerCacheAgo[ $moonID ] = floor($this->now - ($stateTimestamp/3600));
+						$this->towerCacheAgo[ $moonID ] = floor($this->now - ($stateTimestamp/3600))+1;
 					}
 					$this->towerCacheCalcNEW[ $moonID ] = 'no';
 				}
