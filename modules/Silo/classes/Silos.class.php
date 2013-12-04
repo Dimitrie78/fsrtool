@@ -10,6 +10,7 @@ class Silos {
 	private $towerCacheCalcNEW;
 	public $assetTowerCache;
 	public $towerCacheAgo;
+	public $untouchtAssets = array();
 	public $suspect = false;
 	private $y;
 	private $corpID;
@@ -269,6 +270,9 @@ class Silos {
 		$res->close();
 		
 		if ( isset($assets) && is_array($assets) ) {
+			foreach($assets as $asset) {
+				$this->untouchtAssets[$asset['itemID']] = $asset;
+			}
 			$this->buildAssets( $assets );
 			
 			$alarm = false;
