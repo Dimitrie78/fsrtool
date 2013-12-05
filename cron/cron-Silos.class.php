@@ -18,9 +18,9 @@ class cronSilos extends cron
 	private function get_fullApis() {
 		$apis = array();
 		if ( parent::$corpID )
-			$res = $this->query("SELECT * FROM {$this->_table['fsrtool_user_fullapi']} WHERE status=1 AND corpID = '".parent::$corpID."';");
+			$res = $this->query("SELECT api.*, c.name as corpName FROM {$this->_table['fsrtool_user_fullapi']} api LEFT JOIN {$this->_table['fsrtool_corps']} AS c ON api.corpID = c.id WHERE api.status=1 AND api.corpID = '".parent::$corpID."';");
 		else
-			$res = $this->query("SELECT * FROM {$this->_table['fsrtool_user_fullapi']} WHERE status=1;");
+			$res = $this->query("SELECT api.*, c.name as corpName FROM {$this->_table['fsrtool_user_fullapi']} api LEFT JOIN {$this->_table['fsrtool_corps']} AS c ON api.corpID = c.id WHERE api.status=1;");
 		while ( $row = $res->fetch_assoc() ) {
 			if($row) $apis[] = $row;
 		} $res->close();
@@ -362,6 +362,7 @@ class cronSilos extends cron
 										if($value <= 400) {
 											$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$assetItemNew['itemID']}';");
 											$posID = $assetItem['pos'];
+											$msg .= $apikey['corpName'].'<br/>';
 											$msg .= $assetItem['itemID'].'<br/>';
 											$msg .= $assetItem['typeName'].'<br/>';
 											//$msg .= $assetItem['emptyTime'].'<br/>';
