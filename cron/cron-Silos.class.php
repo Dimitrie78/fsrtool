@@ -359,29 +359,29 @@ class cronSilos extends cron
 										//&& $assetItem['quantity'] > $assetItemNew['quantity'])
 									{
 										$value = $assetItem['quantity'] - $assetItemNew['quantity'];
-										if($value <= 400) {
+										//if($value <= 400) {
 											$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$assetItemNew['itemID']}';");
 											$posID = $assetItem['pos'];
 											$msg .= $apikey['corpName'].'<br/>';
 											$msg .= $assetItem['itemID'].'<br/>';
 											$msg .= $assetItem['typeName'].'<br/>';
-											//$msg .= $assetItem['emptyTime'].'<br/>';
-											$msg .= $assetItem['quantity'].'<br/>';
-											$msg .=	$assetItemNew['quantity'].'<br/>';
+											$msg .= 'ammount pro h: '.$assetItem['stk'].'<br/>';
+											$msg .= 'old clac: '.$assetItem['quantity'].'<br/>';
+											$msg .=	'new clac: '.$assetItemNew['quantity'].'<br/>';
 											$msg .=	'old: '.$silosClass->towerCacheAgo[$posID].'<br/>';
 											$msg .=	'new: '.$silosClassNew->towerCacheAgo[$posID].'<br/>';
 											$msg .=	'old: '.$silosClass->assetTowerCache[$posID].'<br/>';
 											$msg .=	'new: '.$silosClassNew->assetTowerCache[$posID].'<br/>';
-											$msg .=	'old: '.$silosClass->assetCacheTime.'<br/>';
-											$msg .=	'new: '.$silosClassNew->assetCacheTime.'<br/>';
-											$msg .=	'old: '.$silosClass->untouchtAssets[$assetItem['itemID']]['quantity'].'<br/>';
-											$msg .=	'new: '.$silosClassNew->untouchtAssets[$assetItem['itemID']]['quantity'].'<br/>';
+											$msg .=	'old ass fetched: '.$silosClass->assetCacheTime.'<br/>';
+											$msg .=	'new ass fetched: '.$silosClassNew->assetCacheTime.'<br/>';
+											$msg .=	'old ass: '.$silosClass->untouchtAssets[$assetItem['itemID']]['quantity'].'<br/>';
+											$msg .=	'new ass: '.$silosClassNew->untouchtAssets[$assetItem['itemID']]['quantity'].'<br/><br/>';
 											//$msg .=	print_r($assetItem,true).'<br/>';
 											//$msg .=	print_r($assetItemNew,true).'<br/>';
 											//echo $assetItem['quantity'] .' - '. $assetItemNew['quantity']. '<br>';
-										} else {
-											$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$assetItemNew['itemID']}';");
-										}
+										//} else {
+											//$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$assetItemNew['itemID']}';");
+										//}
 									} else {
 										$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$assetItemNew['itemID']}';");
 									}
