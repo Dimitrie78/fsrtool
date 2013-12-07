@@ -364,6 +364,7 @@ class cronSilos extends cron
 											$posID = $assetItem['pos'];
 											$msg .= $apikey['corpName'].'<br/>';
 											$msg .= $assetItem['itemID'].'<br/>';
+											$msg .= 'emptyTime: '.$assetItem['emptyTime'].'<br/>';
 											$msg .= $assetItem['typeName'].'<br/>';
 											$msg .= 'ammount pro h: '.$assetItem['stk'].'<br/>';
 											$msg .= 'old clac: '.$assetItem['quantity'].'<br/>';
