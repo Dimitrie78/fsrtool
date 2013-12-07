@@ -7,7 +7,7 @@ class Silos {
 	private $cacheTime;
 	private $towerCache;
 	private $towerCacheCalc;
-	private $towerCacheCalcNEW;
+	public $towerCacheCalcNEW;
 	public $assetTowerCache;
 	public $towerCacheAgo;
 	public $untouchtAssets = array();
@@ -597,7 +597,7 @@ class Silos {
 		$times = array();
 		$cacheTimeCalc = strtotime(date('Y-m-d H', $this->cacheTime).':00:00');
 		$towerCache = unserialize($this->getCacheTime(2));
-		// $xxx = strtotime('2013-12-04 13:55:11'); echo floor($this->now - ($xxx/3600));
+		//$xxx = strtotime('2013-12-07 01:03:36');  $xxxnow = strtotime('2013-12-07 01:15:38')/3600; echo floor($xxxnow - ($xxx/3600));
 		if( is_array($towerCache) && count($towerCache) >= 1 ) {
 			foreach( $towerCache as $moonID => $stateTime ) {
 				$stateTimestamp = strtotime($stateTime);
@@ -612,9 +612,9 @@ class Silos {
 				} else {
 					$cacheTime = $cacheTimeCalc + ((substr($stateTime,14,2) *60) + substr($stateTime,17));
 					if( date('i', $this->cacheTime) <= date('i', $stateTimestamp) ) { // +1 stunde
-						$this->towerCacheAgo[ $moonID ] = floor($this->now - ($stateTimestamp/3600))+1;
+						$this->towerCacheAgo[ $moonID ] = floor($this->now - ($cacheTime/3600))+1;
 					} else {
-						$this->towerCacheAgo[ $moonID ] = floor($this->now - ($stateTimestamp/3600));
+						$this->towerCacheAgo[ $moonID ] = floor($this->now - ($cacheTime/3600));
 					}
 					$this->towerCacheCalcNEW[ $moonID ] = 'no';
 				}

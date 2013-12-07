@@ -370,6 +370,8 @@ class cronSilos extends cron
 											$msg .=	'new clac: '.$assetItemNew['quantity'].'<br/>';
 											$msg .=	'old: '.$silosClass->towerCacheAgo[$posID].'<br/>';
 											$msg .=	'new: '.$silosClassNew->towerCacheAgo[$posID].'<br/>';
+											$msg .=	'old: '.$silosClass->towerCacheCalcNEW[$posID].'<br/>';
+											$msg .=	'new: '.$silosClassNew->towerCacheCalcNEW[$posID].'<br/>';
 											$msg .=	'old: '.$silosClass->assetTowerCache[$posID].'<br/>';
 											$msg .=	'new: '.$silosClassNew->assetTowerCache[$posID].'<br/>';
 											$msg .=	'old ass fetched: '.$silosClass->assetCacheTime.'<br/>';
