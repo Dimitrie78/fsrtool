@@ -1,8 +1,10 @@
 -1 = Stopped
-0 = Untreated
+0 = unprocessed
 1 = In production
 2 = Is being bought
 3 = Ready for delivery
 4 = Delivered
-5 = in stock at Empire
-6 = in transportation
+5 = Stocked HIGHSEC staging
+6 = Stocked Muvolailen
+7 = Transport Freighter
+8 = Transport JF

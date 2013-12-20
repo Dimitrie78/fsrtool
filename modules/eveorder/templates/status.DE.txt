@@ -4,5 +4,7 @@
 2 = wird eingekauft
 3 = Zur Auslieferung bereit
 4 = &Uuml;bergeben
-5 = Lagernd im Empire
-6 = im transport
+5 = Lagernd Highsec-Staging
+6 = Lagernd Muvolailen
+7 = Transport Frachter
+8 = Transport JF
