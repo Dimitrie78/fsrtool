@@ -394,7 +394,7 @@ class cronSilos extends cron
 						if($msg != '') {
 							//$msg .= print_r($silosClass->assetTowerCache, true).'<br/>';
 							//$msg .= print_r($silosClassNew->assetTowerCache, true).'<br/>';
-							$this->sendMail(array('pi@fsrtool.de'), $msg);
+							//$this->sendMail(array('pi@fsrtool.de'), $msg);
 						}
 					}
 					/* echo '<pre>';
