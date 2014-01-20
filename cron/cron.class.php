@@ -716,8 +716,9 @@ class cron extends Database
 				//all errors are handled by exceptions
 				//let's check the key first.
 				$keyinfo = $this->ale->account->APIKeyInfo();
+				$keyinfo = $keyinfo->result->toArray();
 				
-				if( !(intval($keyinfo->result->key->attributes()['accessMask']) & 16777216) ) {
+				if( !(intval($keyinfo['key']['accessMask']) & 16777216) ) {
 					$out .= 'You need a Key with access to Locations'."\n";
 					$this->ale->setConfig('parserClass', $parserClass);
 					return $out;
