@@ -8,8 +8,6 @@ if (!defined('FSR_CONFIG_DIR')) {
 require_once (FSR_BASE . DIRECTORY_SEPARATOR . "classes/class.php");
 require_once (FSR_BASE . DIRECTORY_SEPARATOR . "config.inc.php");
 
-$version = '1.0';
-
 $smarty = loadSmarty();
 //$smarty->testInstall();
 

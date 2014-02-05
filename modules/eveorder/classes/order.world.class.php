@@ -53,7 +53,8 @@ class eveorderWorld extends world
 				LEFT JOIN {$this->_table['eveorder_price']} price ON ut.typeID = price.typeID AND region = 30000142
 				WHERE
 				  u1.corpID = '".$corp."' AND
-				  ut.status = '".$status."'
+				  ut.status = '".$status."' AND 
+				  ut.deleted = 0
 				
 				  UNION
 				SELECT
@@ -68,7 +69,8 @@ class eveorderWorld extends world
 				LEFT JOIN {$this->_table['eveorder_price']} price ON ut.typeID = price.typeID AND region = 30000142
 				WHERE
 				  u1.corpID = '".$corp."' AND
-				  ut.status = '".$status."'
+				  ut.status = '".$status."' AND 
+				  ut.deleted = 0
 				ORDER BY
 				  ".$sort.";";
 		
@@ -172,7 +174,7 @@ class eveorderWorld extends world
 		$str = "SELECT utypes.*, u2.username as supplierName, u2.charID as supplierid 
 			FROM {$this->_table['eveorder_user_types']} as utypes 
 			LEFT JOIN {$this->_table['fsrtool_user']} as u2 ON utypes.supplier = u2.charID 
-			WHERE user='".$userID."' ORDER BY timestamp;";
+			WHERE user='".$userID."' AND deleted=0 ORDER BY timestamp;";
 		$res = $this->db->query( $str );
 
 		if ( $res->num_rows > 0 ) {
@@ -504,14 +506,16 @@ class eveorderWorld extends world
 	public function eveorder_delallDeliverys($status=4, $userID=0) {
 		if ( $userID == 0 ) $userID = $this->User->charID;
 		$status = $this->db->escape($status);
-		$str = "DELETE FROM {$this->_table['eveorder_user_types']} WHERE status=".$status." AND user='".$userID."';";
+		//$str = "DELETE FROM {$this->_table['eveorder_user_types']} WHERE status=".$status." AND user='".$userID."';";
+		$str = "UPDATE {$this->_table['eveorder_user_types']} SET deleted=1 WHERE status=".$status." AND user='".$userID."';";
 		$res = $this->db->exec_query( $str );
 		return $res;
 	}
 	
 	public function eveorder_delOrder($orderID) {
 		$orderID = $this->db->escape($orderID);
-		$str = "DELETE FROM {$this->_table['eveorder_user_types']} WHERE id=".$orderID.";";
+		//$str = "DELETE FROM {$this->_table['eveorder_user_types']} WHERE id=".$orderID.";";
+		$str = "UPDATE {$this->_table['eveorder_user_types']} SET deleted=1 WHERE id=".$orderID.";";
 		$res = $this->db->exec_query( $str );
 		return $res;
 	}

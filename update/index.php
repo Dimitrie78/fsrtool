@@ -30,6 +30,9 @@ if (!isset($_SESSION['state'])) {
 elseif (isset($_GET['step']) && $step = intval($_GET['step'])) {
 	$_SESSION['state'] = $step;
 }
+elseif (!isset($_GET['step'])) {
+	$_SESSION['state'] = 1;
+}
 
 //set the smarty stuff, and render
 $smarty->assign('date', date("Y"));
