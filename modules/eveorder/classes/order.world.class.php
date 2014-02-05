@@ -506,17 +506,21 @@ class eveorderWorld extends world
 	public function eveorder_delallDeliverys($status=4, $userID=0) {
 		if ( $userID == 0 ) $userID = $this->User->charID;
 		$status = $this->db->escape($status);
-		//$str = "DELETE FROM {$this->_table['eveorder_user_types']} WHERE status=".$status." AND user='".$userID."';";
-		$str = "UPDATE {$this->_table['eveorder_user_types']} SET deleted=1 WHERE status=".$status." AND user='".$userID."';";
+		if($status == 0 || $status == '-1')
+			$str = "DELETE FROM {$this->_table['eveorder_user_types']} WHERE status=".$status." AND user='".$userID."';";
+		else $str = "UPDATE {$this->_table['eveorder_user_types']} SET deleted=1 WHERE status=".$status." AND user='".$userID."';";
 		$res = $this->db->exec_query( $str );
 		return $res;
 	}
 	
 	public function eveorder_delOrder($orderID) {
 		$orderID = $this->db->escape($orderID);
-		//$str = "DELETE FROM {$this->_table['eveorder_user_types']} WHERE id=".$orderID.";";
-		$str = "UPDATE {$this->_table['eveorder_user_types']} SET deleted=1 WHERE id=".$orderID.";";
+		$str = "DELETE FROM {$this->_table['eveorder_user_types']} WHERE id=".$orderID." AND status IN(0,-1);";
 		$res = $this->db->exec_query( $str );
+		if(!$res) {
+			$str = "UPDATE {$this->_table['eveorder_user_types']} SET deleted=1 WHERE id=".$orderID.";";
+			$res = $this->db->exec_query( $str );
+		}
 		return $res;
 	}
 	
