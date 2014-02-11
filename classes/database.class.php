@@ -98,6 +98,8 @@ class Database extends mysqli
 			'fsrtool_assets' 					=> TBL_PREFIX.'assets',
 			'fsrtool_assets_contents' 			=> TBL_PREFIX.'assets_contents',
 			
+			'eveorder_user_types' 				=> TBL_PREFIX.'eveorder_user_types',
+			
 			'snow_afk_time' 					=> TBL_PREFIX.'snow_afk_time',
 			'snow_alts' 						=> TBL_PREFIX.'snow_alts',
 			'snow_characters' 					=> TBL_PREFIX.'snow_characters',

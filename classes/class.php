@@ -1,7 +1,7 @@
 <?php
 defined('FSR_BASE') or die('Restricted access');
 
-$version = '1.0';
+$version = '1.1';
 
 require_once("functions.php");
 require_once("settings.class.php");
