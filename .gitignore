@@ -12,3 +12,5 @@ icons/Renders/*
 icons/Types/*
 icons/Icons/*
 install/install.lock
+module/eveorder/templates/status.DE.txt
+module/eveorder/templates/status.EN.txt
