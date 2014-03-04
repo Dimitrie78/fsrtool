@@ -133,7 +133,7 @@ class cronRatter extends cron
 			} catch(Exception $e) {
 				$this->output .= $e->getCode().' - '.$e->getMessage()."\n";
 				// $this->logerror( $e->getMessage() );
-				return false;
+				//return false;
 			}
 		}
 		return parent::format($this->output);

@@ -42,7 +42,12 @@ $parms = array(
 );
 
 $cron = new cron($parms);
-echo $cron->run();
+
+if ($cron->serverStatus()) {
+	echo $cron->run();
+} else {
+	echo 'API Server down!';
+}
 //$cron->print_it($cron->queries);
 //echo FSR_BASE;
 //echo "\n";
