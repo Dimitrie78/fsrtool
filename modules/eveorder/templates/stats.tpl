@@ -79,6 +79,25 @@ $(document).ready(function() {
 <table class="data" cellpadding="3" cellspacing="0" style="width:600px">
   <thead>
     <tr>
+	  <td>Date</td>
+	  <td align="right">User</td>
+	  <td align="right">Corp</td>
+	</tr>
+  </thead>
+  <tbody>
+  {foreach $stat as $keyvar=>$itemvar}  
+	<tr>
+	  <td>{$keyvar}</td>
+	  <td align="right">{$itemvar.user.price|number_format:2:',':'.'}</td>
+	  <td align="right">{$itemvar.corp.price|number_format:2:',':'.'}</td>
+	</tr>
+  {/foreach}
+  </tbody>
+</table>
+<br />
+<table class="data" cellpadding="3" cellspacing="0" style="width:600px">
+  <thead>
+    <tr>
 	  <td>Name
 		{if $sort == "2"}    <a href="{$index}&amp;action=stats&amp;sort=1"><img src="icons/sort_desc.png" alt="sort" /></a>
 		{elseif $sort == "1"}<a href="{$index}&amp;action=stats&amp;sort=2"><img src="icons/sort_asc.png" alt="sort" /></a>

@@ -185,10 +185,10 @@ if ( $User->Manager || $corpid ){
 									'<script type="text/javascript" src="classes/jqry_plugins/msgbox/Scripts/jquery.msgBox.js"></script>'."\n",
 									'<script type="text/javascript" src="modules/Pos/inc/test.js"></script>'."\n",
 								));
-			$smarty->assign("Status",  $action);
-			$smarty->assign("apis", $world->pos_getUserAPI());
-			$smarty->assign("emails", $world->getPosEmails());
-			$smarty->assign("log",     $world->get_logs());
+			$smarty->assign("Status",  	$action);
+			$smarty->assign("apis", 	$world->pos_getUserAPI());
+			$smarty->assign("emails", 	$world->getPosEmails());
+			$smarty->assign("log",     	$world->get_logs());
 			$smarty->display('file:['.ACTIVE_MODULE.']test.tpl');
 		break;
 		

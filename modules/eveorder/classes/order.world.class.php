@@ -451,6 +451,59 @@ class eveorderWorld extends world
 		return $return;
 	}
 	
+	public function eveorder_stat() {
+		$return = array();
+		$strCorp = "SELECT sum(test.price) price, test.datum FROM (
+			SELECT
+			  Sum(o.amount) AS quantity,
+			  (p.buy_percentile_price * Sum(o.amount)) AS price,
+			  p.fetched,
+			  From_UnixTime(o.timestamp, '%Y-%m') AS datum
+			FROM
+			  {$this->_table['eveorder_user_types']} o
+			  LEFT JOIN {$this->_table['fsrtool_currentTypePrice']} p ON o.typeID = p.typeID AND p.region = 30000142
+			WHERE
+			  o.corpid = '{$this->User->corpID}'  
+			GROUP BY
+			  o.typeID) as test
+			GROUP BY
+			  test.datum;";
+		
+		$strUser = "SELECT sum(test.price) price, test.datum FROM (
+			SELECT
+			  Sum(o.amount) AS quantity,
+			  (p.buy_percentile_price * Sum(o.amount)) AS price,
+			  p.fetched,
+			  From_UnixTime(o.timestamp, '%Y-%m') AS datum
+			FROM
+			  {$this->_table['fsrtool_user']} u 
+			  INNER JOIN {$this->_table['eveorder_user_types']} o ON u.charID = o.user 
+			  LEFT JOIN {$this->_table['fsrtool_currentTypePrice']} p ON o.typeID = p.typeID AND p.region = 30000142
+			WHERE
+			  u.corpID = '{$this->User->corpID}' AND o.status = 4 AND o.corpid = ''
+			GROUP BY
+			  o.typeID) as test
+			GROUP BY
+			  test.datum;";
+		
+		$res = $this->db->query( $strUser );
+		if ( $res->num_rows > 0 ) {
+			while ( $row = $res->fetch_assoc() ) {
+				$return[$row['datum']]['user'] = $row;
+				$return[$row['datum']]['corp'] = array('datum' => $row['datum'], 'price' => NULL);
+			}
+		}
+		
+		$res = $this->db->query( $strCorp );
+		if ( $res->num_rows > 0 ) {
+			while ( $row = $res->fetch_assoc() ) {
+				$return[$row['datum']]['corp'] = $row;
+			}
+		}
+		
+		return $return;
+	}
+	
 	public function eveorder_updateOrder($orderid,$status,$supplier,$comment,$check,$target) {
 		$status   = $this->db->escape($status);
 		$supplier = $this->db->escape($supplier);

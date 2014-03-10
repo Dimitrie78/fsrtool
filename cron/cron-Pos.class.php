@@ -106,7 +106,7 @@ class cronPos extends cron
 				if (!$this->ale->isFromCache()) $out .= $this->doLocations($key);
 			} catch (Exception $e) {
 				$out .= $e->getCode().' - '.$e->getMessage()."\n";
-				$this->errorHandler('Problem in StarbaseDetail::'.$e->getMessage(), $e->getCode(), $key['charID'], $key);
+				$this->errorHandler('Problem in StarbaseList::'.$e->getMessage(), $e->getCode(), $key['charID'], $key);
 //				$this->logerror( $e->getMessage(), $this->cronID, 0 );
 			}
 		} //  foreach $apis end
@@ -216,7 +216,9 @@ class cronPos extends cron
 		
 	}
 	
-	private function errorHandler($message, $code, $charID, $data=array()) {
+	private function errorHandler($message, $code, $charID=0, $data=array()) {
+		cron::errorLOG($message, $code, $data['corpID']);
+		
 		switch(substr($code, 0, 1)) {
 			case 1:
 			break;

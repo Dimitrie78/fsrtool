@@ -10,9 +10,18 @@ $checkVer = true;
 
 $instver = $db->fetch_one("SELECT value FROM {$db->_table['fsrtool_config']} WHERE name='Version'", 'value');
 $newver = $instver + 0.1;
-if(strval($newver) == 1.1) {
+if(strval($newver) == 1.2) {
 	$checkVer = false;
-	$res = $db->exec_query("ALTER TABLE {$db->_table['eveorder_user_types']} ADD COLUMN `deleted` tinyint(3) NOT NULL DEFAULT 0;");
+	$res = $db->exec_query("DROP TABLE IF EXISTS {$db->_table['fsrtool_log']};");
+	$res = $db->exec_query("
+	CREATE TABLE `{$db->_table['fsrtool_log']}` (
+	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	  `logtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	  `typeID` bigint(20) unsigned DEFAULT NULL,
+	  `code` int(11) DEFAULT NULL,
+	  `message` varchar(255) DEFAULT NULL,
+	  PRIMARY KEY (`id`)
+	) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;");
 	$res = $db->exec_query("UPDATE {$db->_table['fsrtool_config']} SET value='{$newver}' WHERE name='Version'");
 }
 

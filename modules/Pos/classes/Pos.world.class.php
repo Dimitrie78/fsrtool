@@ -822,26 +822,13 @@ class PosWorld extends world {
 	public function get_logs() {
 		$rows = array();
 		$corpID = $this->db->escape( $_SESSION['corpID'] );
-		$sqlstring = "SELECT * FROM {$this->_table['fsrtool_log']} WHERE (corpID='".$corpID."' OR corpID=0) AND typ=1 ORDER BY date DESC LIMIT 3;";
+		$sqlstring = "SELECT * FROM {$this->_table['fsrtool_log']} WHERE typeID='$corpID' ORDER BY logtime DESC LIMIT 10;";
 		$result = $this->db->query($sqlstring);
 		while ($row = $result->fetch_assoc()) {
 			if($row) $rows[] = $row;
 		}
 		$result->close();
 		
-		$sqlstring = "SELECT * FROM {$this->_table['fsrtool_log']} WHERE (corpID='".$corpID."' OR corpID=0) AND typ=2 ORDER BY date DESC LIMIT 10;";
-		$result = $this->db->query($sqlstring);
-		while ($row = $result->fetch_assoc()) {
-			if($row) $rows[] = $row;
-		}
-		$result->close();
-		
-		$sqlstring = "SELECT * FROM {$this->_table['fsrtool_log']} WHERE (corpID='".$corpID."' OR corpID=0) AND typ=3 ORDER BY date DESC LIMIT 3;";
-		$result = $this->db->query($sqlstring);
-		while ($row = $result->fetch_assoc()) {
-			if($row) $rows[] = $row;
-		}
-		$result->close();
 		return $rows;
 	}
 	

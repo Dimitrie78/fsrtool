@@ -7,6 +7,7 @@ class cron extends Database
 {
 	protected $ale = null;
 	protected $mail = null;
+	protected $apiErrorCount = 10;
 	
 	private $absenderMail = 'noreplay@fsrtool.de';
 	
@@ -993,7 +994,9 @@ class cron extends Database
 		return true;
 	}
 	
-	private function errorHandler($message, $code, $charID, $data=array()) {
+	private function errorHandler($message, $code, $charID=0, $data=array()) {
+		cron::errorLOG($message, $code, $charID);
+		
 		switch(substr($code, 0, 1)) {
 			case 1:
 			break;
@@ -1017,6 +1020,14 @@ class cron extends Database
 			default:
 			break;
 		}
+	}
+	
+	protected function errorLOG($message, $code, $charID) {
+		$stmt = $this->prepare("INSERT INTO {$this->_table['fsrtool_log']} (typeID, code, message) VALUES (?,?,?);");
+		$stmt->bind_param('iis', $charID, $code, $message);
+		$stmt->execute();
+		$stmt->close();
+		
 	}
 	
 	// don't put html in a cron jobs output

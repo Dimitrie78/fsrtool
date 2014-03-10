@@ -93,6 +93,7 @@ switch ($action)
 		}
 		$smarty->assign('sort', $sort);
 		$smarty->assign('stats', $stats);
+		$smarty->assign('stat', $world->eveorder_stat());
 		$smarty->assign('summe', $gesammt);
 		$smarty->display('file:['.ACTIVE_MODULE.']stats.tpl');
 	break;

@@ -40,6 +40,18 @@
 		
 	</table>
 	
+	<div class="jbhead">API Error logs</div><br/>
+	{if ($log)}
+	<table class="jbformtable">
+	{foreach from=$log item=thisLog}
+		<tr>
+			<td> {$thisLog.logtime} </td>
+			<td> {$thisLog.code} </td>
+			<td> {$thisLog.message} </td>
+		</tr>
+	{/foreach}
+	</table>
+	{/if}
 	{else}
 	
 	<div class="jbhead">Add Character</div><br/>

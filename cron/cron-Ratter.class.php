@@ -132,7 +132,7 @@ class cronRatter extends cron
 				}
 			} catch(Exception $e) {
 				$this->output .= $e->getCode().' - '.$e->getMessage()."\n";
-				// $this->logerror( $e->getMessage() );
+				$this->errorHandler($e->getMessage(), $e->getCode());
 				//return false;
 			}
 		}
@@ -152,6 +152,7 @@ class cronRatter extends cron
 		$this->_apiKey = $api['vCODE'];
 		$this->_charID = $api['charID'];
 		$this->_charName = $api['userName'];
+		$this->_corpID = $api['corpID'];
 		
 		return $count++;
 	}
@@ -168,7 +169,7 @@ class cronRatter extends cron
 			$this->_allyID   = (string) $corpData->result->allianceID;
 			
 		} catch(Exception $e) {
-			throw new Exception('Problem in getCorpTax::'.$e->getMessage(),$e->getCode());
+			throw new Exception('Problem in Membertool Carebear Stats -> getCorpTax::'.$e->getMessage(),$e->getCode());
 			return false;
 		}
 		return true;
@@ -190,15 +191,46 @@ class cronRatter extends cron
 			usort($Journal, array($this,'refIDSort')); 
 			
 		} catch(Exception $e) {
-			throw new Exception('Problem in getApiResponse::'.$e->getMessage(),$e->getCode());
+			throw new Exception('Problem in Membertool Carebear Stats -> getApiResponse::'.$e->getMessage(),$e->getCode());
 			return false;
 		}
 		return $Journal;
 	}
 	
-	
 	private function refIDSort($a, $b) {
 		return (floatval($a['refID']) > floatval($b['refID'])) ? -1 : 1;
+	}
+	
+	private function deactivateAPI() {
+		$errorcount = $this->apiErrorCount;
+		$result = $this->exec_query("UPDATE {$this->_table['fsrtool_user_fullapi']} SET errorcount = if(status = 0, 0, errorcount + 1), status = if(errorcount >= {$errorcount}, 0, 1) WHERE charID='{$this->_charID}';");
+		
+		return $result;
+	}
+	
+	private function errorHandler($message, $code, $charID=0, $data=array()) {
+		cron::errorLOG($message, $code, $this->_corpID);
+		
+		switch(substr($code, 0, 1)) {
+			case 1:
+			break;
+			
+			case 2:
+			break;
+			
+			case 3:
+			break;
+			
+			case 4:
+				$this->deactivateAPI();
+			break;
+			
+			case 5:
+			break;
+			
+			default:
+			break;
+		}
 	}
 
 }

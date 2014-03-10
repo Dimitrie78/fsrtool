@@ -486,6 +486,8 @@ class cronSilos extends cron
 	}
 	
 	private function errorHandler($message, $code, $charID, $data=array()) {
+		cron::errorLOG($message, $code, $data['corpID']);
+		
 		switch(substr($code, 0, 1)) {
 			case 1:
 			break;

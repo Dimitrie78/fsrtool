@@ -42,9 +42,9 @@ class cronMember extends cron
 		if ($this->serverStatus()) {
 			while ( $this->getApis( $row ) < $this->numRows ) {
 				//set_time_limit(200);
-				#if ($this->_corpID != 147849586) continue;
+				//if ($this->_corpID != 147849586) continue;
 				if ( $xml = $this->getApiResponse() ) {
-				#	print_it( $xml ); die;
+				//	print_it( $xml ); die;
 					
 					/*** EMPTY TEMP TABLE ***/
 					$this->query("TRUNCATE TABLE ".$this->_table['snow_tempchars']."");
@@ -52,7 +52,7 @@ class cronMember extends cron
 					/*** ADD CHARACTERS TO TEMP TABLE ***/
 					$index = 0;
 					$query = "INSERT INTO ".$this->_table['snow_tempchars']." (charID, arrayIndex, name, startDateTime, logoffDateTime) VALUES";
-					#if( $this->extended ){ print_it($xml); die; }
+					//if( $this->extended ){ print_it($xml); die; }
 					foreach ( $xml as $member ) {
 						if ($index != 0) $query .= ",";
 						$name = addslashes($member['name']);
@@ -61,7 +61,7 @@ class cronMember extends cron
 						else $query .= "('{$member['characterID']}', '{$index}', '{$name}', '0', '0')";
 						$index++;
 					}
-					#if( $this->extended ){ echo $query.'<br>'; }
+					//if( $this->extended ){ echo $query.'<br>'; }
 					$this->exec_query( $query );
 					
 					/*** LOOK FOR NEW EX-MEMBERS ***/
@@ -206,7 +206,7 @@ class cronMember extends cron
 				}
 				$this->getKills();
 				
-				#break;
+				//break;
 			}
 		}
 		else {
@@ -215,6 +215,8 @@ class cronMember extends cron
 			}
 		}
 		$this->unlog_cron();
+		
+		return parent::format($this->output);
 	}
 	
 	private function getKills() {
@@ -284,9 +286,9 @@ class cronMember extends cron
 	}
 	
 	private function prase_mail($file) {
-		#echo $file."\n";
+		//echo $file."\n";
 	  	$sxe = simplexml_load_file($file);
-		#print_it($sxe); die;
+		//print_it($sxe); die;
 		if(isset($sxe->error))
 		{	
 			$this->output .= intval($sxe->error['code']) . ' - ' . strval($sxe->error);
@@ -297,11 +299,11 @@ class cronMember extends cron
 	}
 	
 	private function processKill($row) {
-		#$this->output .= "<a href=\"http://eve-kill.net/?a=kill_detail&kll_id=".$row['killInternalID']."\">".$row['killInternalID']."</a>\n";
+		//$this->output .= "<a href=\"http://eve-kill.net/?a=kill_detail&kll_id=".$row['killInternalID']."\">".$row['killInternalID']."</a>\n";
 		if( !$this->killExists($row) )
 		{
-			$this->output .= $row['killInternalID']."\n";
-			#print_it($row); die;
+			//$this->output .= $row['killInternalID']."\n";
+			//print_it($row); die;
 			
 			$this->processVictim($row, strval($row['killTime']));
 			foreach($row->rowset[0]->row as $inv) $this->processInvolved($inv, strval($row['killTime']), $row);
@@ -381,8 +383,9 @@ class cronMember extends cron
 		$this->xml = $http->get_content();
 		if($http->get_http_code() != 200)
 		{
-			#trigger_error("HTTP error ".$http->get_http_code(). " while fetching file.", E_USER_WARNING);
-			$this->logerror("HTTP error ".$http->get_http_code(). " while fetching file.\n");
+			$this->output .= "HTTP error ".$http->get_http_code(). " while fetching file.\n";
+			//$this->errorHandler("HTTP error ".$http->get_http_code(). " while fetching file.\n", 999);
+			
 			return false;
 		}
 		unset($http);
@@ -439,7 +442,8 @@ class cronMember extends cron
 			
 			
 		} catch(Exception $e) {
-			$this->logerror( $e->getMessage() );
+			$this->output .= $e->getCode().' - '.$e->getMessage()."\n";
+			$this->errorHandler($e->getMessage(), $e->getCode());
 			return false;
 		}
 		
@@ -461,7 +465,8 @@ class cronMember extends cron
 				return true;
 			} // else error end
 		} catch(Exception $e) {
-			$this->logerror( $e->getMessage() );
+			$this->output .= $e->getCode().' - '.$e->getMessage()."\n";
+			$this->errorHandler($e->getMessage(), $e->getCode());
 			return false;
 		}
 		return false;
@@ -491,7 +496,8 @@ class cronMember extends cron
 				return false;
 			return true;
 		} catch(Exception $e) {
-			$this->logerror( $e->getMessage() );
+			$this->output .= $e->getCode().' - '.$e->getMessage()."\n";
+			$this->errorHandler($e->getMessage(), $e->getCode());
 			return false;
 		}
 	}
@@ -507,6 +513,38 @@ class cronMember extends cron
 	
 	private function eveTime() {
 		return time();
+	}
+	
+	private function deactivateAPI() {
+		$errorcount = $this->apiErrorCount;
+		$result = $this->exec_query("UPDATE {$this->_table['fsrtool_user_fullapi']} SET errorcount = if(status = 0, 0, errorcount + 1), status = if(errorcount >= {$errorcount}, 0, 1) WHERE charID='{$this->_charID}';");
+		
+		return $result;
+	}
+	
+	private function errorHandler($message, $code, $charID=0, $data=array()) {
+		cron::errorLOG($message, $code, $this->_corpID);
+		
+		switch(substr($code, 0, 1)) {
+			case 1:
+			break;
+			
+			case 2:
+			break;
+			
+			case 3:
+			break;
+			
+			case 4:
+				$this->deactivateAPI();
+			break;
+			
+			case 5:
+			break;
+			
+			default:
+			break;
+		}
 	}
 
 }
