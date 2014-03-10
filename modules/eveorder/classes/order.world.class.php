@@ -463,7 +463,7 @@ class eveorderWorld extends world
 			  {$this->_table['eveorder_user_types']} o
 			  LEFT JOIN {$this->_table['fsrtool_currentTypePrice']} p ON o.typeID = p.typeID AND p.region = 30000142
 			WHERE
-			  o.corpid = '{$this->User->corpID}'  
+			  o.corpid = '{$this->User->corpID}' AND o.status = 4
 			GROUP BY
 			  o.typeID) as test
 			GROUP BY
