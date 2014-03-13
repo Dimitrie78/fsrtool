@@ -3,7 +3,7 @@ defined('FSR_BASE') or die('Restricted access');
 
 class User
 {
-	public $charID = null;
+	public $charID = 0;
 	public $corpName = null;
 	public $roles = array();
 	
