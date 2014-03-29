@@ -197,7 +197,7 @@ class User
 	
 	public function insertUser($data, $stuff){
 		if (!is_array($data)) $this->error('Data is not an array', __LINE__);
-		$data['username'] = htmlentities($this->db->escape($data['username']),ENT_QUOTES,"utf-8");
+		$data['username'] = htmlentities($data['username'],ENT_QUOTES,"utf-8");
 		$data['password'] = md5(PWSALT.sha1($data['password'].PWSALT));
 		
 		foreach ($data as $k => $v ) $data[$k] = "'".$this->db->escape($v)."'";	
@@ -218,7 +218,7 @@ class User
 	
 	public function addAlt( $data, $stuff ) {
 		if (!is_array($data)) $this->error('Data is not an array', __LINE__);
-		$data['charName'] = htmlentities($this->db->escape($data['charName']),ENT_QUOTES,"utf-8");
+		$data['charName'] = htmlentities($data['charName'],ENT_QUOTES,"utf-8");
 		foreach ($data as $k => $v ) $data[$k] = "'".$this->db->escape($v)."'";	
 		$check = $this->db->query("SELECT * FROM {$this->_table['fsrtool_alts']} WHERE charID = ".$data['charID']." AND mainCharID = '".$this->charID."' LIMIT 1;");
 		if ( $check->num_rows > 0 )
