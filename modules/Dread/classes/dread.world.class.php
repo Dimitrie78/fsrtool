@@ -292,7 +292,7 @@ class DreadWorld extends world
 				  name	   = '".$name."',
 				  standort = '".$ort."',
 				  bemerkung= '".$text."';";
-		$res = $this->db->doQuery( $str );
+		$res = $this->db->query( $str );
 		return $res;
 	}
 	
@@ -326,7 +326,7 @@ class DreadWorld extends world
 				  bemerkung  	 = '".$text."',
 				  tot			 = '".$tot."'
 			    WHERE Id = '".$id."' AND corpID='".$this->User->corpID."';";
-		$res = $this->db->doQuery( $str );
+		$res = $this->db->query( $str );
 		if ($tot == 1) {
 			$str = "SELECT ships.time, ships.player, users.charID AS userID
 				    FROM {$this->_table['fsrtool_ships']} as ships 
@@ -358,7 +358,7 @@ class DreadWorld extends world
 				SET bemerkung = '".$text."',
 					kblink	  = '".$kblink."'
 				WHERE Id = '".$id."' AND corpID='".$this->User->corpID."';";
-		$res = $this->db->doQuery( $str );
+		$res = $this->db->query( $str );
 		
 		return $res;
 	}
