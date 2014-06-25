@@ -63,6 +63,8 @@ class cronSilos extends cron
 				lastFetch = VALUES(lastFetch)";
 		$update = "UPDATE {$this->_table['fsrtool_assets']} SET locationID=?, typeID=?, quantity=?, flag=?, singleton=?, rawQuantity=?, contents=? WHERE itemID=?";
 		
+		$testIns = "INSERT INTO test (corpName,itemID,emptyTime,typeName,ammountPH,quantityOLD,quantityNEW,towerCacheAgoOLD,towerCacheAgoNEW,towerCacheCalcNEWold,towerCacheCalcNEWnew,assetTowerCacheOLD,assetTowerCacheNEW,oldAssFetched,newAssFetched,oldAssQty,newAssQty,turn) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		
 		// $fuelarray = array(4051,4246,4247,4312,44,3683,3689,9832,9848,16272,16273,16274,16275,17887,17888,17889,24592,24593,24594,24595,24596,24597);
 		// $fuelarray = array(44,3683,3689,9832,9848,16272,16273,16274,16275,17887,17888,17889,24592,24593,24594,24595,24596,24597);
 		$fuelarray = array(4051,4246,4247,4312,16275,24592,24593,24594,24595,24596,24597);
@@ -346,6 +348,8 @@ class cronSilos extends cron
 					$out .= $this->doLocations($apikey, true);
 					
 					/* NEW STUFF TEST */
+					$stmt = $this->prepare($testIns);
+					$stmt->bind_param("ssssssssssssssssss", $corpName,$itemID,$emptyTime,$typeName,$ammountPH,$quantityOLD,$quantityNEW,$towerCacheAgoOLD,$towerCacheAgoNEW,$towerCacheCalcNEWold,$towerCacheCalcNEWnew,$assetTowerCacheOLD,$assetTowerCacheNEW,$oldAssFetched,$newAssFetched,$oldAssQty,$newAssQty,$turn);
 					$silosClassNew = new Silos($apikey['corpID'], $worldClass);
 					$newAssets = $silosClassNew->assets;
 					if(is_array($oldAssets)){
@@ -362,26 +366,27 @@ class cronSilos extends cron
 										//if($value <= 400) {
 											$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 1 WHERE itemID = '{$assetItemNew['itemID']}';");
 											$posID = $assetItem['pos'];
-											$msg .= $apikey['corpName'].'<br/>';
-											$msg .= $assetItem['itemID'].'<br/>';
-											$msg .= 'emptyTime: '.$assetItem['emptyTime'].'<br/>';
-											$msg .= $assetItem['typeName'].'<br/>';
-											$msg .= 'ammount pro h: '.$assetItem['stk'].'<br/>';
-											$msg .= 'old clac: '.$assetItem['quantity'].'<br/>';
-											$msg .=	'new clac: '.$assetItemNew['quantity'].'<br/>';
-											$msg .=	'old: '.$silosClass->towerCacheAgo[$posID].'<br/>';
-											$msg .=	'new: '.$silosClassNew->towerCacheAgo[$posID].'<br/>';
-											$msg .=	'old: '.$silosClass->towerCacheCalcNEW[$posID].'<br/>';
-											$msg .=	'new: '.$silosClassNew->towerCacheCalcNEW[$posID].'<br/>';
-											$msg .=	'old: '.$silosClass->assetTowerCache[$posID].'<br/>';
-											$msg .=	'new: '.$silosClassNew->assetTowerCache[$posID].'<br/>';
-											$msg .=	'old ass fetched: '.$silosClass->assetCacheTime.'<br/>';
-											$msg .=	'new ass fetched: '.$silosClassNew->assetCacheTime.'<br/>';
-											$msg .=	'old ass: '.$silosClass->untouchtAssets[$assetItem['itemID']]['quantity'].'<br/>';
-											$msg .=	'new ass: '.$silosClassNew->untouchtAssets[$assetItem['itemID']]['quantity'].'<br/><br/>';
-											//$msg .=	print_r($assetItem,true).'<br/>';
-											//$msg .=	print_r($assetItemNew,true).'<br/>';
-											//echo $assetItem['quantity'] .' - '. $assetItemNew['quantity']. '<br>';
+											$corpName = $apikey['corpName'];
+											$itemID = $assetItem['itemID'];
+											$emptyTime = $assetItem['emptyTime'];
+											$typeName = $assetItem['typeName'];
+											$ammountPH = $assetItem['stk'];
+											$quantityOLD = $assetItem['quantity'];
+											$quantityNEW = $assetItemNew['quantity'];
+											$towerCacheAgoOLD = $silosClass->towerCacheAgo[$posID];
+											$towerCacheAgoNEW = $silosClassNew->towerCacheAgo[$posID];
+											$towerCacheCalcNEWold = $silosClass->towerCacheCalcNEW[$posID];
+											$towerCacheCalcNEWnew = $silosClassNew->towerCacheCalcNEW[$posID];
+											$assetTowerCacheOLD = $silosClass->assetTowerCache[$posID];
+											$assetTowerCacheNEW = $silosClassNew->assetTowerCache[$posID];
+											$oldAssFetched = $silosClass->assetCacheTime;
+											$newAssFetched = $silosClassNew->assetCacheTime;
+											$oldAssQty = $silosClass->untouchtAssets[$assetItem['itemID']]['quantity'];
+											$newAssQty = $silosClassNew->untouchtAssets[$assetItem['itemID']]['quantity'];
+											$turn = $assetItem['turn'];
+											
+											$stmt->execute();
+											
 										//} else {
 											//$this->exec_query("UPDATE {$this->_table['fsrtool_silos']} SET suspect = 0 WHERE itemID = '{$assetItemNew['itemID']}';");
 										//}
@@ -397,6 +402,7 @@ class cronSilos extends cron
 							//$this->sendMail(array('pi@fsrtool.de'), $msg);
 						}
 					}
+					$stmt->close();
 					/* echo '<pre>';
 					print_r($oldAssets);
 					print_r($newAssets);
@@ -485,7 +491,7 @@ class cronSilos extends cron
 		return $this->mail->send();
 	}
 	
-	private function errorHandler($message, $code, $charID, $data=array()) {
+	private function errorHandler($message, $code, $charID=0, $data=array()) {
 		cron::errorLOG($message, $code, $data['corpID']);
 		
 		switch(substr($code, 0, 1)) {

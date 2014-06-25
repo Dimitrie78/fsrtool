@@ -127,7 +127,7 @@ $(document).ready(function(){
 		source: "dowork.php?module=Dread&action=ajaxSearch"
 	});
 	$('input#all').click(function(){
-		$('input.dreadselect').attr('checked',$(this).attr('checked')).attr('disabled',$(this).attr('checked'));
+		$('input.dreadselect').attr('checked',$(this).attr('checked')).prop('disabled',this.checked);
 	});
 	$('input#all').attr('checked','checked').trigger('click').attr('checked','checked');
 	$('input.dreadselect').click(function(){
