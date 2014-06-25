@@ -100,12 +100,13 @@ switch ($action)
 	
 	case "openOrders":
 		if ( isset($_REQUEST['corpid']) &&  $_REQUEST['corpid'] != '' ) $corpID = $_REQUEST['corpid']; else $corpID = $User->corpID;
-		if ( $User->allyID != 0 ) {
+		//if ( $User->allyID != 0 ) {
 			$corps = $world->eveorder_getCorps($User->allyID);
 			
 			$smarty->assign('corps', $corps);
 			$smarty->assign('sel_corp', $corpID);
-		}
+		//}
+		
 		if (isset($_REQUEST['orderStatus'])) {
 			if (isset($_REQUEST['orderby'])) {
 				$orders = $world->eveorder_getOpenOrders($corpID,$_REQUEST['orderStatus'],$_REQUEST['orderby']);
