@@ -357,7 +357,9 @@ class eveorderWorld extends world
 	}
 	
 	public function eveorder_getCorps($allyID){
-		$res = $this->db->query("SELECT * FROM {$this->_table['fsrtool_corps']} WHERE ally='{$allyID}' ORDER BY name;");
+		$res = $this->db->query("SELECT * FROM {$this->_table['fsrtool_corps']} AS c
+			INNER JOIN {$this->_table['fsrtool_user']} AS u ON c.id = u.corpID
+			WHERE c.ally='{$allyID}' ORDER BY c.name;");
 		$corps=array();
 		while ( $row = $res->fetch_array() ){
 			if ($row) $corps[$row['id']] = $row['name'];
