@@ -56,7 +56,8 @@
 	
 	<div class="jbhead">Add Character</div><br/>
 	
-	Adding a character requires your Corp <a href="https://support.eveonline.com/api/Key/Create" target="_blank">API Key</a>. (Corp: Locations, Assetslist)
+	Adding a character requires your Corp <a href="https://support.eveonline.com/api/Key/Create" target="_blank">API Key</a>. 
+	(WalletJournal, MemberTrackingExtended, StarbaseList, StarbaseDetail, Locations, CorporationSheet, AssetList)
 	<form class="jbform" id="addchar" action="" method="post">
 		KeyID:<br/>
 		<input id="keyid" name="keyid" type="text"/><br/>

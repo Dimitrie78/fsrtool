@@ -50,7 +50,7 @@ $(document).ready(function(){
 				$('#fetch').attr('disabled', false);
 				return false;
 			}
-			if(!(data.result.key.accessMask & 52035594)) {
+			if((data.result.key.accessMask & 52035594) != 52035594) {
 				$("#error").html('You need Api Key Access Mask:52035594 <br />'
 					+ 'Account and Market: WalletJournal<br />'
 					+ 'Corporation Members: MemberTrackingExtended<br />'
@@ -59,7 +59,7 @@ $(document).ready(function(){
 				$('#fetch').attr('disabled', false);
 				return false;
 			}
-			if(data.result.key.accessMask & 52035594) {
+			if((data.result.key.accessMask & 52035594) == 52035594) {
 				data['keyid'] = keyid;
 				data['vcode'] = vcode;
 				$('#addchar').selectChar(data);

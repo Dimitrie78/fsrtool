@@ -36,13 +36,13 @@ class Type
 			$typeID = $this->db->escape( $id );
 			$region = $this->db->escape( $region );
 			
-			$str = "SELECT it.*, ei.iconFile AS icon, ig.categoryID AS categoryID, bp.techLevel, IfNull(dmg.valueInt, dmg.valueFloat) itm_techlevel,
+			$str = "SELECT it.*, /* ei.iconFile AS icon, */ ig.categoryID AS categoryID, bp.techLevel, IfNull(dmg.valueInt, dmg.valueFloat) itm_techlevel,
 			(SELECT p.fetched FROM {$this->_table['fsrtool_currentTypePrice']} as p 
 			 WHERE p.typeID = '".$typeID."' AND p.region = ".$region.") as fetched,  
 			(SELECT p1.buy_percentile_price FROM {$this->_table['fsrtool_currentTypePrice']} as p1
 			 WHERE p1.typeID = '".$typeID."' AND p1.region = ".$region.") as price
 				  FROM {$this->_table['invtypes']} AS it 
-				  LEFT JOIN {$this->_table['eveicons']} AS ei ON it.iconID = ei.iconID
+				 /* LEFT JOIN {$this->_table['eveicons']} AS ei ON it.iconID = ei.iconID */
 				  LEFT JOIN {$this->_table['invgroups']} AS ig ON it.groupID = ig.groupID 
 				  LEFT JOIN {$this->_table['invblueprinttypes']} AS bp ON it.typeID = bp.productTypeID
 				  LEFT JOIN {$this->_table['dgmtypeattributes']} AS dmg ON it.typeID = dmg.typeID AND dmg.attributeID IN (633)

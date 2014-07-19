@@ -107,11 +107,11 @@ class Item
         {
             if (!$this->id_)return false;
             
-            $this->sql_ = ("SELECT i.*, IfNull(dgm.valueInt, dgm.valueFloat) tech, g.categoryID, ei.iconFile AS icon
+            $this->sql_ = ("SELECT i.*, IfNull(dgm.valueInt, dgm.valueFloat) tech, g.categoryID /* , ei.iconFile AS icon */
 				FROM {$this->site->_table['invtypes']} i 
 				LEFT JOIN {$this->site->_table['dgmtypeattributes']} dgm ON i.typeID = dgm.typeID AND dgm.attributeID IN (633) 
 				LEFT JOIN {$this->site->_table['invgroups']} g ON i.groupID = g.groupID 
-				LEFT JOIN {$this->site->_table['eveicons']} ei ON i.iconID = ei.iconID
+				/* LEFT JOIN {$this->site->_table['eveicons']} ei ON i.iconID = ei.iconID */
 				WHERE i.typeID = '{$this->id_}';");
             $this->qry_ = $this->site->db->query($this->sql_);
             $this->row_ = $this->qry_->fetch_assoc();
