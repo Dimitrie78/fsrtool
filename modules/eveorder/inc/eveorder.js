@@ -185,11 +185,19 @@ function makeFitClick(fitID) {
 						  $('table.fittable').append(tableadd(json.module.order[rack][i]));
 						}
 					}
-					$('table.fittable').append('<tr><td colspan="4" align="center">'
-						+ '<span style="float:left">For Corp?:<input type="checkbox" name="corp" /></span>'
-						+ '<span style="float:none">Amount:<input type="text" name="amount" value="1" size="5"/></span>'
-						+ '<span style="float:right"><input type="submit" value="Order Fit" id="orderFitting" /></span>'
-						+ '</td></tr>');
+					if(json.corpOrder) {
+						$('table.fittable').append('<tr><td colspan="4" align="center">'
+							+ '<span style="float:left">For Corp?:<input type="checkbox" name="corp" /></span>'
+							+ '<span style="float:none">Amount:<input type="text" name="amount" value="1" size="5"/></span>'
+							+ '<span style="float:right"><input type="submit" value="Order Fit" id="orderFitting" /></span>'
+							+ '</td></tr>');
+					} else {
+						$('table.fittable').append('<tr><td colspan="4" align="center">'
+							//+ '<span style="float:left">For Corp?:<input type="checkbox" name="corp" /></span>'
+							+ '<span style="float:none">Amount:<input type="text" name="amount" value="1" size="5"/></span>'
+							+ '<span style="float:right"><input type="submit" value="Order Fit" id="orderFitting" /></span>'
+							+ '</td></tr>');
+					}
 				}
 			}
 		});

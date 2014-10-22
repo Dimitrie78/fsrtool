@@ -16,6 +16,7 @@ class fitting
 			$this->attrib = $this->getSlots( $fitID );
 			$this->attrib['module'] = $this->getModule( $fitID );
 			$this->attrib['imgShip'] = IMG_URL.'/Renders/'.$this->ships[ $fitID ]['ship'].'.png';
+			$this->attrib['corpOrder'] = $world->User->CorpOrder;
 			$this->skill();
 			$imgShip = IMG_URL.'/Types/'.$this->ships[ $fitID ].'_256.png';
 			$smarty->assign('ShipImgBig', $imgShip);
