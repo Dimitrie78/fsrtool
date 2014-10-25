@@ -127,7 +127,13 @@ class Type
 		if ( is_file( $dir ) ) 
 			$img = $dir;
 		else {
-			$img = 'icons/Icons/items/'.$row['icon'].'.png';
+			// $img = 'icons/Icons/items/'.$row['icon'].'.png';
+			$cacheFile = 'cache/imgcache/' . $this->typeID . '_' . $size . '.png';
+			if ( is_file ( $cacheFile ) ) {
+				$img = $cacheFile;
+			} else {
+				$img = $this->getImageFromEve($this->typeID);
+			}
 		}
 		
 		$it_name = $this->typeName;
@@ -191,6 +197,23 @@ class Type
 	
 	private function getImageFromEve($typeID) {
 		// https://image.eveonline.com/Type/{typeID}_{width}.png
+		
+		$path = 'cache/imgcache';
+		$file = $path . '/' . $typeID . '_64.png';
+		
+		$url = 'https://image.eveonline.com/Type/' . $typeID . '_64.png';
+		
+		$ch = curl_init(); 
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);		
+		curl_setopt($ch, CURLOPT_URL, $url);  
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);  
+		$content = curl_exec ($ch);  
+		curl_close ($ch);
+
+        file_put_contents($file, $content);
+		
+		return $file;
 	}
 }
 
