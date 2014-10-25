@@ -141,6 +141,7 @@ class Type
 		$this->fetched = $row['fetched'];
 		$this->price = $row['price'];
 		$this->categoryID = $row['categoryID'];
+		/*
 		if ($this->categoryID == "9")
 		{
 			$this->produces = $this->getProducedType();
@@ -148,6 +149,7 @@ class Type
 			$this->producesCategory = $temp->categoryID;
 			unset($temp);
 		}
+		*/
 	}
 
 	public function toArray() {
@@ -185,6 +187,10 @@ class Type
 		$str = "SELECT productTypeID FROM {$this->_table['invblueprinttypes']} WHERE blueprintTypeID = '".$this->typeID."';";
 		if ( $productTypeID = $this->db->fetch_one( $str, 'productTypeID' ) )
 			return $productTypeID;
+	}
+	
+	private function getImageFromEve($typeID) {
+		// https://image.eveonline.com/Type/{typeID}_{width}.png
 	}
 }
 
