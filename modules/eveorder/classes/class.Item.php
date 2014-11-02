@@ -98,11 +98,11 @@ class Item
 			$img = $dir;
 		else {
 			// $img = 'icons/Icons/items/'.$row['icon'].'.png';
-			$cacheFile = 'cache/imgcache/' . $this->typeID . '_' . $size . '.png';
+			$cacheFile = 'cache/imgcache/' . $this->row_['itm_externalid'] . '_' . $size . '.png';
 			if ( is_file ( $cacheFile ) ) {
 				$img = $cacheFile;
 			} else {
-				$img = $this->getImageFromEve($this->typeID);
+				$img = $this->getImageFromEve($this->row_['itm_externalid']);
 			}
 		}
         $it_name = $this->getName();
