@@ -71,7 +71,7 @@ $(document).ready(function(){
 function fittIcon(icon) {
 	var out = '<span class="item-icon" style="position:absolute; height:32px; width:32px; text-align:left;">'
 			
-			+ '<img style="position:absolute; z-index: 1; height:32px; width:32px;" src="icons/'+ icon.img +'" title="'+ icon.name +'" alt="'+ icon.name +'" />'
+			+ '<img style="position:absolute; z-index: 1; height:32px; width:32px;" src="'+ icon.img +'" title="'+ icon.name +'" alt="'+ icon.name +'" />'
 			+ '</span>'
 	return out;
 }
@@ -79,7 +79,7 @@ function fittIcon(icon) {
 function fittIconAmmo(ammo) {
 	var out = '<span class="item-icon" style="position:absolute; height:32px; width:32px; text-align:left;">'
 			
-			+ '<img style="position:absolute; z-index: 1; height:24px; width:24px;" src="icons/'+ ammo.img +'" title="'+ ammo.name +'" alt="'+ ammo.name +'" />'
+			+ '<img style="position:absolute; z-index: 1; height:24px; width:24px;" src="'+ ammo.img +'" title="'+ ammo.name +'" alt="'+ ammo.name +'" />'
 			+ '</span>'
 	return out;
 }
