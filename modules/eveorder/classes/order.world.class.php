@@ -128,7 +128,7 @@ class eveorderWorld extends world
 
 	public function eveorder_doSearch($string) {
 		$string = $this->db->escape($string);
-		$str = "SELECT typeID FROM {$this->_table['invtypes']} WHERE typeName LIKE '".$string."%' LIMIT 10;";
+		$str = "SELECT typeID FROM {$this->_table['invtypes']} WHERE typeName LIKE '".$string."%' LIMIT 20;";
 		$res = $this->db->query( $str );
 		if ( $res->num_rows > 0 ) {
 			$return = "";
