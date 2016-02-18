@@ -33,11 +33,12 @@ class Fetcher
 	public function run( $run=null ) {
 		$out = '';
 		if ( $run === null && !$this->charID && !$this->corpID) {
-			$res = $this->query("SELECT c.id, c.name from ".db_tab_cron." c WHERE DATE_SUB(NOW(), INTERVAL c.interwal MINUTE) >= c.time AND status = 1 ORDER BY c.id LIMIT 5;");
-			while($row = $res->fetch_assoc()) {
-				$this->cronID = $row['id'];
-				$out .= $this->$row['name']();
-				$this->exec_query("UPDATE ".db_tab_cron." SET time=DATE_ADD(NOW(),INTERVAL -10 MINUTE) WHERE id={$row['id']};");
+			if ($res = $this->query("SELECT c.id, c.name from ".db_tab_cron." c WHERE DATE_SUB(NOW(), INTERVAL c.interwal MINUTE) >= c.time AND status = 1 ORDER BY c.id LIMIT 5;")) {
+				while($row = $res->fetch_assoc()) {
+					$this->cronID = $row['id'];
+					$out .= $this->$row['name']();
+					$this->exec_query("UPDATE ".db_tab_cron." SET time=DATE_ADD(NOW(),INTERVAL -10 MINUTE) WHERE id={$row['id']};");
+				}
 			}
 		} 
 		
@@ -1442,7 +1443,8 @@ class Fetcher
 	}
 	
 	private function my_error( $message ) {
-		$callee = next(debug_backtrace());
+		$debug = debug_backtrace();
+		$callee = next($debug);
 		$msg = $message."in ".$callee['file']." on line: ".$callee['line'];
 		// $msg = $message.'<br />in <strong>'.$callee['file'].'</strong> on line <strong>'.$callee['line'].'</strong><br />';
 		// $msg .= $callee['function'].', [class] => '.$callee['class'];
