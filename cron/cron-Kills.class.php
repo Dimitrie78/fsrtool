@@ -52,7 +52,7 @@ class cronKills extends cron
 		/*** Get Kills  ***/
 		$file = $this->killdir . 'zkb' . $this->_corpID . '.xml';
 		//$url  = 'eve-kill.net';
-		$url  = "https://zkillboard.com/api/xml/corporationID/147849586/";
+		//$url  = "https://zkillboard.com/api/xml/corporationID/147849586/";
 	
 		/* get the lastkillid form DB */
 		$res = $this->query("SELECT Max(k.kill_id) AS lastkillid FROM ".$this->_table['snow_kills']." k WHERE corpID = '{$this->_corpID}';");
@@ -65,10 +65,10 @@ class cronKills extends cron
 			$lastkillID = $row['lastkillid'];
 			$url = "https://zkillboard.com/api/xml/corporationID/{$this->_corpID}/afterKillID/{$lastkillID}/orderDirection/asc/";
 		} else {
-			$url = "https://zkillboard.com/api/xml/corporationID/{$this->_corpID}/startTime/".(date('YmdHi', time()-60*60*24*200))."/";
+			$url = "https://zkillboard.com/api/xml/corporationID/{$this->_corpID}/startTime/".(date('YmdHi', time()-60*60*24*30))."/";
 		}
 
-			echo $url.'<br>';
+//			echo $url.'<br>';
 
 		if (!file_exists($file)) {			
 			if ( $this->request($url) ) {
@@ -82,7 +82,7 @@ class cronKills extends cron
 		
 		else if ( file_exists($file) ){
 			$x = time() - filemtime($file);
-			#if ($x > 3500) {
+			if ($x > 3000) {
 				if ( $this->request($url) ) {
 					if(strpos($this->xml,"<?xml") !== false) {
 						file_put_contents($file, $this->xml);
@@ -90,7 +90,7 @@ class cronKills extends cron
 						$this->prase_mail($file);
 					}
 				}
-			#}
+			}
 		}
 		
 		//if ( $this->_corpID == 147849586) $this->prase_mail($file);
