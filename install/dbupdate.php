@@ -32,10 +32,11 @@ $parms = array(
 	'request' 	=> array('class' => $c->request)
 );
 
+$cacheDir = FSR_BASE.DIRECTORY_SEPARATOR."cache";
 
-$fileName = "mysql-latest.tar.bz2";
+$fileName = $cacheDir.DIRECTORY_SEPARATOR."mysql-latest.tar.bz2";
 
-$fileURL = "https://www.fuzzwork.co.uk/dump/mysql-latest.tar.bz2";
+$fileURL = "https://www.fuzzwork.co.uk/dump/mysql-latest.tar.bz2 -P ".$cacheDir;
 
 $escape = escapeshellarg($fileURL);
 exec("wget " . $escape);
