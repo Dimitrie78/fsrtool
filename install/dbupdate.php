@@ -70,7 +70,7 @@ function dbimport($mysqlImportFilename, $c) {
 	exec($command,$output,$worked);
 	switch($worked){
 		case 0:
-			echo 'Import file <b>' .$mysqlImportFilename .'</b> successfully imported to database <b>' .$mysqlDatabaseName .'</b><br>';
+			echo 'Import file <b>' .$mysqlImportFilename .'</b> successfully imported to database <b>' .$c->dbeve .'</b><br>';
 			
 			$str = "SHOW TABLES";
 			$res = $db->query($str) or die('fail query');
