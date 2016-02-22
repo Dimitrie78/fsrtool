@@ -20,6 +20,8 @@ if(is_file(CONFIG)) {
 	define('EMAIL', $c->email);
 }
 
+$c->dbeve = substr($c->dbeve, 0, -1);
+
 $parms = array(
 	'main' => array('host' => $c->alehost),
 	'cache' => array(
@@ -36,18 +38,21 @@ $cacheDir = FSR_BASE.DIRECTORY_SEPARATOR."cache";
 
 $fileName = $cacheDir.DIRECTORY_SEPARATOR."mysql-latest.tar.bz2";
 
-$fileURL = "https://www.fuzzwork.co.uk/dump/mysql-latest.tar.bz2 -P ".$cacheDir;
+$fileURL = "https://www.fuzzwork.co.uk/dump/mysql-latest.tar.bz2";
 
 $escape = escapeshellarg($fileURL);
-exec("wget " . $escape);
+exec("wget " . $escape . " -P " . $cacheDir);
 
-$shellBefehl = "tar jxvf $fileName";
+$shellBefehl = "tar jxvf $fileName -C ".$cacheDir;
 $shellBefehl = escapeshellcmd($shellBefehl);
 
 exec($shellBefehl,$nu);
-
+exec("rm ".$fileName);
 #print_r($nu);
-echo $nu[0];
+#$nu = array("yc118-2-116998/mysql56-yc118-2-116998.sql");
+#echo $nu[0];
+
+dbimport($cacheDir.DIRECTORY_SEPARATOR.$nu[0], $c);
 
 function dbimport($mysqlImportFilename, $c) {
 	$db = new mysqli( $c->dbhost, $c->dbuname, $c->dbpass, $c->dbeve );
