@@ -34,6 +34,8 @@ $parms = array(
 	'request' 	=> array('class' => $c->request)
 );
 
+$findMich = '.sql';
+
 $cacheDir = FSR_BASE.DIRECTORY_SEPARATOR."cache";
 
 $fileName = $cacheDir.DIRECTORY_SEPARATOR."mysql-latest.tar.bz2";
@@ -50,9 +52,16 @@ exec($shellBefehl,$nu);
 exec("rm ".$fileName);
 #print_r($nu);
 #$nu = array("yc118-2-116998/mysql56-yc118-2-116998.sql");
-#echo $nu[0];
+foreach($nu as $key => $value) {
+	$pos = strpos($value, $findMich);
+	if ($pos !== false) {
+		$sqlFile = $nu[$key];
+		echo $sqlFile;
+		echo '<br>';
+	}
+}	
 
-dbimport($cacheDir.DIRECTORY_SEPARATOR.$nu[0], $c);
+dbimport($cacheDir.DIRECTORY_SEPARATOR.$sqlFile, $c);
 
 function dbimport($mysqlImportFilename, $c) {
 	$db = new mysqli( $c->dbhost, $c->dbuname, $c->dbpass, $c->dbeve );
@@ -85,6 +94,7 @@ function dbimport($mysqlImportFilename, $c) {
 			echo 'There was an error during import.';
 			break;
 	}
+	
 	
 }
 
