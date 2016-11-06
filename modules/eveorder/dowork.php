@@ -10,6 +10,11 @@ switch ($action)
 			header("Location: ".$string);
 			exit;
 		break;
+        
+        case "clipboard":
+            $arr = $world->eveorder_clipboard($_POST['user']);
+            echo json_encode($arr);
+        break;
 		
 		case "changeOrderStatus":
 			$world->eveorder_updateOrder($_POST['id'],$_POST['status'],$User->charID,$_POST['comment'],$_POST['check'],$_POST['target']);

@@ -530,6 +530,21 @@ class eveorderWorld extends world
 		}
 		return $result;
 	}
+    
+    public function eveorder_clipboard($user) {
+		$user = $this->db->escape($user);
+        $sql = "SELECT it.typeName, ut.amount 
+                FROM {$this->_table['eveorder_user_types']} AS ut INNER JOIN {$this->_table['invtypes']} AS it ON ut.typeID = it.typeID
+                WHERE ut.user = '{$user}' AND ut.status = 0;";
+		$order = $this->db->query( $sql );
+		$arr = array();
+        if ( $order->num_rows > 0 ) {
+			while ( $row = $order->fetch_array() ) {
+                $arr[] = $row['typeName'].' '.$row['amount'];
+            }
+		}
+		return $arr;
+	}
 	
 	public function eveorder_addToFavorites($typeID,$groupID) {
 		global $language;

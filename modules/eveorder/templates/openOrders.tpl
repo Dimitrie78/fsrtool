@@ -81,7 +81,7 @@
 				  <td width="80">&nbsp;</td>
 				  <td width="60">&nbsp;</td>
 				  <td style="text-align:center;"><input type="button" value="All orders?" onClick="checkOrders('{$thisKey}')"/></td>
-				  <td width="115">&nbsp;</td>
+				  <td width="115">{if $orderStatus==0}<input type="button" value="copy clipboard" onClick="clipboard('{$thisKey}')"/>{/if}</td>
 				</tr>
 {foreach from=$thisOrder.order item=order}
 {cycle name=c values="#333333,#444444" assign=col}
@@ -160,5 +160,8 @@
 		
 		
 	</table>
-
+<div id="addFit">Clipboard<br />
+    <textarea name="fitt" id="fitt" cols="50" rows="30"></textarea>
+    <input type="button" class="closeButton" value="Close" />
+</div>
 {include file="footer.tpl"}    
